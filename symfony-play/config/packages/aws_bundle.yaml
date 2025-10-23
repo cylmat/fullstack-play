@@ -1,0 +1,26 @@
+
+parameters:
+  
+
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true 
+    public: false
+
+  # _instanceof:
+      # App LOGGER used in TextBundle #
+      # App\MainBundle\Contract\LoggerAwareInterface:
+      #     calls:
+      #       - ['setLogger', ['@app.logger']]
+
+
+  App\AwsBundle\:
+    resource: ../../src/AwsBundle
+
+  App\AwsBundle\Service\DynamoService:
+    arguments:
+      $iamKey: '%env(AWS_IAM_KEY)%'
+      $iamSecret: '%env(AWS_IAM_SECRET)%'
+      $dynamoRegion: '%env(AWS_DYNAMODB_REGION)%'

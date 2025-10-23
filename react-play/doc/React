@@ -1,0 +1,16 @@
+...current: https://www.tutorialspoint.com/reactjs/reactjs_architecture.htm
+
+Tutorial
+- https://www.tutorialspoint.com/reactjs
+
+Tools
+- npm install serve -g
+- npm install babel-cli@6 babel-preset-react-app@3 -g
+
+Create (React toolchain)
+- npm install -g create-react-app
+- npm install react-scripts@latest
+
+Features:
+  Virtual DOM, Components, JSX, One way data binding
+  Scalable, Flexible, Modular

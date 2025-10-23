@@ -1,0 +1,45 @@
+framework:
+    workflows:
+        encrypt:
+            # logs
+            audit_trail: 
+                enabled: false
+            type: workflow # One of "workflow"; "state_machine"
+            supports:
+                - App\MainBundle\Model\Play\EncryptedData
+
+            initial_marking: start
+            marking_store:
+                type: method
+                property: currentPlace # replace default 'getMarking()'
+
+            # Select which Transition events should be dispatched for this Workflow
+            events_to_dispatch:
+                - workflow.entered
+                - workflow.transition
+
+            places:
+                - start
+                - processing
+                - done
+
+            transitions:
+                process:
+                    from: start
+                    to: processing
+                finish:
+                    from: processing
+                    to: done
+                    # An expression to block the transition
+                    # Example: "is_fully_authenticated() and is_granted('ROLE_JOURNALIST') and subject.getTitle() == 'My first article'"
+                    guard: subject.getValue() # sample
+
+                    # metadata:
+                        # Examples:
+                        # color:               blue
+                        # description:         'Workflow to manage article.'
+
+            metadata: ~
+                # Examples:
+                # color:               blue
+                # description:         'Workflow to manage article.'

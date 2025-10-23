@@ -1,0 +1,89 @@
+##########
+# GITHUB #
+##########
+
+# Current workflow
+# @see https://github.com/cylmat/phpconfig/actions
+
+# DOC
+# @see https://github.com/actions/starter-workflows/
+
+name: Symplay
+
+on:
+  push:
+    branches: [ main, dev ]
+
+###
+# Jobs
+###
+jobs:
+  run:
+    
+    runs-on: ubuntu-latest
+    name: Test and build
+    strategy:
+      fail-fast: false
+      matrix:
+          php: [8.1]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Php, composer, ext, xdebug
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        coverage: xdebug
+        extensions: mbstring, intl
+        php-version: "${{ matrix.php }}"
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    # - name: Cache Composer packages
+    #   id: composer-cache
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: vendor
+    #     key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-php-
+
+    - name: Install composer dependencies
+      if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: bin/install composer-nodev
+
+    ##########
+    #  TEST  #
+    ##########
+    - name: Run tests
+      # @todo use bin/run tests instead !
+      run: |
+        bin/composer install --dev
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    strategy:
+      fail-fast: false  
+    needs: run
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Deploy code
+      env: 
+        VCS_REPOSITORY: ${{ secrets.VCS_REPOSITORY }}
+        VCS_BRANCH_NAME: ${{ secrets.VCS_BRANCH_NAME }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_DIRECTORY: ${{ secrets.REMOTE_DIRECTORY }}
+        LOCAL_SSH_KEY: ~/.ssh/id_ed25519.github
+        SSH_PRIVATE_KEY_CONTENT: ${{ secrets.SSH_PRIVATE_KEY_CONTENT }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY_CONTENT" > ~/.ssh/id_ed25519.github && chmod 600 ~/.ssh/id_ed25519.github
+        ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+        sudo bin/install deployer
+        bin/run deploy

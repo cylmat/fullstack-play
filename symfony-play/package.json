@@ -1,0 +1,42 @@
+{
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "build": "encore production --progress",
+        "dev": "encore dev",
+        "serve": "encore dev-server",
+        "watch": "encore dev --watch"
+    },
+    "dependencies": {
+        "@babel/core": "^7.17",
+        "@babel/preset-env": "^7.16",
+        "@hotwired/stimulus": "^3.0",
+        "@popperjs/core": "^2.11",
+        "@symfony/stimulus-bridge": "^3.2",
+        "@symfony/webpack-encore": "^5.2",
+        "@types/jquery": "^3.5",
+        "axios": "^1.6",
+        "bootstrap": "^5.2",
+        "core-js": "^3.23",
+        "jquery": "^3.7",
+        "json5": "^2.2",
+        "loader-utils": "^2.0",
+        "lodash": "^4.17",
+        "popper.js": "^1.16",
+        "regenerator-runtime": "^0.13",
+        "semver": "^7.5",
+        "webpack": "^5.102",
+        "webpack-dev-server": "^5.2"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4",
+        "css-loader": "^6.9",
+        "eslint": "^8.56",
+        "postcss-loader": "^7.3",
+        "sass": "^1.69",
+        "sass-loader": "^16.0",
+        "style-loader": "^3.3",
+        "ts-loader": "^9.5",
+        "typescript": "^5.3"
+    }
+}
