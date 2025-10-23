@@ -1,0 +1,31 @@
+{
+    "name": "symplay/libs",
+    "description": "libs",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "aws/aws-sdk-php": "^3",
+        "easycorp/easyadmin-bundle": "^4",
+        "liip/imagine-bundle": "^2",
+        "predis/predis": "^2",
+        "snc/redis-bundle": "^4"
+    },
+    "require-dev": {
+        "behat/behat": "*",
+        "behat/mink": "*",
+        "brianium/paratest": "*",
+        "dg/bypass-finals": "*",
+        "jetbrains/phpstorm-stubs": "*",
+        "kint-php/kint": "*",
+        "nikic/php-parser": "*",
+        "pestphp/pest": "*",
+        "phpmd/phpmd": "*",
+        "phpro/grumphp": "*",
+        "phpspec/phpspec": "*",
+        "phpspec/prophecy-phpunit": "*",
+        "phpstan/phpstan": "*",
+        "phpunit/phpunit": "*",
+        "sebastian/phpcpd": "*",
+        "squizlabs/php_codesniffer": "*"
+    }
+}

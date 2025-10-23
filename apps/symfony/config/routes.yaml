@@ -1,0 +1,17 @@
+# Must be configured to avoir error: "No route found"
+
+controllers_aws:
+    resource: ../src/AwsBundle/Controller
+    type: attribute
+
+controllers_main:
+    resource: ../src/MainBundle/Controller
+    type: attribute
+
+
+homepage:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /text
+        permanent: true
