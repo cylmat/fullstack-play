@@ -31,17 +31,17 @@ services:
     # NODE #
     ########
 
-    # node:
-    #     image: node:20
-    #     container_name: nodeground
-    #     restart: always
-    #     user: 1000:1000
-    #     working_dir: /var/www/application
-    #     volumes:
-    #         - ./apps/react:/var/www/application
-    #     command: sleep infinity
-    #     ports:
-    #         - 5173:5173 # npm dev server
+    node:
+        image: node:20
+        container_name: nodeground
+        restart: always
+        user: 1000:1000
+        working_dir: /var/www/application
+        volumes:
+            - ./apps/react:/var/www/application
+        command: sleep infinity
+        ports:
+            - 5173:5173 # npm dev server
 
     ### TRAEFIK
     # @https://doc.traefik.io/traefik/getting-started/quick-start
