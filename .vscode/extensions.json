@@ -1,17 +1,19 @@
 {
 	"recommendations": [
-		// AI
-		"codeium.codeium", // OR sourcegraph.cody-ai
+
+		/////////////
+		// BACKEND //
+		/////////////
 
 		// DEV
 		"bmewburn.vscode-intelephense-client",
-		
-		// SNIPPETS
-		"dsznajder.es7-react-js-snippets",
 		"hakcorp.php-awesome-snippets",
 
-		// FRONT //
+		//////////////
+		// FRONTEND //
+		//////////////
 
+		// SNIPPETS
 		"dsznajder.es7-react-js-snippets",
 	]
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react"; //@todo move it
 import CssSample from "./components/css/CssSample";
-import Loader from "../react/components/Loader";
+import Loader from "./components/Loader";
 import Logo from "./components/logo/Logo";
 import Tabs from "./components/tab/Tabs";
 import reactLogo from "./assets/react.svg";

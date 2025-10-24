@@ -1,6 +1,6 @@
 
-# include:
-#     - .docker/compose-db.yml
+include:
+    - .docker/compose-db.yml
 
 
 services:
@@ -11,7 +11,7 @@ services:
 
     apache:
         # image: httpd:2.4
-        container_name: symplay
+        container_name: fullplay
         build:
             context: .docker
         restart: always
