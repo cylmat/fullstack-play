@@ -10,50 +10,38 @@ services:
     ##########
 
     apache:
-        # image: httpd:2.4
-        container_name: fullplay
+        container_name: symplay
         build:
-            context: .docker
+            context: .
+            dockerfile: .docker/php.Dockerfile
         restart: always
+        user: 1000:1000
         ports: 
             - 8001:80   # apache
             - 8080:8080 # npm dev server (must match weback config)
             - 8003:81   # symfony server if needed
-        
         volumes:
-            - .:/var/www/application
-            - .docker/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
-            - .docker/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
-            - .docker/server/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+            - ./apps/symfony:/var/www/application
+            - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+            - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
+            # - .docker/server/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
             # - .docker/server/apache/my-extra:/usr/local/apache2/conf/my-extra:ro
 
-    ###########
-    # PHP-FPM #
-    ###########
-    #    phpfpm: 
-        ###########
-        # "Target" can be one of :
-        # - CORE     with php:8.x-fpm empty
-        # - SIMPLE   with apt utils and network tools
-        # - EXT      with docker-php selected extensions and databases
-        # - DB_EXT   with added Pecl extensions and databases
-        # - FULL     with bench and profiling
-        #
-        # Then add specific extension in conf.d/php-custom.ini
-        ###########
-        # container_name: phpfpm
-        # build:
-        #     context: .docker
-        # restart: always
-        # environment:
-        #     APP_ENV: dev
-        # #    - MYSQL_DSN=mysql:host=mysql;port=port;dbname=mydb
-        # volumes:
-        #     - ..:/var/www/application
-        #     - ./server/phpfpm/php/php.ini:/usr/local/etc/php/php.ini:ro
-        #     - ./server/phpfpm/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
-            # - phpfpm_home_volume:/root
-        #command: bash -c "cp /tmp/Makefile /root/Makefile && docker-php-ext-install pdo_mysql && php-fpm"
+    ########
+    # NODE #
+    ########
+
+    # node:
+    #     image: node:20
+    #     container_name: nodeground
+    #     restart: always
+    #     user: 1000:1000
+    #     working_dir: /var/www/application
+    #     volumes:
+    #         - ./apps/react:/var/www/application
+    #     command: sleep infinity
+    #     ports:
+    #         - 5173:5173 # npm dev server
 
     ### TRAEFIK
     # @https://doc.traefik.io/traefik/getting-started/quick-start
