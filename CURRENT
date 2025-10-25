@@ -3,18 +3,18 @@ REACT
 -> https://www.tutorialspoint.com/reactjs/reactjs_creating_application.htm
 
 JS
-==
 - https://www.w3schools.com/js/js_es6.asp
 
 TS
-==
 - https://www.tutorialspoint.com/typescript/typescript_features.htm
 
+Symfony
+=======
+-> https://symfony.com/doc/current/security.html
 
 
-BACK
-----
-https://medium.com/@ctrlaltmonique/setting-up-an-express-typescript-server-with-vue-vite-9d415a51facc
+
+--------------------------------------------------------------------------
 
 
 ## Tutos
@@ -40,4 +40,14 @@ https://www.tutorialspoint.com/web_development_tutorials.htm
 - https://tutorialspoint.com/vuejs/index.htm
 
 
+**Symfony**
+- https://symfonycasts.com/tracks/rest
+- https://symfony.com/doc/current/doctrine.html
+- https://symfony.com/bundles/NelmioApiDocBundle/current/index.html
+- https://symfony.com/bundles/WebpackEncoreBundle/current/index.html
 
+
+
+BACK
+----
+https://medium.com/@ctrlaltmonique/setting-up-an-express-typescript-server-with-vue-vite-9d415a51facc

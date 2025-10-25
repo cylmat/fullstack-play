@@ -7,8 +7,8 @@ Up & run
 # uncomment databases if needed (for module DATA)
 docker compose up --build -d
 
-docker exec -it symplay npm run serve -d # dev mode
-docker exec -it symplay npm run build # prod
+docker exec -it symplay npm run serve    # dev mode
+docker exec -it symplay npm run build    # prod
 
 docker exec -it symplay bash
 docker compose down --remove-orphans
@@ -50,5 +50,4 @@ Db
 
 Symfony
 -------
-- https://symfony.com/doc
 - https://symfony.com/doc/current/best_practices.html

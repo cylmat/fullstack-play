@@ -11,9 +11,11 @@ services:
 
     apache:
         container_name: symplay
-        build:
-            context: .
-            dockerfile: .docker/php.Dockerfile
+        # docker build -f ".docker\Dockerfile" --pull -t fullstack-play-apache:latest ".docker" 
+        image: fullstack-play-apache:latest
+        # build:
+        #     context: .
+        #     dockerfile: .docker/php.Dockerfile
         restart: always
         user: 1000:1000
         ports: 
