@@ -21,6 +21,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y curl git vim zip
 RUN apt install -y ca-certificates
 
+# For use pkill
+RUN apt-get update && apt-get install -y procps
+
 
 ### Common and build (https://packages.debian.org) ###
 

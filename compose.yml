@@ -11,8 +11,8 @@ services:
 
     symfony:
         container_name: symfony_php
-        # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fullstack-symfony:latest ".docker"
-        image: fullstack-symfony:latest
+        # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+        image: fs-php:latest
         # build:
         #     context: .docker
         #     dockerfile: php.Dockerfile
@@ -21,11 +21,14 @@ services:
         ports: 
             - 8001:81   # symfony server
             - 8080:8080 # npm dev server (must match weback config)
+        command: sleep infinity
         volumes:
             - ./apps/symfony:/var/www/application
             # - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
             - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
             # - .docker/server/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+        profiles:
+          - symfony
 
     ########
     # NODE #
@@ -42,6 +45,8 @@ services:
         command: sleep infinity
         ports:
             - 5171:5173 # npm dev server
+        profiles:
+          - react
 
     vue:
         image: node:24
@@ -54,6 +59,8 @@ services:
         command: sleep infinity
         ports:
             - 5172:5173 # npm dev server
+        profiles:
+          - vue
 
     ### TRAEFIK
     # @https://doc.traefik.io/traefik/getting-started/quick-start
