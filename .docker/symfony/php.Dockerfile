@@ -10,7 +10,7 @@
 
 ### Debian GNU/Linux 11 (bullseye) ###
 
-FROM php:8.3-apache AS core
+FROM php:8.5 AS core
 
 
 ENV UID=1000
@@ -70,7 +70,6 @@ RUN docker-php-ext-install -j$(nproc) bcmath
 RUN docker-php-ext-install -j$(nproc) ctype 
 RUN docker-php-ext-install -j$(nproc) fileinfo 
 RUN docker-php-ext-install -j$(nproc) gettext 
-RUN docker-php-ext-install -j$(nproc) opcache 
 RUN docker-php-ext-install -j$(nproc) posix 
 RUN docker-php-ext-install -j$(nproc) session 
 RUN docker-php-ext-install -j$(nproc) xml 
@@ -80,6 +79,7 @@ RUN docker-php-ext-install -j$(nproc) zip
 # RUN docker-php-ext-install -j$(nproc) intl
 # RUN docker-php-ext-install -j$(nproc) ldap 
 # RUN docker-php-ext-configure odbc && docker-php-ext-install -j$(nproc) odbc 
+# RUN docker-php-ext-install -j$(nproc) opcache (integrated in php 8.5, no need to install)
 # RUN docker-php-ext-install -j$(nproc) pcntl 
 # RUN docker-php-ext-install -j$(nproc) phar 
 # RUN docker-php-ext-install -j$(nproc) sockets 
@@ -172,7 +172,7 @@ RUN bash -ic "nvm --version && node -v && npm -v"
 ### APACHE ###
 ##############
 
-RUN a2enmod rewrite
+# RUN a2enmod rewrite
 
 
 

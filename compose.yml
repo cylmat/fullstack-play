@@ -9,41 +9,51 @@ services:
     # APACHE #
     ##########
 
-    apache:
-        container_name: symplay
-        # docker build -f ".docker\Dockerfile" --pull -t fullstack-play-apache:latest ".docker" 
-        image: fullstack-play-apache:latest
+    symfony:
+        container_name: symfony_php
+        # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fullstack-symfony:latest ".docker"
+        image: fullstack-symfony:latest
         # build:
-        #     context: .
-        #     dockerfile: .docker/php.Dockerfile
+        #     context: .docker
+        #     dockerfile: php.Dockerfile
         restart: always
         user: 1000:1000
         ports: 
-            - 8001:80   # apache
+            - 8001:81   # symfony server
             - 8080:8080 # npm dev server (must match weback config)
-            - 8003:81   # symfony server if needed
         volumes:
             - ./apps/symfony:/var/www/application
-            - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+            # - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
             - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
             # - .docker/server/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
-            # - .docker/server/apache/my-extra:/usr/local/apache2/conf/my-extra:ro
 
     ########
     # NODE #
     ########
 
-    node:
-        image: node:20
-        container_name: nodeground
+    react:
+        image: node:24
+        container_name: react_node
         restart: always
         user: 1000:1000
         working_dir: /var/www/application
         volumes:
-            - ./apps/react:/var/www/application
+            - ./apps/vite-react:/var/www/application
         command: sleep infinity
         ports:
-            - 5173:5173 # npm dev server
+            - 5171:5173 # npm dev server
+
+    vue:
+        image: node:24
+        container_name: vue_node
+        restart: always
+        user: 1000:1000
+        working_dir: /var/www/application
+        volumes:
+            - ./apps/vite-vue:/var/www/application
+        command: sleep infinity
+        ports:
+            - 5172:5173 # npm dev server
 
     ### TRAEFIK
     # @https://doc.traefik.io/traefik/getting-started/quick-start

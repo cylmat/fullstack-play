@@ -1,0 +1,46 @@
+{
+  // https://www.typescriptlang.org/tsconfig/#jsx
+
+  "compilerOptions": {
+    "target": "ES2023",
+    "useDefineForClassFields": true,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "resolveJsonModule": true,
+  
+    // can be: react-jsxdev, preserve, react-native
+    // react-jsx: JSX changed to _jsx calls optimized for production
+    // react: .js files with JSX changed to the equivalent React.createElement calls
+
+    // need to import React in every file for JSX to work
+    // or use "jsxImportSource": "react" to import automatically
+    "jsx": "react-jsx", 
+ 
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  // vanilla js:  ["src"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+
+    // vue
+    "src/**/*.vue",
+    "vite.config.ts", 
+    "vite-env.d.ts"
+  ]
+}

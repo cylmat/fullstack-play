@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html> 
+   <head> 
+      <meta charset="UTF-8" /> 
+      <title>React Application Tutorialspoint.com</title> 
+
+      <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script> 
+      <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script> 
+      <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> 
+      
+      <script src="/scripts/jquery.min.js"></script>
+      <script src="/scripts/scripts.js"></script>
+   </head> 
+   <body> 
+      <div id="menu"></div>
+
+      <div class="container" style="text-align: center; margin-top: 5em">
+         <div id="title"></div>
+         <div id="babel"></div>
+         <div id="react-app" ></div>
+
+         <a href="https://www.tutorialspoint.com/reactjs/reactjs_architecture.htm"><em>Tutorialspoint React</em></a>
+      </div>
+      
+      <script language="javascript"> 
+         // @https://react.dev/reference/react/createElement
+         element = React.createElement('div', {}, 
+                React.createElement('div', {}, 'TutosPoint!')
+         ) 
+         ReactDOM.render(element, document.getElementById('title'))
+      </script> 
+      <script type="text/babel"> 
+         // @babel convert JSX to javascript
+         function Greet() { return <div>Hello JSX!</div> }
+         ReactDOM.render(<Greet />, document.getElementById('babel')) 
+      </script>
+
+      <script type="module" src="src/pages/tutos.tsx"></script>
+   </body> 
+</html>

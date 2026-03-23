@@ -1,29 +1,31 @@
 SHELL := /bin/bash
 
-.PHONY: up start-node sym-build start-sym stop test jest down
+.PHONY: up down react-stop sym-build sym-run
 
 up:
 	docker compose up --build -d
-	@echo "Symfony/webpack app is available at http://localhost:8001"
-	@echo "To make Symfony assets displayed, use make sym-build"
-	@echo "To run Node server, use make start-node"
-	@echo "Then node server will be available at http://localhost:5173"
+	@echo "
+		Symfony/webpack app is available at http://localhost:8001
+		To make Symfony assets displayed, use make build-sym
+		To run Node server, use make start-node
+		Then node server will be available at http://localhost:5171
+	"
+
+react-run:
+	docker exec -it react_node pkill node || true
+	docker exec -it -u 1000 react_node npm run dev
+
+react-stop:
+	docker exec -it react_node pkill node || true
+	docker exec -it -u 1000 react_node pkill webpack || true
 
 sym-build:
-	docker exec -it symplay pkill webpack || true
-	docker exec -it -u 1000 symplay npm run build
+	docker exec -it symfony_php pkill webpack || true
+	docker exec -it -u 1000 symfony_php npm run build
 
-start-node:
-	docker exec -it nodeground pkill node || true
-	docker exec -it -u 1000 nodeground npm run dev
-
-start-sym:
-	docker exec -it symplay pkill webpack || true
-	docker exec -it -u 1000 symplay npm run serve
-
-stop:
-	docker exec -it nodeground pkill node || true
-	docker exec -it symplay pkill webpack || true
+sym-run:
+	docker exec -it symfony_php pkill webpack || true
+	docker exec -it -u 1000 symfony_php npm run serve
 
 down: 
 	docker compose down
