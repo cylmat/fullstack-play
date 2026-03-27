@@ -5,7 +5,7 @@
 # Use this Dockerfile as a base template,
 # (Un)comment extensions for own application.
 #
-# docker build --pull --rm -f ".docker\Dockerfile" -t symplay:latest ".docker" 
+# docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 ##############
 
 ### Debian GNU/Linux 11 (bullseye) ###
@@ -135,6 +135,20 @@ RUN docker-php-ext-install -j$(nproc) pdo_sqlite
 
 # RUN docker-php-ext-install -j$(nproc) pdo_odbc
 # RUN echo "\yes" | pecl install mongodb
+
+
+###############
+### SYM-CLI ###
+###############
+
+# curl -sS https://get.symfony.com/cli/installer | bash
+
+RUN wget https://get.symfony.com/cli/installer -O - | bash
+RUN wget https://get.symfony.com/cli/installer -O - | bash \
+    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony \
+    && rm -rf /root/.symfony5
+
+RUN symfony completion bash | tee /etc/bash_completion.d/symfony
 
 
 
