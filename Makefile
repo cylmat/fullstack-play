@@ -23,6 +23,7 @@ react-bash:
 	docker exec -it react_node bash
 
 react-start:
+	@echo 'Should run "npm install"'
 	docker exec -it react_node pkill node || true
 	docker exec -it -u 1000 react_node npm run dev
 
@@ -45,10 +46,11 @@ sym-build:
 	docker exec -it -u 1000 symfony_php npm run build
 
 sym-start:
+	@echo 'Should run "composer install"'
 	docker exec -it -u 1000 symfony_php symfony serve --listen-ip=0.0.0.0 --port=81 -d
 	@echo "Symfony/webpack app is available at http://localhost:8001"
 	docker exec -it symfony_php pkill webpack || true
-	docker exec -it -u 1000 symfony_php npm run serve
+	docker exec -it -u 1000 symfony_php npm run watch
 
 sym-stop:
 	docker exec -it -u 1000 symfony_php symfony server:stop

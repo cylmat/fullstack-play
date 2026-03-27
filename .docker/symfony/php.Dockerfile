@@ -10,7 +10,7 @@
 
 ### Debian GNU/Linux 11 (bullseye) ###
 
-FROM php:8.5 AS core
+FROM php:8.4 AS core
 
 
 ENV UID=1000
