@@ -5,26 +5,24 @@ SHELL := /bin/bash
 help list:
 	@echo -e " \
 Available commands: \n\
-- react-up: Start React development server \n\
+- react-up:    Start React development server \n\
 - react-build: Build React assets \n\
-- react-run: Run React development server \n\
-- react-stop: Stop React development server \n\
-- sym-up: Start Symfony/webpack development server \n\
-- sym-build: Build Symfony assets \n\
-- sym-run: Run Symfony/webpack development server \n\
-- sym-stop: Run Symfony/webpack development server \n\
-- sym-down: Stop Symfony/webpack development server"
-
-push:
-	docker run -it -v .:/var/www/application fs-php bash
-	# git config --global user.email "you@example.com"
-	# git config --global user.name "Your Name"
+- react-start: Run React development server \n\
+- react-stop:  Stop React development server \n\
+- sym-up:      Start Symfony/webpack development server \n\
+- sym-build:   Build Symfony assets \n\
+- sym-start:   Run Symfony/webpack development server \n\
+- sym-stop:    Run Symfony/webpack development server \n\
+- sym-down:    Stop Symfony/webpack development server"
 
 react-up:
 	docker compose --profile react up --build -d
 	@echo "React app is available at http://localhost:5171"
 
-react-run:
+react-bash:
+	docker exec -it react_node bash
+
+react-start:
 	docker exec -it react_node pkill node || true
 	docker exec -it -u 1000 react_node npm run dev
 
@@ -39,11 +37,14 @@ sym-up:
 	docker compose --profile symfony up --build -d
 	@echo 'To make Symfony assets displayed, use "make sym-build"'
 
+sym-bash:
+	docker exec -it symfony_php bash
+
 sym-build:
 	docker exec -it symfony_php pkill webpack || true
 	docker exec -it -u 1000 symfony_php npm run build
 
-sym-run sym-serve:
+sym-start:
 	docker exec -it -u 1000 symfony_php symfony serve --listen-ip=0.0.0.0 --port=81 -d
 	@echo "Symfony/webpack app is available at http://localhost:8001"
 	docker exec -it symfony_php pkill webpack || true

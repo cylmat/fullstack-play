@@ -18,14 +18,17 @@ services:
         #     dockerfile: php.Dockerfile
         restart: always
         user: 1000:1000
-        ports: 
+        ports:
             - 8001:81   # symfony server
-            - 8080:8080 # npm dev server (must match weback config)
+            - 8082:8080 # npm dev server (must match weback config)
         command: sleep infinity
         volumes:
             - ./apps/symfony:/var/www/application
-            # - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+            - ./:/var/www/push
+	        # git config --global user.name "Your Name"
+            # git config --global user.email "you@example.com"
             - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
+            # - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
             # - .docker/server/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
         profiles:
           - symfony

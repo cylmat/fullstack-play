@@ -137,6 +137,15 @@ RUN docker-php-ext-install -j$(nproc) pdo_sqlite
 # RUN echo "\yes" | pecl install mongodb
 
 
+################
+### composer ###
+################
+
+# Composer install
+COPY ./symfony/composer.sh /tmp/composer.sh
+RUN chmod +x /tmp/composer.sh && /tmp/composer.sh
+
+
 ###############
 ### SYM-CLI ###
 ###############
