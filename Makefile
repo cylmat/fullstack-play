@@ -15,6 +15,11 @@ Available commands: \n\
 - sym-stop: Run Symfony/webpack development server \n\
 - sym-down: Stop Symfony/webpack development server"
 
+push:
+	docker run -it -v .:/var/www/application fs-php bash
+	# git config --global user.email "you@example.com"
+	# git config --global user.name "Your Name"
+
 react-up:
 	docker compose --profile react up --build -d
 	@echo "React app is available at http://localhost:5171"
