@@ -12,7 +12,7 @@ name: Symplay
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ NOT ]
 
 ###
 # Jobs
