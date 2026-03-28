@@ -5,6 +5,7 @@ SHELL := /bin/bash
 help list:
 	@echo -e " \
 Available commands: \n\
+- docker-build: Build php Docker images \n\
 - react-up:    Start React development server \n\
 - react-build: Build React assets \n\
 - react-start: Run React development server \n\
@@ -14,6 +15,9 @@ Available commands: \n\
 - sym-start:   Run Symfony/webpack development server \n\
 - sym-stop:    Run Symfony/webpack development server \n\
 - sym-down:    Stop Symfony/webpack development server"
+
+docker-build:
+	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 
 react-up:
 	docker compose --profile react up --build -d
@@ -50,7 +54,7 @@ sym-start:
 	docker exec -it -u 1000 symfony_php symfony serve --listen-ip=0.0.0.0 --port=81 -d
 	@echo "Symfony/webpack app is available at http://localhost:8001"
 	docker exec -it symfony_php pkill webpack || true
-	docker exec -it -u 1000 symfony_php npm run watch
+	docker exec -u 1000 symfony_php npm run watch
 
 sym-stop:
 	docker exec -it -u 1000 symfony_php symfony server:stop

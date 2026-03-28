@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\MainBundle\Controller\Data;
+namespace App\MainBundle\Controller;
 
 // use App\SampleBundle\Application\Common\Api\AbstractApiController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/api/randomint', name: 'randomint')]
-final class RandomApiController //extends AbstractApiController
+final class DataController //extends AbstractApiController
 {
     public function __invoke(): Response
     {

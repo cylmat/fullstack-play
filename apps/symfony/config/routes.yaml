@@ -9,9 +9,9 @@ controllers_main:
     type: attribute
 
 
-homepage:
-    path: /
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
-    defaults:
-        path: /text
-        permanent: true
+# homepage:
+#     path: /
+#     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+#     defaults:
+#         path: /text
+#         permanent: true

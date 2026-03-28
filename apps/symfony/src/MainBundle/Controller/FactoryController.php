@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MainBundle\Controller\Data;
+namespace App\MainBundle\Controller;
 
 use App\MainBundle\Contract\SerializerTrait;
 use App\MainBundle\Entity\Data\Factory;

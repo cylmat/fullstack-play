@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MainBundle\Controller\Play;
+namespace App\MainBundle\Controller;
 
 // Note: These classes may need to be created or updated
 // use App\MainBundle\Service\Play\EncryptAction;
