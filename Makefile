@@ -33,7 +33,7 @@ react-start:
 
 react-stop:
 	docker exec -it react_node pkill node || true
-	docker exec -it -u 1000 react_node pkill webpack || true
+	docker exec -it react_node pkill npm || true
 
 react-down:
 	docker compose --profile react down
@@ -62,3 +62,7 @@ sym-stop:
 
 sym-down:
 	docker compose --profile symfony down
+
+stop-all:
+	${MAKE} react-stop
+	${MAKE} sym-stop
