@@ -23,7 +23,7 @@ class TextController extends AbstractController
         $textForm->handleRequest($request);
 
 
-        return $this->render('text/index.html.twig', [
+        return $this->render('page/text.html.twig', [
             'form' => $textForm,
             'result' => 'ok',
         ]);

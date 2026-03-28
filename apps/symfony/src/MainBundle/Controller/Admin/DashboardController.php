@@ -59,7 +59,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         // yield MenuItem::linkToCrud('Log', 'fas fa-list', Log::class);
-        // yield MenuItem::linkToCrud('SqliteLog', 'fas fa-list', SqliteLog::class);
+        yield MenuItem::linkToUrl('Home', 'fas fa-list', 'http://localhost:8001');
 
         yield MenuItem::linkToUrl(
             'Log -FlushAll-',
