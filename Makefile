@@ -10,10 +10,13 @@ Available commands: \n\
 - react-build: Build React assets \n\
 - react-start: Run React development server \n\
 - react-stop:  Stop React development server \n\
+- react-test:  Test React application \n\
+- react-down:  Stop React development server \n\
 - sym-up:      Start Symfony/webpack development server \n\
 - sym-build:   Build Symfony assets \n\
 - sym-start:   Run Symfony/webpack development server \n\
 - sym-stop:    Run Symfony/webpack development server \n\
+- sym-test:    Test Symfony application \n\
 - sym-down:    Stop Symfony/webpack development server"
 
 docker-build:
@@ -59,6 +62,9 @@ sym-start:
 sym-stop:
 	docker exec -it -u 1000 symfony_php symfony server:stop
 	docker exec -it symfony_php pkill webpack || true
+
+sym-test:
+	docker exec -it symfony_php php bin/phpunit
 
 sym-down:
 	docker compose --profile symfony down

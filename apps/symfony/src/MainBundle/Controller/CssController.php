@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\MainBundle\Controller;
+
+use App\MainBundle\Contract\SerializerTrait;
+use App\MainBundle\Entity\Data\Factory;
+use App\MainBundle\Manager\Data\FactoryManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+final class CssController extends AbstractController
+{
+    use SerializerTrait;
+
+    public function __construct(
+        private readonly FactoryManager $factoryManager,
+    ) {
+    }
+
+    #[Route('/css', name: 'css')]
+    public function __invoke(): Response
+    {
+       // $response = $action->execute(new AppRequest());
+
+        // return $this->getApiResponse();
+        return $this->render('page/css.html.twig');
+    }
+
+}
