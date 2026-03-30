@@ -10,7 +10,7 @@ security:
     providers:
         users_in_memory:
             memory:
-                users: 
+                users:
                     user: { password: ~, roles: [ROLE_USER] }
                     admin: { password: ~, roles: [ROLE_USER, ROLE_ADMIN] }
 

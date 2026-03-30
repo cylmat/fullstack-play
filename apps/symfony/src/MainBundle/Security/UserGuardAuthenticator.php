@@ -24,10 +24,10 @@ class UserGuardAuthenticator extends AbstractAuthenticator
      */
     public function supports(Request $request): ?bool
     {
-        $authUser = match ($request->attributes->get('_route')) {
-            'app_admin' => 'admin',
-            default => 'user',
-        };
+        $authUser = 'user';
+        if (preg_match('/^admin/', $request->attributes->get('_route'))) {
+            $authUser = 'admin';
+        }
         $request->headers->set('X-AUTH-TOKEN', $authUser);
 
         return $request->headers->has('X-AUTH-TOKEN');

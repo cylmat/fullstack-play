@@ -2,6 +2,7 @@
 
 namespace App\MainBundle\Controller\Admin;
 
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA;
@@ -14,40 +15,42 @@ use Symfony\Component\HttpFoundation\Response;
 
 /* Used for DashboardController */
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
-class LogController extends AbstractCrudController
+// #[AdminDashboard(routePath: '/admin/log', routeName: 'admin_dash_log_index')]
+class LogController //extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Log::class;
+        return '';
+        // return Log::class;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        $actions
-            ->disable(Action::NEW)
-            ->disable(Action::EDIT)
-            ->disable(Action::DELETE)
-        ;
+    // public function configureActions(Actions $actions): Actions
+    // {
+    //     $actions
+    //         ->disable(Action::NEW)
+    //         ->disable(Action::EDIT)
+    //         ->disable(Action::DELETE)
+    //     ;
 
-        return $actions;
-    }
+    //     return $actions;
+    // }
 
     /** @SuppressWarnings(PHPMD.StaticAccess) */
-    public function flush(AdminContext $context, LogRepository $logRepository): Response
-    {
-        if (!$this->isGranted(Permission::EA_EXECUTE_ACTION, ['action' => Action::INDEX, 'entity' => null])) {
-            throw new ForbiddenActionException($context);
-        }
+    // public function flush(AdminContext $context, LogRepository $logRepository): Response
+    // {
+    //     if (!$this->isGranted(Permission::EA_EXECUTE_ACTION, ['action' => Action::INDEX, 'entity' => null])) {
+    //         throw new ForbiddenActionException($context);
+    //     }
 
-        $logRepository->flushall($context->getEntity()->getFqcn());
+    //     $logRepository->flushall($context->getEntity()->getFqcn());
 
-        return $this->redirect($context->getReferrer()
-            ?? $this->container->get(AdminUrlGenerator::class)
-                ->setAction(Action::INDEX)
-                ->unset(EA::ENTITY_ID)
-                ->generateUrl())
-        ;
-    }
+    //     return $this->redirect($context->getReferrer()
+    //         ?? $this->container->get(AdminUrlGenerator::class)
+    //             ->setAction(Action::INDEX)
+    //             ->unset(EA::ENTITY_ID)
+    //             ->generateUrl())
+    //     ;
+    // }
 
     // PREMIERE VERSION AVEC DOCTRINE CRUD ET ENTITIES !
     /*public function flush(AdminContext $context, AppDoctrine $appDoctrine): Response
