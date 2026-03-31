@@ -69,6 +69,10 @@ sym-test:
 sym-down:
 	docker compose --profile symfony down
 
-stop-all:
+all-stop:
 	${MAKE} react-stop
 	${MAKE} sym-stop
+
+all-down:
+	${MAKE} react-down
+	${MAKE} sym-down
