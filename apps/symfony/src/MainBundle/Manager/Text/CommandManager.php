@@ -5,9 +5,8 @@ namespace App\MainBundle\Manager\Text;
 use App\MainBundle\Contract\LoggerAwareInterface;
 use App\MainBundle\Contract\LoggerTrait;
 use App\MainBundle\Service\Text\CommandProcessInterface;
-use LogicException;
 
-final class CommandManager //implements LoggerAwareInterface
+final class CommandManager // implements LoggerAwareInterface
 {
     // use LoggerTrait;
 
@@ -17,15 +16,14 @@ final class CommandManager //implements LoggerAwareInterface
         // /** @var CommandProcessInterface[] $commandProcesses */
         // private readonly iterable $commandProcesses,
         // private readonly MessageBusInterface $logMessageBus, // messenger.bus.default
-    ) {
-    }
+    ) {}
 
     /** @param mixed[][] $commandsParams */
     public function processText(string $text, array $commandsParams): string
     {
         foreach ($commandsParams as $commandParams) {
-           // $cmd = $this->chooseCommand($text, $commandParams);
-            //$text = $cmd->processText($text, $commandParams);
+            // $cmd = $this->chooseCommand($text, $commandParams);
+            // $text = $cmd->processText($text, $commandParams);
         }
 
         return $text;
@@ -38,7 +36,7 @@ final class CommandManager //implements LoggerAwareInterface
             if ($process::CMD === $commandParams['cmd']) {
                 $this->logMessageBus->dispatch(
                     new LogMessage([
-                        /** @todo don't call message entity directly but use app service */
+                        // @todo don't call message entity directly but use app service
                         'channel' => self::COMMAND_LOGGER_CHANNEL,
                         'logmessage' => 'Command "'.$process::CMD.'" with "'.substr($text, 0, 3).'..." processed.',
                     ])
@@ -49,6 +47,6 @@ final class CommandManager //implements LoggerAwareInterface
             }
         }
 
-        throw new LogicException('Command "'.$commandParams['cmd'].'" not found!');
+        throw new \LogicException('Command "'.$commandParams['cmd'].'" not found!');
     }
 }

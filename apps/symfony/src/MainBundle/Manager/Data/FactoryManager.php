@@ -10,15 +10,13 @@ final class FactoryManager
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {
-    }
+    ) {}
 
     public function addFactory(Factory $factory): void
     {
         $this->entityManager->persist($factory);
         $this->entityManager->flush();
     }
-
 
     public function deleteFactory(Factory $factory): void
     {

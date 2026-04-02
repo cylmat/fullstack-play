@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Manager\Data\Redis;
 
-use App\MainBundle\Manager\Data\Redis\RandomApi;
 use App\MainBundle\Service\Data\Redis\RedisScriptsInterface;
 
 final class RandomApiManager
 {
     public function __construct(
         private readonly RedisScriptsInterface $scriptManager,
-    ) {
-    }
+    ) {}
 
     public function getData(): RandomApi
     {

@@ -13,6 +13,6 @@ final class FrontController extends AbstractController
 {
     public function __invoke(): Response
     {
-        return $this->render('page/front.html.twig', [ ]);
+        return $this->render('page/front.html.twig', []);
     }
 }

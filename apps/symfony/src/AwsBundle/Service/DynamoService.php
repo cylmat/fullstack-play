@@ -2,8 +2,8 @@
 
 namespace App\AwsBundle\Service;
 
-use Aws\Command;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\Result;
 
 /**
  * @doc
@@ -14,7 +14,6 @@ use Aws\DynamoDb\DynamoDbClient;
  *   Credentials
  *     https://us-east-1.console.aws.amazon.com/iam/home?region=eu-west-3#/users/details/<USER>?section=permissions
  *       + AmazonDynamoDBFullAccess
- *
  */
 final class DynamoService
 {
@@ -24,8 +23,7 @@ final class DynamoService
         private readonly string $iamKey,
         private readonly string $iamSecret,
         private readonly string $dynamoRegion
-    ) {
-    }
+    ) {}
 
     public function run(string $command, array $args = []): array
     {
@@ -34,14 +32,14 @@ final class DynamoService
             'credentials' => [
                 'key' => $this->iamKey,
                 'secret' => $this->iamSecret,
-            ]
+            ],
         ];
         $dynamoClient = new DynamoDbClient($args);
 
         // $api = ($dynamoClient->getApi());
         $cmd = $dynamoClient->getCommand($command, $args);
 
-        /** @var \Aws\Result $r */
+        /** @var Result $r */
         $r = $dynamoClient->execute($cmd);
 
         $results = $r->toArray();

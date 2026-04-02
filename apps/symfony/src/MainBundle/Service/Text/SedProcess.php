@@ -22,7 +22,7 @@ final class SedProcess implements CommandProcessInterface
 
         foreach ($args as $pattern => $replace) {
             $process = Process::fromShellCommandline('echo "${:TEXT}" | '.self::CMD.' -E "${:SUBSTIT}"');
-            $process->run(null, ['TEXT' => $text, 'SUBSTIT' => "s/$pattern/$replace/"]);
+            $process->run(null, ['TEXT' => $text, 'SUBSTIT' => "s/{$pattern}/{$replace}/"]);
             $text = trim($process->getOutput());
         }
 

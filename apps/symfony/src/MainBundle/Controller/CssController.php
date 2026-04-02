@@ -16,16 +16,14 @@ final class CssController extends AbstractController
 
     public function __construct(
         private readonly FactoryManager $factoryManager,
-    ) {
-    }
+    ) {}
 
     #[Route('/css', name: 'css')]
     public function __invoke(): Response
     {
-       // $response = $action->execute(new AppRequest());
+        // $response = $action->execute(new AppRequest());
 
         // return $this->getApiResponse();
         return $this->render('page/css.html.twig');
     }
-
 }

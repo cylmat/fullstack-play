@@ -8,14 +8,13 @@ use App\MainBundle\Service\Data\Redis\RedisClient;
 
 /**
  * Repository pattern for Redis operations
- * Provides abstraction layer for Redis data access
+ * Provides abstraction layer for Redis data access.
  */
 final class RedisRepository
 {
     public function __construct(
         private readonly RedisClient $redisClient,
-    ) {
-    }
+    ) {}
 
     public function find(string $key): mixed
     {
@@ -86,7 +85,7 @@ final class RedisRepository
     }
 
     /**
-     * Find all keys matching a pattern with pagination
+     * Find all keys matching a pattern with pagination.
      */
     public function findByPattern(string $pattern, int $offset = 0, int $limit = 100): array
     {
@@ -105,7 +104,7 @@ final class RedisRepository
     }
 
     /**
-     * Save multiple key-value pairs at once
+     * Save multiple key-value pairs at once.
      */
     public function saveMultiple(array $data, ?int $ttl = null): bool
     {
@@ -127,7 +126,7 @@ final class RedisRepository
     }
 
     /**
-     * Delete multiple keys at once
+     * Delete multiple keys at once.
      */
     public function deleteMultiple(array $keys): int
     {

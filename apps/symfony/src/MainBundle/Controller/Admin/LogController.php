@@ -13,10 +13,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Security\Permission;
 use Symfony\Component\HttpFoundation\Response;
 
-/* Used for DashboardController */
+// Used for DashboardController
 /** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 // #[AdminDashboard(routePath: '/admin/log', routeName: 'admin_dash_log_index')]
-class LogController //extends AbstractCrudController
+class LogController // extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -35,7 +35,7 @@ class LogController //extends AbstractCrudController
     //     return $actions;
     // }
 
-    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    // @SuppressWarnings(PHPMD.StaticAccess)
     // public function flush(AdminContext $context, LogRepository $logRepository): Response
     // {
     //     if (!$this->isGranted(Permission::EA_EXECUTE_ACTION, ['action' => Action::INDEX, 'entity' => null])) {

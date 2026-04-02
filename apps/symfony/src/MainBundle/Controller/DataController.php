@@ -19,13 +19,12 @@ final class DataController extends AbstractController
 
     public function __construct(
         private readonly FactoryManager $factoryManager,
-    ) {
-    }
+    ) {}
 
     #[Route('/api/randomint', name: 'randomint')]
     public function __invoke(): Response
     {
-       // $response = $action->execute(new AppRequest());
+        // $response = $action->execute(new AppRequest());
 
         // return $this->getApiResponse();
         return new Response('ok');
@@ -39,7 +38,6 @@ final class DataController extends AbstractController
 
     // API
 
-
     #[Route('/api/factoryAllData', methods: ['GET'])]
     public function getFactories(): JsonResponse
     {
@@ -47,7 +45,7 @@ final class DataController extends AbstractController
 
         return $this->json([
             'factories' => $data['factories'],
-            'contacts '=> $data['contacts'],
+            'contacts ' => $data['contacts'],
         ]);
     }
 

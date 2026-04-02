@@ -10,8 +10,7 @@ final class EncryptManager
     public function __construct(
         private readonly EncryptionFactory $factory,
         private readonly AppWorkflowInterface $workflow,
-    ) {
-    }
+    ) {}
 
     /** @param int[] $options */
     public function encryptValue(string $algo, string $value, array $options = []): EncryptedData

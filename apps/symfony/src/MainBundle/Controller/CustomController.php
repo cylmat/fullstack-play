@@ -9,7 +9,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CustomController extends AbstractController
 {
-
     #[Route('/custom', name: 'app_custom')]
     public function custom(Request $request): Response
     {

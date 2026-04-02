@@ -5,7 +5,7 @@ namespace App\MainBundle\Contract;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**
- * Implements a simple logger
+ * Implements a simple logger.
  */
 interface LoggerInterface extends PsrLoggerInterface
 {

@@ -15,7 +15,7 @@ final class RedisClient implements ClientInterface
 {
     private mixed $client;
 
-    /** @var object $redisClient Can be "Predis" or other Redis client */
+    /** @var object Can be "Predis" or other Redis client */
     public function __construct(?object $redisClient = null)
     {
         $this->init($redisClient);

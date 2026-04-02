@@ -13,7 +13,7 @@ final class HomeController extends AbstractController
 {
     public function __invoke(): Response
     {
-       // $response = $action->execute(new AppRequest());
+        // $response = $action->execute(new AppRequest());
 
         return $this->render('page/home.html.twig');
     }

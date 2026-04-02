@@ -11,6 +11,7 @@ trait SerializerTrait
     {
         if ($this->container->has('serializer')) {
             $serializer = $this->container->get('serializer');
+
             /** @var Serializer $serializer */
             $object = $serializer->deserialize(json_encode($data), $type, 'json', $context);
         }

@@ -12,14 +12,12 @@ use Symfony\Component\Workflow\Event\EnteredEvent;
 use Symfony\Component\Workflow\Event\TransitionEvent;
 
 /** @todo factory: don't call app entity directly, use log service */
-
 class WorkflowSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly LoggerInterface $mainLogger,
         // private readonly AppEntityManager $appManager,
-    ) {
-    }
+    ) {}
 
     /** @return string[] */
     public static function getSubscribedEvents(): array

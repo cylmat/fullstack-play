@@ -14,7 +14,6 @@ use Predis\Client;
  *   https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoDiscovery.Using.ModifyApp.PHP.html
  *   https://docs.aws.amazon.com/fr_fr/AmazonElastiCache/latest/dg/auth-iam.html
  *
- *
  *  Amazon Resource Names
  *  https://docs.aws.amazon.com/fr_fr/IAM/latest/UserGuide/reference-arns.html
  */
@@ -22,15 +21,13 @@ final class ElastiCacheService
 {
     public function __construct(
         // private readonly Client $redisClient,
-    ) {
-    }
+    ) {}
 
     public function run()
     {
 
 
-        $handler = function ($item) {
-        };
+        $handler = function ($item) {};
         $this->redisClient->set('key', 'myvalue');
 
         // $c = ElastiCacheClient::factory([
@@ -48,9 +45,9 @@ final class ElastiCacheService
         //     ]
         // ]);
 
-        /** @var Command $cmd */
+        // @var Command $cmd
         // $list = $c->getApi()['operations'];
-// dump(array_keys($list));
+        // dump(array_keys($list));
         // $cmd = $c->getCommand('CreateCacheCluster', ['CacheClusterId' => 'blop']);
 
         // handler : Aws\IdempotencyTokenMiddleware

@@ -8,8 +8,7 @@ class BcryptEncryption implements EncryptionInterface
 {
     public function __construct(
         private readonly AppWorkflowInterface $encryptWorkflow,
-    ) {
-    }
+    ) {}
 
     public function encrypt(string $value, array $options): EncryptedData
     {
