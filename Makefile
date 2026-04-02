@@ -64,7 +64,7 @@ sym-stop:
 	docker exec -it symfony_php pkill webpack || true
 
 sym-test:
-	docker exec -it symfony_php php bin/phpunit
+	docker exec -it symfony_php php bin/composer run-script test
 
 sym-down:
 	docker compose --profile symfony down
