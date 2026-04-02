@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\MainBundle\Controller;
 
 use App\MainBundle\Contract\SerializerTrait;
-use App\MainBundle\Entity\Data\Factory;
 use App\MainBundle\Manager\Data\FactoryManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class CssController extends AbstractController
 {

@@ -7,7 +7,7 @@ use Symfony\Component\Serializer\Serializer;
 
 trait SerializerTrait
 {
-    public function deserialize(array $data, string $type, array $context = []): object
+    private function deserialize(array $data, string $type, array $context = []): object
     {
         if ($this->container->has('serializer')) {
             $serializer = $this->container->get('serializer');

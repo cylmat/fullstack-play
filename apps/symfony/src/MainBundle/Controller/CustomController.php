@@ -2,12 +2,10 @@
 
 namespace App\MainBundle\Controller;
 
-use App\MainBundle\Form\Text\TextType;
-use App\MainBundle\Manager\Text\CommandManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CustomController extends AbstractController
 {
