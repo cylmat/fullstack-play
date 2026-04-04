@@ -26,8 +26,6 @@ final class ElastiCacheService
     public function run()
     {
 
-
-        $handler = function ($item) {};
         $this->redisClient->set('key', 'myvalue');
 
         // $c = ElastiCacheClient::factory([

@@ -39,10 +39,10 @@ final class DynamoService
         // $api = ($dynamoClient->getApi());
         $cmd = $dynamoClient->getCommand($command, $args);
 
-        /** @var Result $r */
-        $r = $dynamoClient->execute($cmd);
+        /** @var Result $result */
+        $result = $dynamoClient->execute($cmd);
 
-        $results = $r->toArray();
+        $results = $result->toArray();
         if (array_key_exists('@metadata', $results)) {
             unset($results['@metadata']);
         }

@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @SuppressWarnings(PHPMD.ShortVariable)
+ */
 #[ORM\Entity(repositoryClass: FactoryRepository::class)]
 class Factory
 {

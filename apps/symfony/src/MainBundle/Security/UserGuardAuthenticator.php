@@ -45,12 +45,18 @@ class UserGuardAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($apiToken));
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // on success, let the request continue
         return null;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $data = [

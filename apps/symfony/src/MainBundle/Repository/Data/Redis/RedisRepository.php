@@ -7,6 +7,8 @@ namespace App\MainBundle\Repository\Data\Redis;
 use App\MainBundle\Service\Data\Redis\RedisClient;
 
 /**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ *
  * Repository pattern for Redis operations
  * Provides abstraction layer for Redis data access.
  */
@@ -114,9 +116,9 @@ final class RedisRepository
             $serializedValue = serialize($value);
             if ($ttl) {
                 $pipeline->setex($key, $ttl, $serializedValue);
-            } else {
-                $pipeline->set($key, $serializedValue);
+                continue;
             }
+            $pipeline->set($key, $serializedValue);
         }
 
         $results = $pipeline->execute();

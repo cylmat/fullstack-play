@@ -5,6 +5,9 @@ namespace App\MainBundle\Entity\Data;
 use App\MainBundle\Repository\Data\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @SuppressWarnings(PHPMD.ShortVariable)
+ */
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 class Contact
 {

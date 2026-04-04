@@ -28,7 +28,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /** @SuppressWarnings(PHPMD.MissingImport) */
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function entered(EnteredEvent $event): void
     {
         // $event->getSubject() instanceof EncryptedData or throw new RuntimeException('Event subject must be an instance of '.EncryptedData::class);
@@ -42,7 +42,7 @@ class WorkflowSubscriber implements EventSubscriberInterface
         // $this->appManager->save($log);
     }
 
-    /** @SuppressWarnings(PHPMD.MissingImport) */
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function transition(TransitionEvent $event): void
     {
         // $event->getSubject() instanceof EncryptedData or throw new RuntimeException('Event subject must be an instance of '.EncryptedData::class);

@@ -6,8 +6,8 @@ namespace App\MainBundle\Manager\Data\Redis;
 
 final class RandomApi
 {
-    public int $random_int;
-    public int $random_script_int;
-    public string $cache_get;
-    public string $cache_dynamic;
+    public int $randomInt;
+    public int $randomScriptInt;
+    public string $cacheGet;
+    public string $cacheDynamic;
 }

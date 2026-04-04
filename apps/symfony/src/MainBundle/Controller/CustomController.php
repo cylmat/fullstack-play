@@ -3,14 +3,13 @@
 namespace App\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class CustomController extends AbstractController
 {
     #[Route('/custom', name: 'app_custom')]
-    public function custom(Request $request): Response
+    public function custom(): Response
     {
         // $cryptoForm = $this->createForm(CryptoType::class);
         // $cryptoForm->handleRequest($request);
@@ -39,6 +38,8 @@ class CustomController extends AbstractController
     }
 
     /**
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     *
      * @param mixed[][] $arguments
      *
      * @return mixed[]

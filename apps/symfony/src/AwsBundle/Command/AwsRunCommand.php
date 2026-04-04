@@ -35,19 +35,19 @@ class AwsRunCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyle = new SymfonyStyle($input, $output);
         // $arg1 = $input->getArgument('arg1');
         $this->awsManager->run();
 
         // if ($arg1) {
-        //     $io->note(sprintf('You passed an argument: %s', $arg1));
+        //     $symfonyStyle->note(sprintf('You passed an argument: %s', $arg1));
         // }
 
         // if ($input->getOption('option1')) {
         //     // ...
         // }
 
-        $io->success('AWS success');
+        $symfonyStyle->success('AWS success');
 
         return Command::SUCCESS;
     }

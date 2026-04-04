@@ -18,18 +18,27 @@ final class CommandManager // implements LoggerAwareInterface
         // private readonly MessageBusInterface $logMessageBus, // messenger.bus.default
     ) {}
 
-    /** @param mixed[][] $commandsParams */
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
+     * @param mixed[][] $commandsParams
+     */
     public function processText(string $text, array $commandsParams): string
     {
-        foreach ($commandsParams as $commandParams) {
-            // $cmd = $this->chooseCommand($text, $commandParams);
-            // $text = $cmd->processText($text, $commandParams);
-        }
+        // foreach ($commandsParams as $commandParams) {
+        //     $cmd = $this->chooseCommand($text, $commandParams);
+        //     $text = $cmd->processText($text, $commandParams);
+        // }
 
         return $text;
     }
 
-    /** @param string[] $commandParams */
+    /**
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     * @SuppressWarnings(PHPMD.MissingImport)
+     *
+     * @param string[] $commandParams
+     */
     private function chooseCommand(string $text, array &$commandParams): CommandProcessInterface
     {
         foreach ($this->commandProcesses as $process) {
