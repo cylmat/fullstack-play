@@ -11,6 +11,11 @@
 ## Credential
 - https://us-east-1.console.aws.amazon.com/iam/home?nc2=h_m_sc&region=us-east-1#/security_credentials
 
+## Download AWS.Phar
+
+https://docs.aws.amazon.com/fr_fr/sdk-for-php/v3/developer-guide/getting-started_installation.html
+
+## Services
 
 Free
 - https://aws.amazon.com/fr/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=tier%23always-free&awsf.Free%20Tier%20Categories=*all
