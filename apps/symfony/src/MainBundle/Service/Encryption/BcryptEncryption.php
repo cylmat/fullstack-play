@@ -3,11 +3,12 @@
 namespace App\MainBundle\Service\Encryption;
 
 use App\MainBundle\Model\Play\EncryptedData;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 class BcryptEncryption implements EncryptionInterface
 {
     public function __construct(
-        private readonly AppWorkflowInterface $encryptWorkflow,
+        private readonly WorkflowInterface $encryptWorkflow,
     ) {}
 
     public function encrypt(string $value, array $options): EncryptedData

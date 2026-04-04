@@ -4,12 +4,13 @@ namespace App\MainBundle\Manager\Play;
 
 use App\MainBundle\Model\Play\EncryptedData;
 use App\MainBundle\Service\Encryption\EncryptionFactory;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 final class EncryptManager
 {
     public function __construct(
         private readonly EncryptionFactory $factory,
-        private readonly AppWorkflowInterface $workflow,
+        private readonly WorkflowInterface $workflow,
     ) {}
 
     /** @param int[] $options */

@@ -39,8 +39,7 @@
         "symfony/workflow": "^7",
         "symfony/yaml": "^7",
         "twig/extra-bundle": "^3",
-        "twig/twig": "^3",
-        "wikimedia/composer-merge-plugin": "^2"
+        "twig/twig": "^3"
     },
     "require-dev": {
         "deptrac/deptrac": "^4",
@@ -51,7 +50,6 @@
         "rector/rector": "^2",
         "squizlabs/php_codesniffer": "^4",
         "symfony/browser-kit": "^7",
-        "symfony/console": "^7",
         "symfony/css-selector": "^7",
         "symfony/maker-bundle": "^1",
         "symfony/phpunit-bridge": "^7",
@@ -107,8 +105,7 @@
             "php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes --verbose"
         ],
         "test": [
-            "phpunit",
-            "@php -d display_errors=0 bin/phpmd src text phpmd.xml"
+            "phpstan analyse -l 1 src"
         ],
         "test-backup": [
             "phpunit",

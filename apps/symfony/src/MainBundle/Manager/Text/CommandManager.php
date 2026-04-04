@@ -39,23 +39,23 @@ final class CommandManager // implements LoggerAwareInterface
      *
      * @param string[] $commandParams
      */
-    private function chooseCommand(string $text, array &$commandParams): CommandProcessInterface
-    {
-        foreach ($this->commandProcesses as $process) {
-            if ($process::CMD === $commandParams['cmd']) {
-                $this->logMessageBus->dispatch(
-                    new LogMessage([
-                        // @todo don't call message entity directly but use app service
-                        'channel' => self::COMMAND_LOGGER_CHANNEL,
-                        'logmessage' => 'Command "'.$process::CMD.'" with "'.substr($text, 0, 3).'..." processed.',
-                    ])
-                );
-                unset($commandParams['cmd']);
-
-                return $process;
-            }
-        }
-
-        throw new \LogicException('Command "'.$commandParams['cmd'].'" not found!');
-    }
+    // private function chooseCommand(string $text, array &$commandParams): CommandProcessInterface
+    // {
+    //     foreach ($this->commandProcesses as $process) {
+    //         if ($process::CMD === $commandParams['cmd']) {
+    //             $this->logMessageBus->dispatch(
+    //                 new LogMessage([
+    //                     // @todo don't call message entity directly but use app service
+    //                     'channel' => self::COMMAND_LOGGER_CHANNEL,
+    //                     'logmessage' => 'Command "'.$process::CMD.'" with "'.substr($text, 0, 3).'..." processed.',
+    //                 ])
+    //             );
+    //             unset($commandParams['cmd']);
+    //
+    //             return $process;
+    //         }
+    //     }
+    //
+    //     throw new \LogicException('Command "'.$commandParams['cmd'].'" not found!');
+    // }
 }

@@ -25,8 +25,7 @@ final class ElastiCacheService
 
     public function run()
     {
-
-        $this->redisClient->set('key', 'myvalue');
+        // $this->redisClient->set('key', 'myvalue');
 
         // $c = ElastiCacheClient::factory([
         //     // 'key' => '<aws access key>',

@@ -9,19 +9,21 @@ trait SerializerTrait
 {
     private function deserialize(array $data, string $type, array $context = []): object
     {
-        if ($this->container->has('serializer')) {
-            $serializer = $this->container->get('serializer');
-
-            /** @var Serializer $serializer */
-            $object = $serializer->deserialize(json_encode($data), $type, 'json', $context);
+        if (!$this->container->has('serializer')) {
+            throw new \RuntimeException('Serializer service not available.');
         }
 
-        return $object;
+        /** @var Serializer $serializer */
+        $serializer = $this->container->get('serializer');
+
+        return $serializer->deserialize(json_encode($data), $type, 'json', $context);
     }
 
     private function createJsonResponse(mixed $data, int $status = JsonResponse::HTTP_OK, array $context = [], array $headers = []): JsonResponse
     {
-        $json = $this->serializer->serialize($data, 'json', $context);
+        /** @var Serializer $serializer */
+        $serializer = $this->container->get('serializer');
+        $json = $serializer->serialize($data, 'json', $context);
 
         return new JsonResponse($json, $status, $headers, true);
     }

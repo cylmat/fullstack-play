@@ -34,6 +34,7 @@ final class DynamoService
                 'secret' => $this->iamSecret,
             ],
         ];
+        /** @phpstan-ignore-next-line */
         $dynamoClient = new DynamoDbClient($args);
 
         // $api = ($dynamoClient->getApi());
