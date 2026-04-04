@@ -24,6 +24,7 @@ final class FactoryManager
         $this->entityManager->flush();
     }
 
+    /** @return array<string, mixed> */
     public function getAllData(): array
     {
         return [

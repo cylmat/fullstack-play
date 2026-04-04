@@ -4,6 +4,7 @@ namespace App\AwsBundle\Controller;
 
 use App\AwsBundle\Manager\AwsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class AwsController extends AbstractController
@@ -13,7 +14,7 @@ class AwsController extends AbstractController
     ) {}
 
     #[Route('/aws')]
-    public function run()
+    public function run(): Response
     {
         $data = $this->awsManager->run();
 

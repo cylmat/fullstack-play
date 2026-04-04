@@ -12,6 +12,7 @@ final class AwsManager
         private readonly DynamoService $dynamoService
     ) {}
 
+    /** @return array<string, mixed> */
     public function run(): array
     {
         $results = [];

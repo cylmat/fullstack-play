@@ -10,8 +10,6 @@ final class CommandManager // implements LoggerAwareInterface
 {
     // use LoggerTrait;
 
-    private const COMMAND_LOGGER_CHANNEL = 'command';
-
     public function __construct(
         // /** @var CommandProcessInterface[] $commandProcesses */
         // private readonly iterable $commandProcesses,

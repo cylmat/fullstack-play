@@ -21,6 +21,7 @@ class Factory
     #[ORM\Column(length: 50)]
     private string $name;
 
+    /** @var Collection<int, Contact> */
     #[ORM\OneToMany(
         targetEntity: Contact::class,
         mappedBy: 'factory',

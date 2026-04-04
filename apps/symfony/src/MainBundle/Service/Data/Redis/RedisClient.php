@@ -6,19 +6,39 @@ namespace App\MainBundle\Service\Data\Redis;
 
 use App\MainBundle\Service\Data\ClientInterface;
 use App\MainBundle\Service\Data\ClientNull;
-use Predis\Client;
 
 // Doc.
 
-/** @see https://github.com/predis/predis/wiki */
+/**
+ * @see https://github.com/predis/predis/wiki
+ *
+ * @method mixed  get(string $key)
+ * @method bool   set(string $key, string $value)
+ * @method bool   setex(string $key, int $ttl, string $value)
+ * @method int    del(string ...$keys)
+ * @method int    exists(string $key)
+ * @method int    incrby(string $key, int $value)
+ * @method int    decrby(string $key, int $value)
+ * @method bool   expire(string $key, int $seconds)
+ * @method int    ttl(string $key)
+ * @method bool   flushall()
+ * @method array<string> keys(string $pattern)
+ * @method mixed  pipeline()
+ * @method mixed  eval(string $script, int $numkeys, mixed ...$args)
+ */
 final class RedisClient implements ClientInterface
 {
-    private mixed $client;
+    private ClientInterface $client;
 
-    /** @var object Can be "Predis" or other Redis client */
-    public function __construct(?object $redisClient = null)
+    /** @param ClientInterface|null $redisClient Can be "Predis" or other Redis client */
+    public function __construct(?ClientInterface $redisClient = null)
     {
         $this->init($redisClient);
+    }
+
+    public function connect(): mixed
+    {
+        return $this->client->connect();
     }
 
     public function __call(string $name, mixed $arguments): mixed
@@ -26,7 +46,7 @@ final class RedisClient implements ClientInterface
         return $this->client->{$name}(...$arguments);
     }
 
-    private function init(?object $redisClient): void
+    private function init(?ClientInterface $redisClient): void
     {
         try {
             $this->client = $redisClient ?: new ClientNull();

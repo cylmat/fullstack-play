@@ -23,7 +23,7 @@ final class ElastiCacheService
         // private readonly Client $redisClient,
     ) {}
 
-    public function run()
+    public function run(): void
     {
         // $this->redisClient->set('key', 'myvalue');
 

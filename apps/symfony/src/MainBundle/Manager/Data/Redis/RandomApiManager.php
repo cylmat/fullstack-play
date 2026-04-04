@@ -15,8 +15,8 @@ final class RandomApiManager
     public function getData(): RandomApi
     {
         $randomApi = new RandomApi();
-        $randomApi->random_int = \random_int(1, 99);
-        $randomApi->random_script_int = $this->scriptManager->getRandomInt();
+        $randomApi->randomInt = \random_int(1, 99);
+        $randomApi->randomScriptInt = $this->scriptManager->getRandomInt();
 
         return $randomApi;
     }

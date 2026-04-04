@@ -25,6 +25,7 @@ final class RedisRepository
         return $data ? unserialize($data) : null;
     }
 
+    /** @return array<string, mixed> */
     public function findAll(string $pattern = '*'): array
     {
         $keys = $this->redisClient->keys($pattern);
@@ -88,6 +89,8 @@ final class RedisRepository
 
     /**
      * Find all keys matching a pattern with pagination.
+     *
+     * @return array<string, mixed>
      */
     public function findByPattern(string $pattern, int $offset = 0, int $limit = 100): array
     {
@@ -107,6 +110,8 @@ final class RedisRepository
 
     /**
      * Save multiple key-value pairs at once.
+     *
+     * @param array<string, mixed> $data
      */
     public function saveMultiple(array $data, ?int $ttl = null): bool
     {
@@ -129,6 +134,8 @@ final class RedisRepository
 
     /**
      * Delete multiple keys at once.
+     *
+     * @param array<string> $keys
      */
     public function deleteMultiple(array $keys): int
     {

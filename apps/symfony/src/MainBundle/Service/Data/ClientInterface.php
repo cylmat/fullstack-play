@@ -4,4 +4,7 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Service\Data;
 
-interface ClientInterface {}
+interface ClientInterface
+{
+    public function connect(): mixed;
+}

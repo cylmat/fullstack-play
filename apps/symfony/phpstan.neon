@@ -1,0 +1,22 @@
+# - 0 — basic checks (unknown classes, unknown functions)
+# - 1–4 — progressively stricter type checks
+# - 5–7 — return types, iterable types, dead code
+# - 8 — mixed type strictness
+# - 9 — strict mixed propagation
+# - 10 — maximum strictness (treats all mixed as errors)
+
+
+parameters:
+    ignoreErrors:
+        # PHPMD annotations use dot notation (e.g. PHPMD.RuleName) which PHPStan cannot parse
+        - '#PHPDoc tag @SuppressWarnings has invalid value#'
+        # AWS SDK is an optional dependency not installed in this environment
+        - '#Aws\\#'
+        # Symfony MicroKernelTrait calls configureContainer() via framework internals
+        - '#App\\Kernel::configureContainer\(\) is unused#'
+        # LoggerTrait is kept for future use; not yet wired up
+        - '#Trait App\\MainBundle\\Contract\\LoggerTrait is used zero times#'
+        # Doctrine hydrates $id via reflection — PHPStan cannot see the assignment
+        - '#Property .+::\$id .+ is never assigned#'
+        # Injected dependency whose usage is commented out pending feature work
+        - '#WorkflowSubscriber::\$mainLogger is never read#'

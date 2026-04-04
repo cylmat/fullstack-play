@@ -25,6 +25,11 @@ final class DynamoService
         private readonly string $dynamoRegion
     ) {}
 
+    /**
+     * @param array<mixed> $args
+     *
+     * @return array<string, mixed>
+     */
     public function run(string $command, array $args = []): array
     {
         $args = [

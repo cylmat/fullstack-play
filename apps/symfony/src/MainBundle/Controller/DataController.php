@@ -52,6 +52,7 @@ final class DataController extends AbstractController
     #[Route('/api/factory', methods: ['POST'])]
     public function postFactory(Request $request): JsonResponse
     {
+        /** @var Factory $factory */
         $factory = $this->deserialize(
             $request->request->all(),
             Factory::class

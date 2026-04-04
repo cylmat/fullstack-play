@@ -36,19 +36,4 @@ class CustomController extends AbstractController
             'result' => 'res',
         ]);
     }
-
-    /**
-     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
-     *
-     * @param mixed[][] $arguments
-     *
-     * @return mixed[]
-     */
-    private function commandArguments(string $command, array $arguments): array
-    {
-        return [
-            'cmd' => $command,
-            'arguments' => $arguments,
-        ];
-    }
 }
