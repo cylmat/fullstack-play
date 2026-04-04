@@ -107,12 +107,11 @@
         "test": [
             "phpunit",
             "php -d display_errors=0 bin/phpmd src text phpmd.xml",
+            "rector",
             "phpstan analyse -l 6 src"
         ],
-        "test-backup": [
-            "phpunit",
-            "php -d display_errors=0 bin/phpmd src text phpmd.xml",
-            "phpstan analyse -l 6 src"
+        "to_test": [
+            "deptrac"
         ]
     },
     "conflict": {
