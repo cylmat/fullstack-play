@@ -17,6 +17,8 @@ final class DataController extends AbstractController
 {
     use SerializerTrait;
 
+    /////////////// @todo APCU cache
+
     public function __construct(
         private readonly FactoryManager $factoryManager,
     ) {}
