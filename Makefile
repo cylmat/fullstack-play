@@ -7,17 +7,20 @@ help list:
 Available commands: \n\
 - docker-build: Build php Docker images \n\
 - react-up:    Start React development server \n\
-- react-build: Build React assets \n\
+- react-bash:  Open a bash shell in the React container \n\
 - react-start: Run React development server \n\
 - react-stop:  Stop React development server \n\
-- react-test:  Test React application \n\
 - react-down:  Stop React development server \n\
 - sym-up:      Start Symfony/webpack development server \n\
+- sym-bash:    Open a bash shell in the Symfony container \n\
 - sym-build:   Build Symfony assets \n\
 - sym-start:   Run Symfony/webpack development server \n\
-- sym-stop:    Run Symfony/webpack development server \n\
+- sym-stop:    Stop Symfony/webpack development server \n\
 - sym-test:    Test Symfony application \n\
-- sym-down:    Stop Symfony/webpack development server"
+- sym-down:    Stop Symfony/webpack development server \n\
+- all-stop:    Stop all development servers \n\
+- all-down:    Stop all development servers \n\
+"
 
 docker-build:
 	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
@@ -64,7 +67,7 @@ sym-stop:
 	docker exec -it symfony_php pkill webpack || true
 
 sym-test:
-	docker exec -it symfony_php php bin/composer run-script test
+	docker exec -it symfony_php  composer run-script test
 
 sym-down:
 	docker compose --profile symfony down

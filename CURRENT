@@ -1,54 +1,25 @@
-REACT
-=====
--> https://www.tutorialspoint.com/reactjs/reactjs_creating_application.htm
+## FRONT
 
-JS
-- https://www.w3schools.com/js/js_es6.asp
+- React
+https://www.tutorialspoint.com/reactjs/reactjs_creating_application.htm
 
-TS
-- https://www.tutorialspoint.com/typescript/typescript_features.htm
+- JS
+https://www.w3schools.com/js/js_es6.asp
 
-Symfony
-=======
--> https://symfony.com/doc/current/security.html
+- TS
+https://www.tutorialspoint.com/typescript/typescript_features.htm
 
 
+## BACK
 
---------------------------------------------------------------------------
+- Symfony
+https://symfony.com/doc/current/security.html
 
-
-## Tutos
-
-https://www.tutorialspoint.com/web_development_tutorials.htm
-
-**Js**
-- https://w3schools.com/js/default.asp
-- https://www.tutorialspoint.com/es6/index.htm
-- https://www.tutorialspoint.com/javascript/index.htm
-- https://www.javascripttutorial.net/es6
-
-**Ts**
-- https://w3schools.com/typescript/index.php
-- https://www.tutorialspoint.com/typescript/index.htm
-- https://www.typescripttutorial.net
-
-**React**
-- https://w3schools.com/react/default.asp
-- https://tutorialspoint.com/reactjs/index.htm
-- https://grafikart.fr/formations/react
-
-**Vue**
-- https://tutorialspoint.com/vuejs/index.htm
+- PHP
+https://www.php.net/manual/en/migration80.php
 
 
-**Symfony**
-- https://symfonycasts.com/tracks/rest
-- https://symfony.com/doc/current/doctrine.html
-- https://symfony.com/bundles/NelmioApiDocBundle/current/index.html
-- https://symfony.com/bundles/WebpackEncoreBundle/current/index.html
+## OTHER
 
-
-
-BACK
-----
-https://medium.com/@ctrlaltmonique/setting-up-an-express-typescript-server-with-vue-vite-9d415a51facc
+- Design Patterns
+https://refactoring.guru/design-patterns

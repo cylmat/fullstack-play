@@ -15,7 +15,6 @@
     "preview": "vite preview",
     "test": "jest",
     "tscbuild": "tsc -b && vite build",
-
     "build-micro": "microbundle --no-compress --css-modules false --format modern,cjs ",
     "dev-micro": "microbundle watch --no-compress --css-modules false --format modern,cjs"
   },
@@ -37,8 +36,7 @@
     "sort-by": "^1.2",
     "styled-components": "^6.1",
     "ts-node": "^10.9",
-    "tslib": "^2.6",
-    "vue": "^3.5"
+    "tslib": "^2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.28",
@@ -55,7 +53,6 @@
     "@types/react-dom": "^18.3",
     "@types/react-query": "^1.2",
     "@vitejs/plugin-react": "^4.3",
-    "@vitejs/plugin-vue": "^5.1",
     "babel-jest": "^30.1",
     "eslint": "^9.9",
     "eslint-plugin-react-hooks": "^5.1",
@@ -66,7 +63,6 @@
     "jest-environment-jsdom": "^30.1",
     "typescript": "^5.5",
     "typescript-eslint": "^8.0",
-    "vite": "^5.4",
-    "vue-tsc": "^2.0"
+    "vite": "^5.4"
   }
 }
