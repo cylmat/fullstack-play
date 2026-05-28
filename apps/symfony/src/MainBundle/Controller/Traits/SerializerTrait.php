@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MainBundle\Contract;
+namespace App\MainBundle\Controller\Traits;
 
 use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;

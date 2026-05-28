@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Controller;
 
-use App\MainBundle\Contract\SerializerTrait;
+use App\MainBundle\Controller\Traits\SerializerTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

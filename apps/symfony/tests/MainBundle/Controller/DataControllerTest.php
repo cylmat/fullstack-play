@@ -21,6 +21,6 @@ final class DataControllerTest extends WebTestCase
 
         $responseData = $this->getSuccessfulResponseJsonData();
 
-        $this->assertArrayHasKey('randomScriptInt', $responseData);
+        $this->assertArrayHasKey('randomScriptInt', $responseData['redis'] ?? []);
     }
 }

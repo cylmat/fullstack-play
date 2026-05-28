@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Controller;
 
-use App\MainBundle\Contract\SerializerTrait;
+use App\MainBundle\Controller\Traits\ControllerTrait;
+use App\MainBundle\Controller\Traits\SerializerTrait;
 use App\MainBundle\Manager\Data\RedisManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class DataController extends AbstractController
 {
     use SerializerTrait;
+    use ControllerTrait;
 
     /////////////// @todo APCU cache
 
@@ -30,10 +32,6 @@ final class DataController extends AbstractController
             'redis' => $redis,
         ];
 
-        if ($request->isXmlHttpRequest()) {
-            return $this->json($redis);
-        }
-
-        return $this->render('page/data.html.twig', $parameters);
+        return $this->renderJsonOrResponse('page/data.html.twig', $parameters, $request);
     }
 }
