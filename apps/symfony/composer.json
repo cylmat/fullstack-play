@@ -14,6 +14,7 @@
         "doctrine/orm": "^3",
         "easycorp/easyadmin-bundle": "^5",
         "nelmio/cors-bundle": "^2",
+        "predis/predis": "^3",
         "snc/redis-bundle": "^4",
         "symfony/apache-pack": "^1",
         "symfony/asset": "^7",

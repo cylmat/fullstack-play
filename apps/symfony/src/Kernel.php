@@ -20,11 +20,19 @@ class Kernel extends BaseKernel
         $container->import($configDir.'/{packages}/*.{php,yaml}');
         $container->import($configDir.'/{packages}/'.$this->environment.'/*.{php,yaml}');
 
+        // ADDED FOR DATABASE //
+        $container->import($configDir.'/{databases}/*.{php,yaml}');
+        $container->import($configDir.'/{databases}/'.$this->environment.'/*.{php,yaml}');
+
         if (is_file($configDir.'/services.yaml')) {
             $container->import($configDir.'/services.yaml');
             $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
         } else {
             $container->import($configDir.'/{services}.php');
+        }
+
+        if (is_file($configDir.'/services_db.yaml')) {
+            $container->import($configDir.'/services_db.yaml');
         }
     }
 

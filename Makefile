@@ -51,6 +51,9 @@ sym-up:
 sym-bash:
 	docker exec -it symfony_php bash
 
+sym-bash-root:
+	docker exec -it -u root symfony_php bash
+
 sym-build:
 	docker exec -it symfony_php pkill webpack || true
 	docker exec -it -u 1000 symfony_php npm run build

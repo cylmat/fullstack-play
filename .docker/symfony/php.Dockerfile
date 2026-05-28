@@ -34,11 +34,11 @@ RUN apt install -y \
     wget
 
 RUN apt install -y apt-utils
-RUN apt install -y autoconf 
-RUN apt install -y gcc 
-RUN apt install -y libc6-dev 
-RUN apt install -y make 
-RUN apt install -y pkg-config 
+RUN apt install -y autoconf
+RUN apt install -y gcc
+RUN apt install -y libc6-dev
+RUN apt install -y make
+RUN apt install -y pkg-config
 
 
 
@@ -52,7 +52,7 @@ RUN apt install -y pkg-config
 # Already installed extensions "php -m" :
 # ctype curl date dom fileinfo filter ftp hash iconv json libxml mbstring mysqlnd openssl pcre pdo pdo_sqlite Phar
 # posix readline Reflection session SimpleXML sodium spl sqlite3 standard tokenizer xml xmlreader xmlwriter zlib
-# 
+#
 # Available extensions with "docker-php-ext-install" :
 # bcmath bz2 calendar ctype curl dba dl_test dom enchant exif ffi fileinfo filter ftp gd gettext gmp hash iconv
 # imap intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci pdo_odbc
@@ -60,7 +60,7 @@ RUN apt install -y pkg-config
 # spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader xmlwriter xsl zend_test zip
 #
 # Extensions installed with docker-php-ext automatically created
-# /usr/local/etc/php/conf.d/docker-php-ext-***.ini 
+# /usr/local/etc/php/conf.d/docker-php-ext-***.ini
 ##################
 
 # @see https://www.php.net/manual/en/refs.basic.other.php
@@ -69,27 +69,28 @@ RUN apt install -y \
     libxslt1-dev \
     libzip-dev
 
-RUN docker-php-ext-install -j$(nproc) bcmath 
-RUN docker-php-ext-install -j$(nproc) ctype 
-RUN docker-php-ext-install -j$(nproc) fileinfo 
-RUN docker-php-ext-install -j$(nproc) gettext 
-RUN docker-php-ext-install -j$(nproc) posix 
-RUN docker-php-ext-install -j$(nproc) session 
-RUN docker-php-ext-install -j$(nproc) xml 
-RUN docker-php-ext-install -j$(nproc) xsl 
+RUN docker-php-ext-install -j$(nproc) bcmath
+RUN docker-php-ext-install -j$(nproc) ctype
+RUN docker-php-ext-install -j$(nproc) fileinfo
+RUN docker-php-ext-install -j$(nproc) gettext
+RUN docker-php-ext-install -j$(nproc) posix
+RUN docker-php-ext-install -j$(nproc) session
+RUN docker-php-ext-install -j$(nproc) xml
+RUN docker-php-ext-install -j$(nproc) xsl
 RUN docker-php-ext-install -j$(nproc) zip
 
 # RUN docker-php-ext-install -j$(nproc) intl
-# RUN docker-php-ext-install -j$(nproc) ldap 
-# RUN docker-php-ext-configure odbc && docker-php-ext-install -j$(nproc) odbc 
+# RUN docker-php-ext-install -j$(nproc) ldap
+# RUN docker-php-ext-configure odbc && docker-php-ext-install -j$(nproc) odbc
 # RUN docker-php-ext-install -j$(nproc) opcache (integrated in php 8.5, no need to install)
-# RUN docker-php-ext-install -j$(nproc) pcntl 
-# RUN docker-php-ext-install -j$(nproc) phar 
-# RUN docker-php-ext-install -j$(nproc) sockets 
-# RUN docker-php-ext-install -j$(nproc) sodium 
-# RUN docker-php-ext-install -j$(nproc) spl 
-# RUN docker-php-ext-configure standard && docker-php-ext-install -j$(nproc) standard 
-# RUN docker-php-ext-install -j$(nproc) tokenizer 
+# RUN docker-php-ext-install -j$(nproc) pcntl
+# RUN docker-php-ext-install -j$(nproc) phar
+# RUN docker-php-ext-install -j$(nproc) soap
+# RUN docker-php-ext-install -j$(nproc) spl
+# RUN docker-php-ext-install -j$(nproc) sodium
+# RUN docker-php-ext-install -j$(nproc) sockets
+# RUN docker-php-ext-configure standard && docker-php-ext-install -j$(nproc) standard
+# RUN docker-php-ext-install -j$(nproc) tokenizer
 
 #bz2 #gd #hash
 
@@ -111,10 +112,12 @@ RUN echo "\n" | pecl install ds
 RUN echo "\n" | pecl install psr
 
 # RUN echo "\n" | pecl install mcrypt
+# RUN echo "\n" | pecl install phalcon
 # RUN echo "\n" | pecl install oauth
 
+
 #crypto #env #http_message #imagick #imap #ingres #lua #v8js
-    
+
 
 
 
@@ -132,8 +135,9 @@ RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
 RUN docker-php-ext-install -j$(nproc) pdo_pgsql
 RUN docker-php-ext-install -j$(nproc) pdo_sqlite
-
 # RUN docker-php-ext-install -j$(nproc) pdo_odbc
+
+RUN yes '' | pecl install redis
 # RUN echo "\yes" | pecl install mongodb
 
 

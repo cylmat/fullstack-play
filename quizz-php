@@ -1,0 +1,160 @@
+https://github.com/cylmat/docs/blob/main/quizz/php-symfony.md
+
+
+1. Différence entre service et contrôleur :
+→ Un contrôleur gère les requêtes HTTP ; un service contient la logique réutilisable injectée dans les contrôleurs.
+
+2. Injection de dépendance :
+→ C’est le fait de fournir les dépendances d’une classe via le conteneur de services de Symfony.
+
+3. services.yaml :
+→ Définit les services et leur configuration (autowiring, visibilité, arguments…).
+
+4. @Route vs YAML/PHP :
+→ @Route est défini dans le code via annotations/attributs, YAML/PHP via fichiers de config. Même effet, syntaxe différente.
+
+5. cache:clear :
+→ Vide et reconstruit le cache de Symfony (config, routes, conteneur…).
+
+6. paramConverter vs service manuel :
+→ ParamConverter charge automatiquement les entités à partir des paramètres de route, un service le ferait manuellement.
+
+7. Doctrine / EntityManager :
+→ Doctrine est l’ORM de Symfony ; EntityManager gère les entités (persist, flush, remove…).
+
+8. persist() vs flush() :
+→ persist() prépare l’objet à être enregistré, flush() exécute les requêtes SQL.
+
+9. Entité vs DTO :
+→ L’entité représente une table BD ; le DTO sert à transférer des données sans logique métier.
+
+10. EventSubscriber :
+→ Écoute des événements du kernel ou Doctrine pour exécuter du code automatiquement (ex : logger, audit).
+
+🔐 Sécurité & API
+
+11. security.yaml :
+→ Configure l’authentification, les rôles, les firewalls et les règles d’accès.
+
+12. Firewall vs Access Control :
+→ Le firewall gère la sécurité de la requête (authentification) ; l’access control gère les autorisations.
+
+13. Auth JWT :
+→ Authentifie via un token signé transmis dans les headers sans session.
+
+14. Validator :
+→ Valide les données d’entités ou formulaires selon des contraintes (ex : NotBlank, Email).
+
+15. Middleware global (EventListener) :
+→ Listener sur kernel.request ou kernel.response pour intercepter toutes les requêtes/réponses.
+
+16. JsonResponse vs Response :
+→ JsonResponse renvoie du JSON (API), Response renvoie du HTML ou texte classique.
+
+17. Erreurs 404/403 :
+→ Gérer via ErrorController, templates error404.html.twig, ou événements ExceptionListener.
+
+18. Pagination API :
+→ Utiliser PaginatorInterface, Pagerfanta ou KnpPaginatorBundle, éviter de charger tout en mémoire.
+
+19. Environnements (.env) :
+→ .env global, .env.local pour machine locale, .env.prod pour la prod.
+
+20. Migration :
+→ php bin/console make:migration puis php bin/console doctrine:migrations:migrate.
+
+🧠 PHP / Concepts généraux
+
+21. Hashage vs cryptage :
+→ Hashage = irréversible (password_hash()), cryptage = réversible (clé).
+utoload et l’environne
+22. PUT vs POST :
+→ PUT remplace une ressource, POST crée une nouvelle ressource.
+
+23. REST vs GraphQL :
+→ REST = endpoints multiples ; GraphQL = une seule requête flexible avec schéma.
+
+24. Token JWT :
+→ JSON Web Token signé contenant les infos utilisateur (header + payload + signature).
+
+25. BDD relationnelle vs NoSQL :
+→ Relationnelle = tables et relations fixes ; NoSQL = documents ou clés/valeurs, plus flexible.
+
+26. ACID :
+→ Atomicité, Cohérence, Isolation, Durabilité : garanties des transactions.
+
+27. ORM / Doctrine :
+→ ORM = mapping objets ↔ tables ; Doctrine gère cela automatiquement.
+
+28. Command Handler (CQRS) :
+→ Sépare les commandes (actions) de la logique de lecture (requêtes).
+
+29. Service Container vs Service Locator :
+→ Container = injection automatique ; Locator = récupération manuelle d’un service.
+
+30. Trait PHP :
+→ Bloc de code réutilisable ; à éviter pour la logique métier complexe (favoriser services).
+
+🧩 Symfony – Avancé
+
+31. Bundle vs Package :
+→ Bundle = module intégré à Symfony ; Package = dépendance PHP installée via Composer.
+
+32. Kernel :
+→ Point d’entrée de l’application ; initialise les bundles, services et traite les requêtes.
+
+33. Controller Resolver :
+→ Trouve et exécute le bon contrôleur pour une requête donnée.
+
+34. Cycle de vie requête :
+→ HTTP Request → Router → Controller → Response → HTTP Response.
+
+35. Service public vs privé :
+→ Public = accessible partout ; Privé = uniquement injecté via autowiring.
+
+36. Surcharger config bundle :
+→ Placer la config personnalisée dans config/packages/nom_du_bundle.yaml.
+
+37. .env / .env.local / .env.test / .env.prod :
+→ Environnements distincts selon contexte (dev, test, prod).
+
+38. bootstrap.php :
+→ Initialise l’autoload et prépare l’environnement avant le Kernel.
+
+39. Multi-EntityManager :
+→ Déclarer plusieurs connexions Doctrine dans doctrine.yaml.
+
+40. Paramètre global :
+→ Déclaré dans services.yaml sous parameters: et injecté via le conteneur.
+
+🗄️ Doctrine & Sécurité avancée
+
+41. Relation ManyToMany :
+→ Définie via annotations @ManyToMany ; souvent gérée par une table de jointure.
+
+42. EAGER vs LAZY :
+→ EAGER = charge tout de suite ; LAZY = charge à la demande.
+
+43. Optimisation Doctrine :
+→ Utiliser join fetch, indexation, cache, pagination, éviter les N+1.
+
+44. Lifecycle Callback :
+→ Méthodes exécutées automatiquement à certains moments (ex : @PrePersist).
+
+45. Requête DQL / QueryBuilder :
+→ Permet des requêtes personnalisées en orienté objet (createQueryBuilder()).
+
+46. Voter vs Access Control :
+→ Voter = logique fine d’autorisation ; Access Control = règle globale dans security.yaml.
+
+47. Custom Authenticator :
+→ Classe qui gère manuellement la logique d’authentification (ex : JWT, API Key).
+
+48. UserProvider vs Authenticator :
+→ UserProvider charge l’utilisateur ; Authenticator gère le processus de login.
+
+49. Protection CSRF :
+→ Token unique ajouté aux formulaires pour éviter les attaques intersites.
+
+50. Session fixation :
+→ Régénérer l’ID de session après login avec migrate() pour éviter le vol de session.

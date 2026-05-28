@@ -1,13 +1,15 @@
 
 include:
-    - .docker/compose-db.yml
+    # - .docker/compose-db.yml
+    # - .docker/compose-kv.yml
 
 
 services:
 
-    ##########
-    # APACHE #
-    ##########
+    #######
+    # PHP #
+    # docker run -it php:latest bash
+    #######
 
     symfony:
         container_name: symfony_php
