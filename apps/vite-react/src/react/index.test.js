@@ -5,10 +5,15 @@ import Index from './Index.tsx';
 
 describe('Index', () => {
   test('Render component', () => {
-    render(<Index />);
+    render(<Index />)
     // Check for initial button text
-    expect(screen.getByRole('button')).toHaveTextContent('count is 0');
-  });
+
+    expect(
+      screen
+        .getByRole('button'))
+        .toHaveTextContent('count is 0'
+    )
+  })
 
   // test('increments count when button is clicked', () => {
   //   render(<Index />);

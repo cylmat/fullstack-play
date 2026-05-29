@@ -5,25 +5,38 @@ SHELL := /bin/bash
 help list:
 	@echo -e " \
 Available commands: \n\
+- all-stop:     Stop all development servers \n\
+- all-down:     Stop all development servers \n\
 - docker-build: Build php Docker images \n\
-- react-up:    Start React development server \n\
-- react-bash:  Open a bash shell in the React container \n\
-- react-start: Run React development server \n\
-- react-stop:  Stop React development server \n\
-- react-down:  Stop React development server \n\
-- sym-up:      Start Symfony/webpack development server \n\
-- sym-bash:    Open a bash shell in the Symfony container \n\
-- sym-build:   Build Symfony assets \n\
-- sym-start:   Run Symfony/webpack development server \n\
-- sym-stop:    Stop Symfony/webpack development server \n\
-- sym-test:    Test Symfony application \n\
-- sym-down:    Stop Symfony/webpack development server \n\
-- all-stop:    Stop all development servers \n\
-- all-down:    Stop all development servers \n\
+- react-up:     Start React development server \n\
+- react-bash:   Open a bash shell in the React container \n\
+- react-start:  Run React development server \n\
+- react-stop:   Stop React development server \n\
+- react-test:   Test React application \n\
+- react-down:   Stop React development server \n\
+- sym-up:       Start Symfony/webpack development server \n\
+- sym-bash:     Open a bash shell in the Symfony container \n\
+- sym-build:    Build Symfony assets \n\
+- sym-start:    Run Symfony/webpack development server \n\
+- sym-stop:     Stop Symfony/webpack development server \n\
+- sym-test:     Test Symfony application \n\
+- sym-down:     Stop Symfony/webpack development server \n\
 "
+
+# COMMON #
+
+all-stop:
+	${MAKE} react-stop
+	${MAKE} sym-stop
+
+all-down:
+	${MAKE} react-down
+	${MAKE} sym-down
 
 docker-build:
 	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+
+# REACT #
 
 react-up:
 	docker compose --profile react up --build -d
@@ -41,8 +54,13 @@ react-stop:
 	docker exec -it react_node pkill node || true
 	docker exec -it react_node pkill npm || true
 
+react-test:
+	docker exec -it react_node npm run test
+
 react-down:
 	docker compose --profile react down
+
+# SYMFONY #
 
 sym-up:
 	docker compose --profile symfony up --build -d
@@ -74,11 +92,3 @@ sym-test:
 
 sym-down:
 	docker compose --profile symfony down
-
-all-stop:
-	${MAKE} react-stop
-	${MAKE} sym-stop
-
-all-down:
-	${MAKE} react-down
-	${MAKE} sym-down

@@ -10,7 +10,7 @@ import './index.css'
 
 
 function Index() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   const display_logo = () => {
       return <div>
@@ -40,7 +40,7 @@ function Index() {
       </div>
 
       React ⚛️ + Vite ⚡ + Replit 🌀
-      
+
       { /*Tabs*/ }
       <Tabs />
       <Loader />
