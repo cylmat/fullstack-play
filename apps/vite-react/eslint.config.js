@@ -4,6 +4,15 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
+/**
+ * @doc
+ *
+ * v9.9
+ * @https://eslint.org/docs/v9.x/use/configure/configuration-files
+ *
+ * @https://eslint.org/docs/latest/use/configure
+ */
+
 export default tseslint.config(
   { ignores: ['dist'] },
   {
