@@ -1,18 +1,20 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Index from './Index.tsx';
+import Index from '../react/Index.tsx';
 
 
-describe('Index', () => {
+describe('React', () => {
+
   test('Render component', () => {
     render(<Index />)
-    // Check for initial button text
+  })
 
-    expect(
-      screen
-        .getByRole('button'))
-        .toHaveTextContent('count is 0'
-    )
+  test('Content component', () => {
+    render(<Index />)
+
+    expect(screen.getByRole('button')).toHaveTextContent('count is 0')
+
+    expect(screen.getByText(/^Loader data/)).toHaveTextContent(/Loader data: \d+/)
   })
 
   // test('increments count when button is clicked', () => {
@@ -24,7 +26,7 @@ describe('Index', () => {
 
   // test('renders logos and other components', () => {
   //   // render(<Index />);
-    
+
   //   // Look for images by alt text
   //   // expect(screen.getByAltText('Vite logo')).toBeInTheDocument();
   //   // expect(screen.getByAltText('React logo')).toBeInTheDocument();
@@ -33,4 +35,5 @@ describe('Index', () => {
   //   // You may need to use text, roles, or test ids depending on their implementation
   //   // expect(screen.getByText(/React ⚛️ \+ Vite ⚡ \+ Replit 🌀/)).toBeInTheDocument();
   // });
-});
+})
+
