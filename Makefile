@@ -7,6 +7,7 @@ help list:
 Available commands: \n\
 - all-stop:     Stop all development servers \n\
 - all-down:     Stop all development servers \n\
+- all-test:     Test all applications \n\
 - docker-build: Build php Docker images \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
@@ -34,6 +35,10 @@ all-stop:
 all-down:
 	${MAKE} react-down
 	${MAKE} sym-down
+
+all-test:
+	${MAKE} react-test
+	${MAKE} sym-test
 
 docker-build:
 	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
