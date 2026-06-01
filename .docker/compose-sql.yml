@@ -2,7 +2,12 @@
 # volumes:
 #     mysql:
 
-# services:
+networks:
+    default:
+        name: fs-network
+        driver: bridge
+
+services:
 
     ################
     ### DATABASE ###

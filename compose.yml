@@ -1,8 +1,8 @@
 
-include:
-    # - .docker/compose-db.yml
-    # - .docker/compose-kv.yml
-
+networks:
+    default:
+        name: fs-network
+        driver: bridge
 
 services:
 

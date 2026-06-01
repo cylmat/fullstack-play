@@ -8,6 +8,8 @@ Available commands: \n\
 - all-stop:     Stop all development servers \n\
 - all-down:     Stop all development servers \n\
 - docker-build: Build php Docker images \n\
+- db-up:        Start database servers \n\
+- db-down:      Stop database servers \n\
 - react-up:     Start React development server \n\
 - react-bash:   Open a bash shell in the React container \n\
 - react-start:  Run React development server \n\
@@ -35,6 +37,14 @@ all-down:
 
 docker-build:
 	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+
+# DB #
+
+db-up:
+	docker compose -f "compose-db.yml" --profile db up --build -d
+
+db-down:
+	docker compose -f "compose-db.yml" --profile db down
 
 # REACT #
 
