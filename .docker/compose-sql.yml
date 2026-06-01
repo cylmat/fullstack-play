@@ -15,24 +15,33 @@ services:
 
     ### MYSQL ###
 
-    # mysql:
-    #     image: mysql:5.7
-    #     restart: always
-    #     environment:
-    #         MYSQL_ROOT_PASSWORD: root
-    #         MYSQL_USER: user
-    #         MYSQL_PASSWORD: pass
-    #         MYSQL_DATABASE: mydb
-    #         MYSQL_TCP_PORT: 3306 # Mandatory 3306 for Adminer
-    #     volumes:
-    #         - ./data/mysql/my.cnf:/etc/mysql/my.cnf:ro
-    #         - ./data/mysql/conf.d/my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf:ro
-    #         - mysql:/var/lib/mysql
+    # https://hub.docker.com/_/mysql
+    mysql:
+        image: mysql:9
+        container_name: fs-mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: mydb
+            MYSQL_TCP_PORT: 3306 # Mandatory 3306 for Adminer
+        # volumes:
+            # - ./data/mysql/my.cnf:/etc/mysql/my.cnf:ro
+            # - ./data/mysql/conf.d/my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf:ro
+            # - mysql:/var/lib/mysql
+        ports: [8801:3306]
+        profiles:
+          - db
 
-    # adminer:
-    #     image: adminer:4-standalone
-    #     restart: always
-    #     ports: [8081:8080]
+    # https://hub.docker.com/_/adminer
+    adminer:
+        image: adminer:5-standalone
+        container_name: fs-adminer
+        restart: always
+        ports: [8881:8080]
+        profiles:
+          - db
 
     # phpmyadmin:
     #     image: phpmyadmin:5.0
@@ -43,5 +52,4 @@ services:
     #         - PMA_ARBITRARY=1
     #     external_links:
     #         - mysql:mysql
-    #     networks:
-    #         - sym
+

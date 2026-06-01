@@ -12,7 +12,7 @@ services:
     #######
 
     symfony:
-        container_name: symfony_php
+        container_name: fs-symfony-php
         # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
         image: fs-php:latest
         # build:
@@ -41,7 +41,7 @@ services:
 
     react:
         image: node:24
-        container_name: react_node
+        container_name: fs-react-node
         restart: always
         user: 1000:1000
         working_dir: /var/www/application
@@ -55,7 +55,7 @@ services:
 
     vue:
         image: node:24
-        container_name: vue_node
+        container_name: fs-vue-node
         restart: always
         user: 1000:1000
         working_dir: /var/www/application

@@ -15,12 +15,25 @@ services:
 
     ### REDIS ###
 
+    # https://hub.docker.com/_/redis
     redis:
         image: redis:8
-        container_name: redis
+        container_name: fs-redis
         restart: always
-        ports: [63791:6379]
+        ports: [8802:6379]
         # volumes:
         #     - ./data/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+        profiles:
+          - db
+
+    # ADMIN #
+
+    # https://hub.docker.com/r/redislabs/redisinsight
+    # docker run -d --name redisinsight -p 5540:5540 redis/redisinsight:latest
+    redisinsight:
+        image: redislabs/redisinsight:latest
+        container_name: fs-redisinsight
+        restart: always
+        ports: [8882:5540]
         profiles:
           - db

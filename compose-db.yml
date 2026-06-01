@@ -1,6 +1,6 @@
 
 include:
-    # - .docker/compose-db.yml
     - .docker/compose-kv.yml
+    - .docker/compose-sql.yml
 
 
