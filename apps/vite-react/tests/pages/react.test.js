@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Index from '../react/Index.tsx';
+import Index from '../../src/react/Index.tsx';
 
 
 describe('React', () => {

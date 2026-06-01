@@ -5,11 +5,11 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/shared-options.html
 
 export default defineConfig({
-  // root: 'src',              // Vite will look for index.html 
-  // publicDir: 'public',   // Static assets served 
+  // root: 'src',              // Vite will look for index.html
+  // publicDir: 'public',   // Static assets served
 
   plugins: [react({
-    include: "**/*.tsx",
+    include: ["**/*.jsx", "**/*.tsx"],
   })],
   server: {
     host: '0.0.0.0',

@@ -1,12 +1,11 @@
 import React from "react"
 import Basics from "./basics"
-import Generics from "./types"
+import Generics from "./generics"
 
 function TsIndex() {
     return (
         <div>
             <h3>Ts</h3>
-            <p>This is the TsIndex component.</p>
             <Basics /><br/><br/>
             <Generics />
         </div>

@@ -42,5 +42,5 @@
     "src/**/*.vue",
     "vite.config.ts", 
     "vite-env.d.ts"
-  ]
+, "src/pages/js.jsx", "src/vanilla/index.jsx"  ]
 }

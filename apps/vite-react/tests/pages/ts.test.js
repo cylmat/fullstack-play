@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import TsIndex from '../typescript/index.tsx';
+import TsIndex from '../../src/typescript/index.tsx';
 
 
 describe('Ts', () => {
@@ -12,7 +12,10 @@ describe('Ts', () => {
   test('Content component', () => {
     render(<TsIndex />)
 
-    expect(screen.getByText(/^basics /)).toHaveTextContent(/basics wip/)
+    expect(screen.getByText(/^Basics/))
+    expect(screen.getByText(/^Generics/))
+
+    expect(screen.getByText(/^interface/)).toHaveTextContent(/interface IPerson = .*/)
   })
 
 })

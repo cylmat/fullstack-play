@@ -1,5 +1,4 @@
 
-
 ## Tutos
 
 https://www.tutorialspoint.com/web_development_tutorials.htm
@@ -14,11 +13,23 @@ https://www.tutorialspoint.com/web_development_tutorials.htm
 - https://w3schools.com/typescript/index.php
 - https://www.tutorialspoint.com/typescript/index.htm
 - https://www.typescripttutorial.net
+- https://www.typescriptlang.org/docs
 
 **React**
+- https://react.dev/reference/react
+- https://react.dev/reference/react-dom
+- https://react-redux.js.org
+*
 - https://w3schools.com/react/default.asp
 - https://tutorialspoint.com/reactjs/index.htm
 - https://grafikart.fr/formations/react
+
+@todo
+- https://react.dev/reference/react/cache
+- https://react.dev/reference/react/lazy
+- https://react.dev/reference/react/Suspense
+- https://react.dev/reference/react-dom/createPortal
+* https://nextjs.org
 
 **Vue**
 - https://tutorialspoint.com/vuejs/index.htm
