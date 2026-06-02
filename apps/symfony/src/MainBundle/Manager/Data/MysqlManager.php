@@ -21,22 +21,18 @@ final class MysqlManager
     /** @return mixed[] */
     public function getData(): array
     {
-        $createTable = <<<R
-            CREATE TABLE IF NOT EXISTS `my_table6` (
-                `id` INT NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        R;
-        $this->runQuery( $createTable);
+        $query = file_get_contents(__DIR__.'/Mysql.sql');
+        $this->runQuery($query);
 
         return [
-            'create_table' => $this->runQuery('SELECT * FROM my_table6'),
+            'table6' => $this->runQuery('SELECT * FROM my_table6'),
+            'black_hole' => $this->runQuery('SELECT * FROM my_black_hole'),
         ];
     }
 
-    private function runQuery(string $sql): Result
+    /** @return mixed[] */
+    private function runQuery(string $sql): array
     {
-        return $this->entityManager->getConnection()->executeQuery($sql);
+        return $this->entityManager->getConnection()->executeQuery($sql)->fetchAllAssociative();
     }
 }

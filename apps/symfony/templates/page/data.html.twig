@@ -8,7 +8,7 @@
 
 {% block header %}
     <div class="d-flex justify-content-center">
-        <h2 class="pb-4">Data</h2> 
+        <h2 class="pb-4">Data</h2>
     </div>
 {% endblock %}
 
@@ -17,14 +17,13 @@
 {% block content %}
 
     <section id="data" class="text-center justify-content-center">
-   
-        <div class="row">
 
+        <div class="row">
             <div class="col">
                 <fieldset id="factory" class="border border-2">
                     <legend>Factories</legend>
                     <div>
-                        <div id="factoriesList">Loading...</div>
+                        {# <div id="factoriesList">Loading...</div> #}
                         <form>
                             <div class="form-group">
                                 <label for="factoryName">Factory name</label>
@@ -36,21 +35,32 @@
 
                 </fieldset>
             </div>
-
-            <div class="col">
-                <fieldset class="border border-2">
-                    qsd
-                </fieldset>
-            </div>
-
-            <div class="col">
-                <fieldset class="border border-2">
-                    qsd
-                </fieldset>
-            </div>
-    
         </div>
-    
+
+        <div class="row">
+            <div class="col">
+                <fieldset id="mysql" class="border border-2">
+                    <legend>MySQL</legend>
+                    <div>
+                        {# <div id="mysqlData">Loading...</div> #}
+                        {% for key_data_type, my_data_type in mysql %}
+                            ---
+                            {{ key_data_type }}:
+                            {% for k_data, my_data in my_data_type %}
+                                {# {{ k_data }}: {{ my_data }} #}
+
+                                {% for k_item, my_data_item in my_data %}
+                                    [{{ k_item }}]: {{ my_data_item }}
+                                {% endfor %}
+                            {% endfor %}
+                            <br/>
+                        {% endfor %}
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+
     </section>
 
 {% endblock %}
