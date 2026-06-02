@@ -6,6 +6,7 @@ namespace App\MainBundle\Controller;
 
 use App\MainBundle\Controller\Traits\ControllerTrait;
 use App\MainBundle\Controller\Traits\SerializerTrait;
+use App\MainBundle\Manager\Data\MysqlManager;
 use App\MainBundle\Manager\Data\RedisManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,15 +21,18 @@ final class DataController extends AbstractController
     /////////////// @todo APCU cache
 
     public function __construct(
+        private readonly MysqlManager $mysqlManager,
         private readonly RedisManager $redisManager,
     ) {}
 
     #[Route('/data')]
     public function index(Request $request): Response
     {
+        $mysql = $this->mysqlManager->getData();
         $redis = $this->redisManager->getData();
 
         $parameters = [
+            'mysql' => $mysql,
             'redis' => $redis,
         ];
 

@@ -2,14 +2,20 @@ doctrine_migrations:
     migrations_paths:
         # namespace is arbitrary but should be different from App\Migrations
         # as migrations classes should NOT be autoloaded
-        'AppBundleMigrations': '%kernel.project_dir%/migrations'
+        'MainBundleMigrations': '%kernel.project_dir%/migrations'
+
     enable_profiler: false
 
+    ####### ERROR #######
+    # The error In MissingDependency.php  The schema provider is not available
+    # Append on php bin/console doctrine:migrations:diff
+    # When using "connection": default instead on "em": default
+
     # Connection to use for the migrations
-    connection: default
+    # connection: default
 
     # Entity manager to use for migrations. This overrides the "connection" setting.
-    # em: default
+    em: default
 
     # Possible values: "BY_YEAR", "BY_YEAR_AND_MONTH", false
     organize_migrations: false

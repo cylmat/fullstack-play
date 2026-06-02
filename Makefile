@@ -82,28 +82,32 @@ sym-up:
 	@echo 'To make Symfony assets displayed, use "make sym-build"'
 
 sym-bash:
-	docker exec -it symfony_php bash
+	docker exec -it fs-symfony-php bash
 
 sym-bash-root:
-	docker exec -it -u root symfony_php bash
+	docker exec -it -u root fs-symfony-php bash
 
 sym-build:
-	docker exec -it symfony_php pkill webpack || true
-	docker exec -it -u 1000 symfony_php npm run build
+	docker exec -it fs-symfony-php pkill webpack || true
+	docker exec -it -u 1000 fs-symfony-php npm run build
 
 sym-start:
 	@echo 'Should run "composer install"'
-	docker exec -it -u 1000 symfony_php symfony serve --listen-ip=0.0.0.0 --port=81 -d
+	docker exec -it -u 1000 fs-symfony-php symfony serve --listen-ip=0.0.0.0 --port=81 -d
+	${MAKE}	sym-fixtures
 	@echo "Symfony/webpack app is available at http://localhost:8001"
-	docker exec -it symfony_php pkill webpack || true
-	docker exec -u 1000 symfony_php npm run watch
+	docker exec -it fs-symfony-php pkill webpack || true
+	docker exec -u 1000 fs-symfony-php npm run watch
+
+sym-fixtures:
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:fixtures:load -n
 
 sym-stop:
-	docker exec -it -u 1000 symfony_php symfony server:stop
-	docker exec -it symfony_php pkill webpack || true
+	docker exec -it -u 1000 fs-symfony-php symfony server:stop
+	docker exec -it fs-symfony-php pkill webpack || true
 
 sym-test:
-	docker exec -it symfony_php  composer run-script test
+	docker exec -it fs-symfony-php  composer run-script test
 
 sym-down:
 	docker compose --profile symfony down

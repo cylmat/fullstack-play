@@ -17,7 +17,7 @@ services:
 
     # https://hub.docker.com/_/mysql
     mysql:
-        image: mysql:9
+        image: mysql:9.7
         container_name: fs-mysql
         restart: always
         environment:
@@ -26,7 +26,8 @@ services:
             MYSQL_PASSWORD: pass
             MYSQL_DATABASE: mydb
             MYSQL_TCP_PORT: 3306 # Mandatory 3306 for Adminer
-        # volumes:
+        volumes:
+            - ./init/mysql/:/docker-entrypoint-initdb.d/:ro
             # - ./data/mysql/my.cnf:/etc/mysql/my.cnf:ro
             # - ./data/mysql/conf.d/my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf:ro
             # - mysql:/var/lib/mysql

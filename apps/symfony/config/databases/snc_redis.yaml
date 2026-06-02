@@ -9,7 +9,7 @@ when@dev:
             default:
                 #alias: local
                 type: predis
-                dsn: "redis://redis:6379/0"
+                dsn: "%env(REDIS_DSN)%/0"
                 logging: '%kernel.debug%'
 
 when@test:
@@ -17,7 +17,7 @@ when@test:
         clients:
             default:
                 type: predis
-                dsn: "redis://redis:6379/1"
+                dsn: "%env(REDIS_DSN)%/1"
 
             #  # @snc_redis.elasticache
             # elasticache:
