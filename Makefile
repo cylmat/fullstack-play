@@ -94,10 +94,16 @@ sym-build:
 sym-start:
 	@echo 'Should run "composer install"'
 	docker exec -it -u 1000 fs-symfony-php symfony serve --listen-ip=0.0.0.0 --port=81 -d
+	${MAKE}	sym-migrate
 	${MAKE}	sym-fixtures
 	@echo "Symfony/webpack app is available at http://localhost:8001"
 	docker exec -it fs-symfony-php pkill webpack || true
 	docker exec -u 1000 fs-symfony-php npm run watch
+
+sym-migrate:
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:drop -f --if-exists
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:create
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:migrations:migrate -n
 
 sym-fixtures:
 	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:fixtures:load -n
