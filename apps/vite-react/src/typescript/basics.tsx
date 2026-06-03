@@ -14,22 +14,39 @@ function Basics(): JSX.Element {
   let first_name: string = 'John'
   let isReady: boolean = true
   const UNIQUE_KEY: symbol = Symbol('r') // symbol is a primitive data type to create unique values
-  let empty: null = null
-  let undef: undefined
-  let person: object = {name: "Bob"}
+  let person: object = { name: "Bob" }
   function logg(): void { }
   let numbers: number[] = [1, 2, 3]
   let tuple: [string, number] = ["hello", 10] //  express an array with a fixed number of elements
   enum Color {Red, Green, Blue}
 
-  // Union
-  const union: (number | string)[] = [5, 10, "TypeScript"];
+  // Union and others
+
+  let empty: null = null
+  let undef: undefined
+  let nevermind: () => never = () => { throw new Error("Never!") } // represents the type of values that never occur
+  const union: (number | string)[] = [5, 10, "TypeScript"]
+
+  // Custom
+
+  type literaltype = "hello" | "world" // literal types can only have one of the specified values
+  let literalValue: literaltype = "hello"
+  type specificOneCustomType = string | number
+  type aliasName = specificOneCustomType
+  let aliasValue: aliasName = 42
+
 
   console.log(age, first_name, isReady, UNIQUE_KEY, empty, undef, person, logg, numbers, tuple, Color)
-  console.log(union)
+  console.log(union, nevermind, literalValue, aliasValue)
 
-  function getNumber(num: number): number {
-    return num + age
+  function getNumber(
+    num: number,
+    optional?: number,
+    defaultValue: number = 1,
+    ...rest: number[]
+  ): number {
+    console.log(rest)
+    return num + age + defaultValue + (optional || 0)
   }
 
   enum Direction {
