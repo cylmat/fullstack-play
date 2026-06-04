@@ -58,19 +58,19 @@ react-up:
 	@echo "React app is available at http://localhost:5171"
 
 react-bash:
-	docker exec -it react_node bash
+	docker exec -it fs-react-node bash
 
 react-start:
 	@echo 'Should run "npm install"'
-	docker exec -it react_node pkill node || true
-	docker exec -it -u 1000 react_node npm run dev
+	docker exec -it fs-react-node pkill node || true
+	docker exec -it -u 1000 fs-react-node npm run dev
 
 react-stop:
-	docker exec -it react_node pkill node || true
-	docker exec -it react_node pkill npm || true
+	docker exec -it fs-react-node pkill node || true
+	docker exec -it fs-react-node pkill npm || true
 
 react-test:
-	docker exec -it react_node npm run test
+	docker exec -it fs-react-node npm run test
 
 react-down:
 	docker compose --profile react down
