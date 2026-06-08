@@ -1,4 +1,5 @@
 /*! p5.js v2.0.5 September 1, 2025 */
+/** https://p5js.org/ */
 var p5 = (function () {
   'use strict';
 
