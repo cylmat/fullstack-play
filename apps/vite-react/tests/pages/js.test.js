@@ -1,19 +1,25 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import JsIndex from '../../src/vanilla/index.jsx';
 
+import {screen} from '@testing-library/dom';
+import { loadHtml } from '../../public/scripts/vanilla';
+
+// This is pure JS, no frameworks
+
+function loadFakeBody () {
+  document.body.innerHTML = `
+    <div id="js_text"></div>
+  `;
+}
 
 describe('Js', () => {
 
-  test('Render component', () => {
-    render(<JsIndex />)
-  })
+  test('Content js', () => {
 
-  test('Content component', () => {
-    render(<JsIndex />)
+    loadFakeBody()
+    loadHtml()
 
-    expect(screen.getByText(/^Vanilla/))
+    expect(screen.getByText(/^my Vanilla/)).toBeInTheDocument()
+
+    // screen.debug()
   })
 
 })
-

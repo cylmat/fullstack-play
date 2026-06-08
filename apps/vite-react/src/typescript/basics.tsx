@@ -35,9 +35,12 @@ function Basics(): JSX.Element {
   type aliasName = specificOneCustomType
   let aliasValue: aliasName = 42
 
-
-  console.log(age, first_name, isReady, UNIQUE_KEY, empty, undef, person, logg, numbers, tuple, Color)
-  console.log(union, nevermind, literalValue, aliasValue)
+let USE = {
+  age, first_name, isReady, UNIQUE_KEY, empty, undef, person, logg, numbers, tuple, Color,
+  union, nevermind, literalValue, aliasValue
+}
+  // console.log(age, first_name, isReady, UNIQUE_KEY, empty, undef, person, logg, numbers, tuple, Color)
+  // console.log(union, nevermind, literalValue, aliasValue)
 
   function getNumber(
     num: number,
@@ -45,7 +48,8 @@ function Basics(): JSX.Element {
     defaultValue: number = 1,
     ...rest: number[]
   ): number {
-    console.log(rest)
+    // console.log(rest)
+    let USE = { ...rest }
     return num + age + defaultValue + (optional || 0)
   }
 
