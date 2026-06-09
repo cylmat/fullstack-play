@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>CSS Display Demo</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Layout: 5 columns side-by-side */
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+/* Common box style */
+.box {
+  border: 2px solid #333;
+  padding: 10px;
+  min-height: 200px;
+}
+
+/* Labels */
+.title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* ========== 1. BLOCK ========== */
+.block-demo div {
+  display: block;
+  background: #ffdddd;
+  margin: 5px 0;
+}
+
+/* ========== 2. INLINE ========== */
+.inline-demo span {
+  display: inline;
+  background: #ddffdd;
+}
+
+/* ========== 3. INLINE-BLOCK ========== */
+.inline-block-demo span {
+  display: inline-block;
+  background: #ddddff;
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  text-align: center;
+}
+
+/* ========== 4. FLEX ========== */
+.flex-demo {
+  display: flex;
+  gap: 5px;
+  background: #fff3cd;
+  flex-wrap: wrap;
+}
+
+.flex-demo div {
+  background: #f0ad4e;
+  padding: 5px;
+}
+
+/* ========== 5. GRID ========== */
+.grid-demo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  background: #d9edf7;
+}
+
+.grid-demo div {
+  background: #5bc0de;
+  padding: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- BLOCK -->
+  <div class="box block-demo">
+    <div class="title">BLOCK</div>
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+  </div>
+
+  <!-- INLINE -->
+  <div class="box inline-demo">
+    <div class="title">INLINE</div>
+    <span>A</span>
+    <span>B</span>
+    <span>C</span>
+    <span>D</span>
+  </div>
+
+  <!-- INLINE-BLOCK -->
+  <div class="box inline-block-demo">
+    <div class="title">INLINE-BLOCK</div>
+    <span>A</span>
+    <span>B</span>
+    <span>C</span>
+    <span>D</span>
+  </div>
+
+  <!-- FLEX -->
+  <div class="box flex-demo">
+    <div class="title">FLEX</div>
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+    <div>D</div>
+  </div>
+
+  <!-- GRID -->
+  <div class="box grid-demo">
+    <div class="title">GRID</div>
+    <div>A</div>
+    <div>B</div>
+    <div>C</div>
+    <div>D</div>
+  </div>
+
+</div>
+
+</body>
+</html>

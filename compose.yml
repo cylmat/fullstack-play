@@ -42,6 +42,20 @@ services:
     # NODE #
     ########
 
+    vanilla:
+        image: node:24
+        container_name: fs-vanilla-node
+        restart: always
+        user: 1000:1000
+        working_dir: /var/www/application
+        volumes:
+            - ./apps/vite-vanilla:/var/www/application
+        command: sleep infinity
+        ports:
+            - 5171:5173 # npm dev server
+        profiles:
+          - vanilla
+
     react:
         image: node:24
         container_name: fs-react-node
@@ -52,7 +66,7 @@ services:
             - ./apps/vite-react:/var/www/application
         command: sleep infinity
         ports:
-            - 5171:5173 # npm dev server
+            - 5172:5173 # npm dev server
         profiles:
           - react
 
@@ -66,7 +80,7 @@ services:
             - ./apps/vite-vue:/var/www/application
         command: sleep infinity
         ports:
-            - 5172:5173 # npm dev server
+            - 5173:5173 # npm dev server
         profiles:
           - vue
 

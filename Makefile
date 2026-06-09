@@ -11,6 +11,12 @@ Available commands: \n\
 - docker-build: Build php Docker images \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
+- js-up:        Start Vanilla JS development server \n\
+- js-bash:      Open a bash shell in the Vanilla JS container \n\
+- js-start:     Run Vanilla JS development server \n\
+- js-stop:      Stop Vanilla JS development server \n\
+- js-test:      Test Vanilla JS application \n\
+- js-down:      Stop Vanilla JS development server \n\
 - react-up:     Start React development server \n\
 - react-bash:   Open a bash shell in the React container \n\
 - react-start:  Run React development server \n\
@@ -29,15 +35,21 @@ Available commands: \n\
 # COMMON #
 
 all-stop:
+	${MAKE} js-stop
 	${MAKE} react-stop
+	${MAKE} vue-stop
 	${MAKE} sym-stop
 
 all-down:
+	${MAKE} js-down
 	${MAKE} react-down
+	${MAKE} vue-down
 	${MAKE} sym-down
 
 all-test:
+	${MAKE} js-test
 	${MAKE} react-test
+	${MAKE} vue-test
 	${MAKE} sym-test
 
 docker-build:
@@ -51,11 +63,35 @@ db-up:
 db-down:
 	docker compose -f "compose-db.yml" --profile db down
 
+# VANILLA JS #
+
+js-up:
+	docker compose --profile vanilla up --build -d
+	@echo "Vanilla JS app is available at http://localhost:5171"
+
+js-bash:
+	docker exec -it fs-vanilla-node bash
+
+js-start:
+	@echo 'Should run "npm install"'
+	docker exec -it fs-vanilla-node pkill node || true
+	docker exec -it -u 1000 fs-vanilla-node npm run dev
+
+js-stop:
+	docker exec -it fs-vanilla-node pkill node || true
+	docker exec -it fs-vanilla-node pkill npm || true
+
+js-test:
+	docker exec -it fs-vanilla-node npm run test
+
+js-down:
+	docker compose --profile vanilla down
+
 # REACT #
 
 react-up:
 	docker compose --profile react up --build -d
-	@echo "React app is available at http://localhost:5171"
+	@echo "React app is available at http://localhost:5172"
 
 react-bash:
 	docker exec -it fs-react-node bash
