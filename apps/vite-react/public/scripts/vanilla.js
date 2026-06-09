@@ -1,9 +1,20 @@
 
-// JS
+////////
+// JS //
+////////
 
-export function loadHtml() {
+// function creation // (arg1, arg2, functionBody)
+let fct_construct = new Function('x', 'y', 'return x + y')
+
+let arr_construct = new Array(8)
+let arr_items = new Array('a', 'b', 'c')
+
+/////////
+// DOM //
+/////////
+
+function loadHtml() {
     const jsText = document.getElementById('js_text')
-
     // ! innerText is not fully implemented and can behave inconsistently, use textContent.
     jsText.textContent = 'my Vanilla JS'
 }
@@ -14,3 +25,10 @@ const DOMContentLoaded = 'DOMContentLoaded'
 document.addEventListener(DOMContentLoaded, () => {
     loadHtml()
 })
+
+export {
+    loadHtml,
+    fct_construct,
+    arr_construct,
+    arr_items,
+}

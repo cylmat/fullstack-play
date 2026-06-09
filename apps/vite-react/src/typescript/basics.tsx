@@ -26,18 +26,19 @@ function Basics(): JSX.Element {
   let undef: undefined
   let nevermind: () => never = () => { throw new Error("Never!") } // represents the type of values that never occur
   const union: (number | string)[] = [5, 10, "TypeScript"]
+  type literaltype = "hello" | "world" // literal types can only have one of the specified values
+  let literalValue: literaltype = "hello"
 
   // Custom
 
-  type literaltype = "hello" | "world" // literal types can only have one of the specified values
-  let literalValue: literaltype = "hello"
   type specificOneCustomType = string | number
   type aliasName = specificOneCustomType
   let aliasValue: aliasName = 42
+  var my_fct: (x: number) => number = function (x: number): number { return x * 2 } // function type
 
 let USE = {
   age, first_name, isReady, UNIQUE_KEY, empty, undef, person, logg, numbers, tuple, Color,
-  union, nevermind, literalValue, aliasValue
+  union, nevermind, literalValue, aliasValue, my_fct
 }
   // console.log(age, first_name, isReady, UNIQUE_KEY, empty, undef, person, logg, numbers, tuple, Color)
   // console.log(union, nevermind, literalValue, aliasValue)
