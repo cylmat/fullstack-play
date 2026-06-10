@@ -10,14 +10,18 @@
 
       <script src="/lib/jquery.min.js"></script>
       <script src="/scripts/general.js"></script>
+
+      <link rel="stylesheet" href="style/general.css" />
    </head>
    <body>
-      <div id="menu"></div>
+      <header id="menu"></header>
 
-      <div id="content" style="text-align: center; margin-top: 5em">
-         <div id="ts_root"></div>
-      </div>
+      <main id="content">
+         <div class="container">
+            <div id="ts_root"></div>
+         </div>
+      </main>
 
-      <script type="module" src="src/pages/ts.tsx"></script>
+      <script type="module" src="src/pages/ts.ts"></script>
    </body>
 </html>

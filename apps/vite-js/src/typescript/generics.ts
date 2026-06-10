@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  *
@@ -15,7 +14,7 @@ import React from "react";
  * // @https://www.typescriptlang.org/docs/handbook/2/generics.html
  */
 
-function Generics() {
+function Generics(): HTMLElement {
 
   function printVar<T>(val: T): T { // T is a generic type
       return val
@@ -73,12 +72,23 @@ function Generics() {
   //   // let genresult = myIdentityWithGen('123') // error string
   // let genresult = myIdentityWithGen(123) + 'str'
 
-  return (<div>
-    <h2>Generics</h2>
-    <p>{'printVar<T> (' + printVar('test') + '): T'}</p>
-    <p>{'concatenate<T, U> (1, "b"): T & U = ' + JSON.stringify(concatenate(1, "b"))}</p>
-    <p>{'strToNumFct<string, number>("123"): number = ' + strToNum}</p>
-  </div>)
+  // return (<div>
+  //   <h2>Generics</h2>
+  //   <p>{'printVar<T> (' + printVar('test') + '): T'}</p>
+  //   <p>{'concatenate<T, U> (1, "b"): T & U = ' + JSON.stringify(concatenate(1, "b"))}</p>
+  //   <p>{'strToNumFct<string, number>("123"): number = ' + strToNum}</p>
+  // </div>)
+
+  const container = document.createElement('div')
+    container.innerHTML = `
+      <h3>Generics</h3>
+      <p>${'printVar<T> (' + printVar('test') + '): T'}</p>
+      <p>${'concatenate<T, U> (1, "b"): T & U = ' + JSON.stringify(concatenate(1, "b"))}</p>
+      <p>${'strToNumFct<string, number>("123"): number = ' + strToNum}</p>
+    `
+
+  // export html elements
+  return container
 }
 
   /****************/

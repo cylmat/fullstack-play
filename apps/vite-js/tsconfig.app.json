@@ -13,19 +13,27 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
+    "isolatedModules": true, // needed for "module": "ESNext"
     "moduleDetection": "force",
     "moduleResolution": "bundler",
     "noEmit": true,
     "resolveJsonModule": true,
-  
+
     // can be: react-jsxdev, preserve, react-native
     // react-jsx: JSX changed to _jsx calls optimized for production
     // react: .js files with JSX changed to the equivalent React.createElement calls
 
     // need to import React in every file for JSX to work
     // or use "jsxImportSource": "react" to import automatically
- 
+
+
+    /* Javascript */
+     "allowJs": true, // allow js files to be compiled
+     "checkJs": false, // do not check js files for errors, use .d.ts declaration instead
+     // or use declaration files
+     // -js
+
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -35,7 +43,6 @@
   // vanilla js:  ["src"]
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
     "vite.config.ts",
     "vite-env.d.ts"
   ]

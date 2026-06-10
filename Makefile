@@ -14,21 +14,21 @@ Available commands: \n\
 - js-up:        Start Vanilla JS development server \n\
 - js-bash:      Open a bash shell in the Vanilla JS container \n\
 - js-start:     Run Vanilla JS development server \n\
-- js-stop:      Stop Vanilla JS development server \n\
 - js-test:      Test Vanilla JS application \n\
+- js-stop:      Stop Vanilla JS development server \n\
 - js-down:      Stop Vanilla JS development server \n\
 - react-up:     Start React development server \n\
 - react-bash:   Open a bash shell in the React container \n\
 - react-start:  Run React development server \n\
-- react-stop:   Stop React development server \n\
 - react-test:   Test React application \n\
+- react-stop:   Stop React development server \n\
 - react-down:   Stop React development server \n\
 - sym-up:       Start Symfony/webpack development server \n\
 - sym-bash:     Open a bash shell in the Symfony container \n\
 - sym-build:    Build Symfony assets \n\
 - sym-start:    Run Symfony/webpack development server \n\
-- sym-stop:     Stop Symfony/webpack development server \n\
 - sym-test:     Test Symfony application \n\
+- sym-stop:     Stop Symfony/webpack development server \n\
 - sym-down:     Stop Symfony/webpack development server \n\
 "
 
@@ -36,7 +36,7 @@ Available commands: \n\
 
 all-stop:
 	${MAKE} js-stop
-	${MAKE} react-stop
+	${MAKE} react-Stop
 	${MAKE} vue-stop
 	${MAKE} sym-stop
 
@@ -46,11 +46,11 @@ all-down:
 	${MAKE} vue-down
 	${MAKE} sym-down
 
-all-test:
-	${MAKE} js-test
-	${MAKE} react-test
-	${MAKE} vue-test
-	${MAKE} sym-test
+all-tests:
+	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-react-node; then $(MAKE) react-test; fi'
+	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-vanilla-node; then $(MAKE) js-test; fi'
+	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-vue-node; then $(MAKE) vue-test; fi'
+	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-symfony-php; then $(MAKE) sym-test; fi'
 
 docker-build:
 	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
@@ -77,12 +77,12 @@ js-start:
 	docker exec -it fs-vanilla-node pkill node || true
 	docker exec -it -u 1000 fs-vanilla-node npm run dev
 
+js-test:
+	docker exec -it fs-vanilla-node npm run test
+
 js-stop:
 	docker exec -it fs-vanilla-node pkill node || true
 	docker exec -it fs-vanilla-node pkill npm || true
-
-js-test:
-	docker exec -it fs-vanilla-node npm run test
 
 js-down:
 	docker compose --profile vanilla down
@@ -101,12 +101,12 @@ react-start:
 	docker exec -it fs-react-node pkill node || true
 	docker exec -it -u 1000 fs-react-node npm run dev
 
+react-test:
+	docker exec -it fs-react-node npm run test
+
 react-stop:
 	docker exec -it fs-react-node pkill node || true
 	docker exec -it fs-react-node pkill npm || true
-
-react-test:
-	docker exec -it fs-react-node npm run test
 
 react-down:
 	docker compose --profile react down
@@ -144,12 +144,12 @@ sym-migrate:
 sym-fixtures:
 	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:fixtures:load -n
 
+sym-test:
+	docker exec -it fs-symfony-php  composer run-script test
+
 sym-stop:
 	docker exec -it -u 1000 fs-symfony-php symfony server:stop
 	docker exec -it fs-symfony-php pkill webpack || true
-
-sym-test:
-	docker exec -it fs-symfony-php  composer run-script test
 
 sym-down:
 	docker compose --profile symfony down

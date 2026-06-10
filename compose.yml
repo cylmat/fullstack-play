@@ -49,7 +49,7 @@ services:
         user: 1000:1000
         working_dir: /var/www/application
         volumes:
-            - ./apps/vite-vanilla:/var/www/application
+            - ./apps/vite-js:/var/www/application
         command: sleep infinity
         ports:
             - 5171:5173 # npm dev server

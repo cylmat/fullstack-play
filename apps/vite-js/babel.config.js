@@ -4,7 +4,6 @@
 export default {
   presets: [
     '@babel/preset-env',       // Transpile modern JS
-    '@babel/preset-react',     // Transform JSX
     '@babel/preset-typescript' // Transform TS/TSX
   ]
 };

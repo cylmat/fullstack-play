@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * @doc
@@ -6,7 +5,7 @@ import React from "react";
  * https://www.typescriptlang.org/docs/handbook/2/basic-types.html
  */
 
-function Basics(): JSX.Element {
+function Basics(): HTMLElement {
 
   // BASICS //
 
@@ -95,15 +94,26 @@ let USE = {
     }
   }
 
-  return (<div>
-    <h2>Basics</h2>
-    <p>{'getNumber(5): number = ' + getNumber(5)}</p>
-    <p>{'enum Direction {Up = 1}, Direction.Up, ' + Direction.Up}</p>
-    <p>{'str2: string as unknown as number = ' + str2}</p>
-    <p>{'interface IPerson = {' + obj.getFullName() + ': string}'}</p>
-    <p>{'new Greeter("world").greet(): string = ' + new Greeter("world").greet()}</p>
-  </div>)
+  // return (<div>
+  //   <h2>Basics</h2>
+  //   <p>{'getNumber(5): number = ' + getNumber(5)}</p>
+  //   <p>{'enum Direction {Up = 1}, Direction.Up, ' + Direction.Up}</p>
+  //   <p>{'str2: string as unknown as number = ' + str2}</p>
+  //   <p>{'interface IPerson = {' + obj.getFullName() + ': string}'}</p>
+  //   <p>{'new Greeter("world").greet(): string = ' + new Greeter("world").greet()}</p>
+  // </div>)
 
+  const container = document.createElement('div')
+  container.innerHTML = `
+    <h3>Basics</h3>
+    <p>${'getNumber(5): number = ' + getNumber(5)}</p>
+    <p>${'enum Direction {Up = 1}, Direction.Up, ' + Direction.Up}</p>
+    <p>${'str2: string as unknown as number = ' + str2}</p>
+    <p>${'interface IPerson = {' + obj.getFullName() + ': string}'}</p>
+    <p>${'new Greeter("world").greet(): string = ' + new Greeter("world").greet()}</p>
+  `
+
+    return container
 }
 
 export default Basics

@@ -4,5 +4,5 @@
 
 // Replace deprecated .ready
 $(() => {
-    $('#menu').load('./_menu.html')
+    $('#menu').load('./_menu_js.html')
 })
