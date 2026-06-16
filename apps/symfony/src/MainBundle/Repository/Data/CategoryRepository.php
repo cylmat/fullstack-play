@@ -2,17 +2,17 @@
 
 namespace App\MainBundle\Repository\Data;
 
-use App\MainBundle\Entity\Data\Contact;
+use App\MainBundle\Entity\Data\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Contact>
+ * @extends ServiceEntityRepository<Category>
  */
-class ContactRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Contact::class);
+        parent::__construct($registry, Category::class);
     }
 }

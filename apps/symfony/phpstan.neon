@@ -16,7 +16,14 @@ parameters:
         - '#App\\Kernel::configureContainer\(\) is unused#'
         # LoggerTrait is kept for future use; not yet wired up
         - '#Trait App\\MainBundle\\Contract\\LoggerTrait is used zero times#'
-        # Doctrine hydrates $id via reflection — PHPStan cannot see the assignment
-        - '#Property .+::\$id .+ is never assigned#'
         # Injected dependency whose usage is commented out pending feature work
         - '#WorkflowSubscriber::\$mainLogger is never read#'
+
+        # DOCTRINE #
+
+        # Doctrine hydrates $id via reflection — PHPStan cannot see the assignment
+        - '#Property .+::\$id .+ is never assigned#'
+        # Doctrine hydrates auto-generated IDs via reflection — only read by application code
+        - '#Property .+::\$(id|isbn) is never written, only read#'
+        # Collection generic types are properly declared in @var annotations
+        - '#with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types#'

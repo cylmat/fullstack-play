@@ -2,7 +2,8 @@
 
 namespace App\MainBundle\DataFixtures;
 
-use App\MainBundle\Entity\Data\Contact;
+use App\MainBundle\Entity\Data\Book;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -13,17 +14,14 @@ class AppFixtures extends Fixture implements FixtureInterface
     /** @SuppressWarnings(PHPMD.StaticAccess) */
     public function load(ObjectManager $manager): void
     {
-        $contact = new Contact();
-        Hydrator::hydrate($contact, [
-            'function'  => 'officer',
-            'service'   => 'data',
-            'firstname' => 'John',
-            'lastname'  => 'Doe',
-            'email'     => 'john.doe@arobase.com',
-            'mobile'    => '+33606060202',
-            'phone'     => '+33102030405',
-            'comment'   => 'comment',
+        $book = new Book();
+        Hydrator::hydrate($book, [
+            'isbn' => 1234567890,
+            'title' => 'Sample Book',
+            'description' => 'This is a sample book description.',
+            'price' => 19.99,
+            'publishedAt' => new DateTimeImmutable(),
         ]);
-        $manager->persist($contact);
+        $manager->persist($book);
     }
 }
