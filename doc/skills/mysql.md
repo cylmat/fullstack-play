@@ -23,6 +23,8 @@
 21. Sécurité    - Gestion des rôles    - Chiffrement    - Audit    - Gestion des permissions
 22. Bonnes pratiques    - Normalisation (1NF, 2NF, 3NF)    - Dénormalisation    - Choix des types de données    - Convention de nommage    - Conception de schémas performants
 
+
+
 ## Fonctions avancées
 
 - les tables temporaires (CREATE TEMPORARY TABLE) ;
@@ -30,6 +32,25 @@
 - les tables système du schéma information_schema ;
 - les Performance Schema pour analyser les performances ;
 - le schéma sys, qui fournit des vues simplifiées pour diagnostiquer les requêtes lentes et l'utilisation des ressources.
+
+## parcours d'apprentissage 
+
+- Revoir les JOIN avancés.
+- Agrégations (GROUP BY, HAVING).
+- Sous-requêtes.
+- CTE. CTE récursives.
+- Window Functions.
+- Transactions.
+- Verrouillage (FOR UPDATE).
+- Index et EXPLAIN.
+- Triggers.
+- Procédures stockées.
+- Fonctions personnalisées.
+- Vues.
+- JSON.
+- Event Scheduler.
+- Partitionnement.
+- Réplication et optimisation.
 
 ## Projet global :
 
@@ -44,3 +65,9 @@
 -  des fonctions analytiques
 -  du partitionnement
 -  l'optimisation des performances avec EXPLAIN ANALYZE.
+
+
+## ref
+- https://dev.mysql.com/doc/refman/8.4/en/
+- https://www.mysqltutorial.org/mysql-cte/
+- https://www.stratascratch.com/
