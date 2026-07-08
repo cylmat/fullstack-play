@@ -32,6 +32,7 @@ services:
             - ./:/var/www/push
             # git config --global user.name "Your Name"
             # git config --global user.email "you@example.com"
+            # git config --global credential.helper store
             - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
             # - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
             # - .docker/server/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro

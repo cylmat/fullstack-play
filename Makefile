@@ -66,7 +66,8 @@ db-down:
 
 # GIT PUSH #
 git-push:
-	docker exec fs-symfony-php sh -c "cd /var/www/push && git add . && git commit -m 'Update by make' && git push"
+	docker exec fs-symfony-php sh -c \
+		"cd /var/www/push && git add . && git commit -m 'Update by make' && git pull --rebase && git push"
 
 # VANILLA JS #
 
