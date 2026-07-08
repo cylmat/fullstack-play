@@ -11,6 +11,7 @@ Available commands: \n\
 - docker-build: Build php Docker images \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
+- git-push:     Push all changes to git \n\
 - js-up:        Start Vanilla JS development server \n\
 - js-bash:      Open a bash shell in the Vanilla JS container \n\
 - js-start:     Run Vanilla JS development server \n\
@@ -62,6 +63,10 @@ db-up:
 
 db-down:
 	docker compose -f "compose-db.yml" --profile db down
+
+# GIT PUSH #
+git-push:
+	docker exec fs-symfony-php sh -c "cd /var/www/push && git add . && git commit -m 'Update by make' && git push"
 
 # VANILLA JS #
 
