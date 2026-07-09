@@ -12,6 +12,7 @@ Available commands: \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
 - git-push:     Push all changes to git \n\
+- linux-bash:   Open a bash shell in the Linux container \n\
 - js-up:        Start Vanilla JS development server \n\
 - js-bash:      Open a bash shell in the Vanilla JS container \n\
 - js-start:     Run Vanilla JS development server \n\
@@ -66,8 +67,15 @@ db-down:
 
 # GIT PUSH #
 git-push:
-	docker exec fs-symfony-php sh -c \
-		"cd /var/www/push && git add . && git commit -m 'Update by make' && git pull --rebase && git push"
+	docker run -u 1000:1000 --env-file .docker/linux/.env.dist.local -v .:/var/www/application fs-linux sh -c "\
+		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
+		cd /var/www/application && git add . && git commit -m 'Update by make' && git pull --rebase"
+
+linux-build:
+	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest ".docker"
+
+linux-bash:
+	docker run -it -u 1000:1000 --env-file .docker/linux/.env.dist.local -v .:/var/www/application fs-linux:latest bash
 
 # VANILLA JS #
 
