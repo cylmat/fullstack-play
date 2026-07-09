@@ -65,6 +65,7 @@ db-up:
 db-down:
 	docker compose -f "compose-db.yml" --profile db down
 
+# test
 # GIT PUSH #
 git-push:
 	docker run -u 1000:1000 --env-file .docker/linux/.env.dist.local -v .:/var/www/application fs-linux sh -c '\
