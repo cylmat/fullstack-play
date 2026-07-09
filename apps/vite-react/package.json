@@ -16,7 +16,12 @@
     "test": "jest",
     "tscbuild": "tsc -b && vite build",
     "build-micro": "microbundle --no-compress --css-modules false --format modern,cjs ",
-    "dev-micro": "microbundle watch --no-compress --css-modules false --format modern,cjs"
+    "dev-micro": "microbundle watch --no-compress --css-modules false --format modern,cjs",
+    
+      "compile": "tsc -p ./",
+      "watch": "tsc -watch -p ./",
+      "pretest": "npm run compile && npm run lint",
+      "test2": "node ./out/test/runTest.js"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90",
