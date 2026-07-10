@@ -12,7 +12,7 @@ function Basics(): HTMLElement {
 
   let age: number = 30
   let first_name: string = 'John'
-  let isReady: boolean = true
+  let isReady: boolean = Boolean("hello") // true (@see typescript/lib/lib.es5.d.ts)
   const UNIQUE_KEY: symbol = Symbol('r') // symbol is a primitive data type to create unique values
   let person: object = { name: "Bob" }
   let myObj: { name: string} = { name: "Alice" } // object type with specific properties
@@ -38,6 +38,17 @@ function Basics(): HTMLElement {
   function myFct(name: string, optionAge?: number): void { console.log(name, optionAge) } // optional parameter
   var my_fct: (x: number) => number = function (x: number): number { return x * 2 } // function type
 
+  function getNumber(
+    num: number,
+    optional?: number,
+    defaultValue: number = 1,
+    ...rest: number[]
+  ): number {
+    // @ts-ignore
+    let USE = { ...rest }
+    return num + age + defaultValue + (optional || 0)
+  }
+
   // Type assertion
 
   var str: string = '1'
@@ -46,7 +57,10 @@ function Basics(): HTMLElement {
   let str30: number = <number><unknown>str3
   let obj1: any = { name: "Alice" } as object
 
-  // Narrow "rétrécir"
+  // Narrow "rétrécir" //
+  // JS -typeof- can be "string", "number", "boolean", "symbol", "undefined", "object", "bigint", or "function"..
+  // JS -in- check if a property exists in an object
+  // JS -instanceof- check if an object is an instance of a class
 
   function printId(id: number | string) {
     if (typeof id === "string") {
@@ -58,16 +72,8 @@ function Basics(): HTMLElement {
     }
   }
 
-  function getNumber(
-    num: number,
-    optional?: number,
-    defaultValue: number = 1,
-    ...rest: number[]
-  ): number {
-    // @ts-ignore
-    let USE = { ...rest }
-    return num + age + defaultValue + (optional || 0)
-  }
+  let fish: { swimAttribute: boolean } = { swimAttribute: true }
+  if ("swimAttribute" in fish) console.log('swim fish')
 
   ////////////////////
   // Advanced Types //
@@ -119,12 +125,25 @@ function Basics(): HTMLElement {
     }
   }
 
+  // Type Predicate //
+  // A type predicate is a special return type that narrows the type of a variable within a conditional block.
+  // @see https://www.typescriptlang.org/docs/handbook/2/narrowing.html
+
+  type Fish = { swim: () => void };
+  type Bird = { fly: () => void };
+  function isFish(pet: Fish | Bird): pet is Fish {
+    return (pet as Fish).swim !== undefined
+  }
+  let testFish: Fish | Bird = { swim: () => true }
+  if (isFish(testFish)) testFish.swim() // TypeScript knows that testFish is a Fish here
+  else console.log("Not a fish")
+
 
 // @ts-ignore
 let USE = {
   age, first_name, isReady, UNIQUE_KEY, empty, undef, person, myObj, numbers, tuple, Color,
   logg, myFct, my_fct, union, nevermind, literalValue, p: printId(2),
-   oneHundred, aliasValue, aliasId, str30, obj1
+   oneHundred, aliasValue, aliasId, str30, obj1, testFish
 }
 
 
