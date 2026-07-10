@@ -36,7 +36,21 @@ function Basics(): HTMLElement {
 
   function logg(): void { }
   function myFct(name: string, optionAge?: number): void { console.log(name, optionAge) } // optional parameter
-  var my_fct: (x: number) => number = function (x: number): number { return x * 2 } // function type
+  var my_fct: (x: number) => number = function (x: number): number { return x * 2 }
+
+  type MyFunctionType = {
+    (x: number): number;
+  }
+  var my_fct_declare: MyFunctionType = function (x: number): number { return 51 }
+
+  // constructor //
+  // type CallOrConstruct  = {
+  //   (n?: number): string;
+  //   new (s: string): Date;
+  // }
+  // function fnWithConstructor(ctor: CallOrConstruct ): void {
+  //   console.log(new ctor("hello"), ctor(42)) // both accepted
+  // }
 
   function getNumber(
     num: number,
@@ -142,8 +156,9 @@ function Basics(): HTMLElement {
 // @ts-ignore
 let USE = {
   age, first_name, isReady, UNIQUE_KEY, empty, undef, person, myObj, numbers, tuple, Color,
-  logg, myFct, my_fct, union, nevermind, literalValue, p: printId(2),
-   oneHundred, aliasValue, aliasId, str30, obj1, testFish
+  logg, myFct, my_fct, my_fct_declare,
+  union, nevermind, literalValue, p: printId(2),
+  oneHundred, aliasValue, aliasId, str30, obj1, testFish
 }
 
 
