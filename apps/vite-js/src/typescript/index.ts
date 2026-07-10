@@ -18,11 +18,6 @@ function TsIndex(): HTMLElement {
     `
 
     return container
-    // <div>
-    //     <h3>Ts</h3>
-    //     <Basics /><br/><br/>
-    //     <Generics />
-    // </div>
 
 }
 

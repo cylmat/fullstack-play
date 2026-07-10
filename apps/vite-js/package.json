@@ -14,6 +14,7 @@
     "playtest": "npx playwright test --output var/test-results --project=chromium --debug -c playwright.config.ts tests",
     "preview": "vite preview",
     "test": "jest",
+    "tsc": "tsc",
     "tscbuild": "tsc -b && vite build",
     "build-micro": "microbundle --no-compress --css-modules false --format modern,cjs ",
     "dev-micro": "microbundle watch --no-compress --css-modules false --format modern,cjs"
