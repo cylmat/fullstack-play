@@ -37,12 +37,14 @@ Available commands: \n\
 # COMMON #
 
 all-stop:
+	${MAKE} db-stop
 	${MAKE} js-stop
-	${MAKE} react-Stop
+	${MAKE} react-stop
 	${MAKE} vue-stop
 	${MAKE} sym-stop
 
 all-down:
+	${MAKE} db-down
 	${MAKE} js-down
 	${MAKE} react-down
 	${MAKE} vue-down
