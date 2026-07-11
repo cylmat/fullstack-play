@@ -56,12 +56,12 @@ function Generics(): HTMLElement {
   // Constraints
 
   function longest<Type extends { length: number }>(a: Type) {
-    console.log(a.length);  // Now we know it has a .length property, so no more error
+    let s =  typeof a // "string"
     if (a.length >= 2) {
       return a;
     }
   }
-  let long = longest("hello")
+  let long = longest("hello")  // "String" have a .length method, so length = 5
 
   /***********
     interface with generic

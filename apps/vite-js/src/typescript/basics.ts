@@ -74,15 +74,15 @@ function Basics(): HTMLElement {
   function printId(id: number | string) {
     if (typeof id === "string") {
       // In this branch, id is of type 'string'
-      console.log(id.toUpperCase());
+      let a = id.toUpperCase()
     } else {
       // Here, id is of type 'number'
-      console.log(id);
+      let a = id
     }
   }
 
   let fish: { swimAttribute: boolean } = { swimAttribute: true }
-  if ("swimAttribute" in fish) console.log('swim fish')
+  if ("swimAttribute" in fish) var a =('swim fish')
 
   ////////////////////
   // Advanced Types //
@@ -145,7 +145,7 @@ function Basics(): HTMLElement {
   }
   let testFish: Fish | Bird = { swim: () => true }
   if (isFish(testFish)) testFish.swim() // TypeScript knows that testFish is a Fish here
-  else console.log("Not a fish")
+  else var a = ("Not a fish")
 
 
 // @ts-ignore
