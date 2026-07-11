@@ -1,17 +1,9 @@
 
 /**
- *
- * @doc
- *
- * @https://www.digitalocean.com/community/tutorials/how-to-use-generics-in-typescript
- * @https://trungvose.com/experience/typescript-function-callback-type
- */
-
-/**
  * Section: Type manipulation / Generics
  *
- * @https://www.tutorialspoint.com/typescript/typescript_generics.htm
- * // @https://www.typescriptlang.org/docs/handbook/2/generics.html
+ * @https://www.typescriptlang.org/docs/handbook/2/functions.html
+ * @https://www.typescriptlang.org/docs/handbook/2/generics.html
  */
 
 function Generics(): HTMLElement {
@@ -27,9 +19,7 @@ function Generics(): HTMLElement {
     return arg;
   }
 
-  // let myIdentitySignature: { <CustomType>(arg: CustomType): CustomType } = identityGen;
-
-  function strToNumFct<In,Out>(num: In): Out {
+  function strToNumFct<In, Out>(num: In): Out {
     return num as unknown as Out
   }
   let strToNum: number = strToNumFct<string, number>('123')
@@ -38,26 +28,40 @@ function Generics(): HTMLElement {
    Generic types
   ********/
 
-  let myIdentityGen: <Input>(arg: Input) => Input = identityGen;
+  let myGen: <Input>(arg: Input) => Input = identityGen;
 
   /********
   with array
   **********/
-  // function loggingIdentity<Type>(arg: Array<Type>): Array<Type> {
-  //   console.log(arg.length); // Array has a .length, so no more error
-  //   return arg;
-  // }
+  function loggingIdentity<Type>(arg: Array<Type>): Array<Type> {
+    console.log(arg.length); // Array has a .length, so no more error
+    return arg;
+  }
 
   /**********
   interfaces
   **********/
-  // interface GenericIdentityFn {
-  //   <Type>(arg: Type): Type;
-  // }
-  // function identityUseInt<Type>(arg: Type): string {
-  //   return 'ret';
-  // }
-  // let myIdentity: GenericIdentityFn = identityUseInt;
+  interface GenericIdentityFn {
+    <Type>(arg: Type): string;
+  }
+  function identityUseInt<Type>(arg: Type): string {
+    return 'ret';
+  }
+  let myIdentity: GenericIdentityFn = identityUseInt
+
+  //////////////
+  // Advanced //
+  //////////////
+
+  // Constraints
+
+  function longest<Type extends { length: number }>(a: Type) {
+    console.log(a.length);  // Now we know it has a .length property, so no more error
+    if (a.length >= 2) {
+      return a;
+    }
+  }
+  let long = longest("hello")
 
   /***********
     interface with generic
@@ -78,6 +82,9 @@ function Generics(): HTMLElement {
   //   <p>{'concatenate<T, U> (1, "b"): T & U = ' + JSON.stringify(concatenate(1, "b"))}</p>
   //   <p>{'strToNumFct<string, number>("123"): number = ' + strToNum}</p>
   // </div>)
+
+  // @ts-ignore
+  let USE = { myGen, loggingIdentity, myIdentity, long }
 
   const container = document.createElement('div')
     container.innerHTML = `

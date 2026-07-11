@@ -6,6 +6,10 @@
  * https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
  */
 
+
+// T, K extends keyof T ?
+
+
 function Basics(): HTMLElement {
 
   // BASICS //
@@ -42,15 +46,6 @@ function Basics(): HTMLElement {
     (x: number): number;
   }
   var my_fct_declare: MyFunctionType = function (x: number): number { return 51 }
-
-  // constructor //
-  // type CallOrConstruct  = {
-  //   (n?: number): string;
-  //   new (s: string): Date;
-  // }
-  // function fnWithConstructor(ctor: CallOrConstruct ): void {
-  //   console.log(new ctor("hello"), ctor(42)) // both accepted
-  // }
 
   function getNumber(
     num: number,
@@ -160,6 +155,19 @@ let USE = {
   union, nevermind, literalValue, p: printId(2),
   oneHundred, aliasValue, aliasId, str30, obj1, testFish
 }
+
+// OTHERS //
+
+  // constructor
+
+  // type CallOrConstruct  = {
+  //   (n?: number): string;
+  //   new (s: string): Date;
+  // }
+  // function fnWithConstructor(ctor: CallOrConstruct ): void {
+  //   console.log(new ctor("hello"), ctor(42)) // both accepted
+  // }
+
 
 
   const container = document.createElement('div')
