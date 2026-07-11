@@ -27,7 +27,8 @@ function Types(): HTMLElement {
 
   // "c" must be a constructor that can be called with new, takes no arguments, and produces an AType.
   // extends object = {} is default type parameter
-  function createInstance<AType extends object = { blob: number }>(c: new () => AType): AType {
+  type Blob = { blob: number }
+  function createInstance<AType extends object = Blob>(c: new () => AType): AType {
     return new c()
   }
   class Person { name = "Alice"; }
