@@ -148,18 +148,115 @@ function Types(): HTMLElement {
   type MessageOf<T extends { message: any }> = T["message"]
   let usageConstraint: MessageOf<IEmail> = "Hello" // type is "string" (IEmail.message type)
 
-  // condition
+  // condition //
+
   type MessageOfCond<T> = T extends { message: any } ? T["message"] : boolean
   type _DefaultBool = MessageOfCond<{}> // type is "boolean" (default type)
   let usageDefault: MessageOfCond<IdLabel> = false // type is "boolean" (IdLabel.message doesn't exists so default type is used)
 
+  // Distributive //
+
+  type ToArray<Type> = Type extends any ? Type[] : never // always true
+  type StrArrOrNumArr = ToArray<string | number> // string[] | number[]
+  let testDistributive: StrArrOrNumArr = ["hello", "world"]
+  let testDistributive2: StrArrOrNumArr = [1, 2, 3]
+
+  ////////////
+  // MAPPED //
+  ////////////
+
+  type Horse = { robe: string }
+  type OnlyBoolsAndHorses = {
+    [key: string]: boolean | Horse
+  }
+  let usageMappedHorse: OnlyBoolsAndHorses = {
+    isHorse: true,
+    myHorse: { robe: "brown" }
+  }
+
+  // in keyof //
+  //  remove or add  modifiers "readonly" and "?" by prefixing with - or +
+
+  type OptionsFlags<Type> = {
+    [Property in keyof Type]: boolean
+  }
+  type OptionsFlags2<Type> = {
+    -readonly [Property in keyof Type]+?: boolean // remove "readonly" and add "?" modifier
+  }
+  type FeatureFlags = {
+    readonly darkMode: boolean,
+    newUserProfile: BigInt,
+    readonly alphaTest?: string,
+    plantasia?: number,
+  }
+  let usageOfKeyOf: OptionsFlags<FeatureFlags> = {
+    darkMode: true,
+    newUserProfile: false,
+  }
+
+  // alias //
+
+  type Getter<Type> = {
+    [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+  }
+  type GetterExclude<Type> = {
+    [Property2 in keyof Type as Exclude<Property2, "alphaTest">]: () => Type[Property2]
+  }
+  type GetterBoth<Type> = {
+    [Property2 in keyof Type as `get${Capitalize<string & Exclude<Property2, "alphaTest">>}`]: () => Type[Property2]
+  }
+  /* type FinalGetter = {
+      readonly getDarkMode: () => boolean;
+      getNewUserProfile: () => BigInt;
+      readonly getAlphaTest?: (() => string | undefined) | undefined;
+      getPlantasia?: (() => number | undefined) | undefined;
+  } */
+  type FinalGetter = Getter<FeatureFlags>
+  let usageGetter: FinalGetter = {
+    getDarkMode: () => true,
+    getNewUserProfile: () => BigInt(42),
+    getAlphaTest: () => "my string",
+  }
+
+  // TEST property //
+
+  type DBFields = {
+    id: { format: "incrementing" };
+    name: { type: string; pii: true };
+  }
+  type ExtractPII<Type> = {
+    [Prop5 in keyof Type]: Type[Prop5] extends { pii: boolean } ? 'withPII'|'flop' : 'notPII'
+  }
+  /* type ObjectsNeeding = {
+      id: "notPII";
+      name: "withPII" | "flop";
+  } */
+  type ObjectsNeeding = ExtractPII<DBFields> // type is "name"
+  let testExtractPII: ObjectsNeeding = {
+    id: 'notPII',
+    name: 'withPII',
+  }
 
   // @ts-ignore
   let USE = {
     myNameCheked, myNameCheked2, classA, a, p, pointKey, testA,
     typeOfString, typeName, appSettings, age, birth, tryArray,
-    testExtAnimal, testExtNot, testNameOrId, usageConstraint, usageDefault
+    testExtAnimal, testExtNot, testNameOrId, usageConstraint, usageDefault,
+    testDistributive, testDistributive2, usageMappedHorse,
+    usageOfKeyOf, usageGetter, testExtractPII
   }
+
+
+  // "infer" // let you create a type variable that can be used in the "true" branch of a conditional type
+
+  // type Flatten<MyType> = MyType extends Array<infer ItemType> ? ItemType : MyType
+  //   // equiv: type Flatten<MyType> = MyType extends any[] ? MyType[number] : MyType
+  // type Str = Flatten<string[]> // Str is of type "string" // infer is true
+  // let flattenStr: Str = "hello"
+  // type Num = Flatten<number[]> // Num is of type "number" // infer is true
+  // type Bool = Flatten<boolean> // Bool is of type "boolean" // infer is false, so MyType is used instead of ItemType
+
+
 
   const container = document.createElement('div')
     container.innerHTML = `

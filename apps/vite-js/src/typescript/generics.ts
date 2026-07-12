@@ -83,6 +83,13 @@ function Generics(): HTMLElement {
   //   <p>{'strToNumFct<string, number>("123"): number = ' + strToNum}</p>
   // </div>)
 
+  ////////////////////////////////////
+
+  /***************
+   * UTILITY TYPES
+  // @see https://www.typescriptlang.org/docs/handbook/utility-types.htm
+   **************/
+
   // @ts-ignore
   let USE = { myGen, loggingIdentity, myIdentity, long }
 
