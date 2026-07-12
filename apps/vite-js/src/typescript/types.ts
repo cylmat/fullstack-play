@@ -73,9 +73,9 @@ function Types(): HTMLElement {
   ////////
   // Keyof Type Operator //
 
-  type Point = { x: number; y: number };
+  type Point = { xPlace: number; y: number };
   type P = keyof Point // alias for "x" | "y"
-  let pointKey: P = "x"
+  let pointKey: P = "xPlace"
 
   type Arrayish = { first: string, bloc: number, isPoint?: boolean} //{ [key: string]: unknown }
   type A = keyof Arrayish
@@ -83,13 +83,26 @@ function Types(): HTMLElement {
 
   /////////
   // Typeof Type Operator //
+  // typeof js (get variable type) <=> typeof ts (create a type from a variable)
 
-  let str: string = 'welcome'
-  let typeOfString: typeof str = 'hello' // typeof str is "string"
+  const str: string = 'welcome' // cast as string
+  type StringType = typeof str // StringType is of type "string"
+  let typeOfString: StringType = 'hello' // typeof str is "string"
+
+  const name = "Alice"
+  type DeclaredType = typeof name // DeclaredType is of type "Alice"
+  let typeName: DeclaredType = "Alice"
+
+  const settings = {
+    theme: "dark",
+    fontSize: 16,
+  };
+  type Settings = typeof settings
+  let appSettings: Settings = { theme: "dark", fontSize: 16 }
 
   // @ts-ignore
   let USE = {
-    myNameCheked, myNameCheked2, classA, a, p, pointKey, testA, typeOfString
+    myNameCheked, myNameCheked2, classA, a, p, pointKey, testA, typeOfString, typeName, appSettings
   }
 
   const container = document.createElement('div')
