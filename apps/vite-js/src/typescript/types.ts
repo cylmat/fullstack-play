@@ -1,13 +1,47 @@
 
 /**
- * Section: Type manipulation / Generics
+ * Section: Type manipulation
  *
  * @https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
  */
 
-import { create } from "domain";
+/*
+  TypeScript has two separate namespaces:
+
+  Value space (functions, variables, classes)
+  Type space (interfaces, type aliases, classes)
+*/
+
+///////////////
+// NAMESPACE //
+///////////////
+
+// import other namespace from files, for ex:
+/// <reference path="generics.ts" />
+
+namespace Validation {
+    export interface MyExType { isAcceptable: boolean }
+    export interface Blop { setNum: { myNum: number } }
+    // export const isString = (x: any): x is string => typeof x === "string"
+}
+
+// aliases namespace //
+
+import ValidationType = Validation.MyExType
+import PolygonsType = Validation.Blop
+let myPolygon: PolygonsType = { setNum: { myNum: 5 } }
+
 
 function Types(): HTMLElement {
+
+  // Namespaces //
+
+  let myNameCheked: Validation.MyExType = { isAcceptable: true }
+  let myNameCheked2: ValidationType = { isAcceptable: true }
+
+  /////////////
+  // Classes //
+  /////////////
 
   class GenericClass<NumType> {
     zeroValue: NumType = 5 as NumType;
@@ -22,6 +56,7 @@ function Types(): HTMLElement {
       return obj[key];
     }
   }
+  let classA = new GenericClass<number>(0, (x) => x.toString())
 
   // Constructor
 
@@ -35,12 +70,31 @@ function Types(): HTMLElement {
   let a = createInstance(Person) // returns a Person instance
   let p = createInstance(class { name = "Bob" }) // returns an instance of an anonymous class with a name property
 
+  ////////
+  // Keyof Type Operator //
+
+  type Point = { x: number; y: number };
+  type P = keyof Point // alias for "x" | "y"
+  let pointKey: P = "x"
+
+  type Arrayish = { first: string, bloc: number, isPoint?: boolean} //{ [key: string]: unknown }
+  type A = keyof Arrayish
+  let testA: A = "isPoint"
+
+  /////////
+  // Typeof Type Operator //
+
+  let str: string = 'welcome'
+  let typeOfString: typeof str = 'hello' // typeof str is "string"
+
   // @ts-ignore
-  let USE = {  }
+  let USE = {
+    myNameCheked, myNameCheked2, classA, a, p, pointKey, testA, typeOfString
+  }
 
   const container = document.createElement('div')
     container.innerHTML = `
-      <h3>GenerTypesics</h3>
+      <h3>Types</h3>
       <p>Generic classes</p>
     `
 
