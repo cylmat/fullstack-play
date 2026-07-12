@@ -120,15 +120,9 @@ function Types(): HTMLElement {
   type PersonArbitraryGlobal = typeof MyArray[number] // get the type of an element in the array
   let tryArray: PersonArbitraryGlobal = { name: "Charlie", age: 42 } // type is { name: string; age: number }
 
-  // CONSTRAINT //
-
-  interface IEmail { message: string }
-  type MessageOf<T extends { message: any }> = T["message"]
-
-  let usageConstraint: MessageOf<IEmail> = "Hello" // type is "string" (IEmail.message type)
-
-
+  /////////////////
   // CONDITIONAL //
+  /////////////////
 
   interface Animal { live(): void }
   interface Dog extends Animal { woof(): void }
@@ -146,12 +140,25 @@ function Types(): HTMLElement {
     : NameLabel
   let testNameOrId: NameOrId<number> = { id: 5 }
 
+  ////////////////
+  // CONSTRAINT //
+  ////////////////
+
+  interface IEmail { message: string }
+  type MessageOf<T extends { message: any }> = T["message"]
+  let usageConstraint: MessageOf<IEmail> = "Hello" // type is "string" (IEmail.message type)
+
+  // condition
+  type MessageOfCond<T> = T extends { message: any } ? T["message"] : boolean
+  type _DefaultBool = MessageOfCond<{}> // type is "boolean" (default type)
+  let usageDefault: MessageOfCond<IdLabel> = false // type is "boolean" (IdLabel.message doesn't exists so default type is used)
+
 
   // @ts-ignore
   let USE = {
     myNameCheked, myNameCheked2, classA, a, p, pointKey, testA,
     typeOfString, typeName, appSettings, age, birth, tryArray,
-    testExtAnimal, testExtNot, testNameOrId
+    testExtAnimal, testExtNot, testNameOrId, usageConstraint, usageDefault
   }
 
   const container = document.createElement('div')
