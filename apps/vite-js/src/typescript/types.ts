@@ -2,7 +2,8 @@
 /**
  * Section: Type manipulation
  *
- * @https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
+ * @see https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
+ * @see https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
  */
 
 /*
@@ -118,6 +119,14 @@ function Types(): HTMLElement {
   type PersonArbitraryIndex = typeof MyArray[0] // get the type of an element in the array
   type PersonArbitraryGlobal = typeof MyArray[number] // get the type of an element in the array
   let tryArray: PersonArbitraryGlobal = { name: "Charlie", age: 42 } // type is { name: string; age: number }
+
+  // CONSTRAINT //
+
+  interface IEmail { message: string }
+  type MessageOf<T extends { message: any }> = T["message"]
+
+  let usageConstraint: MessageOf<IEmail> = "Hello" // type is "string" (IEmail.message type)
+
 
   // CONDITIONAL //
 
