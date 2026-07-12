@@ -42,6 +42,7 @@ function Types(): HTMLElement {
 
   /////////////
   // Classes //
+  // @see https://www.typescriptlang.org/static/TypeScript%20Classes-83cc6f8e42ba2002d5e2c04221fa78f9.png
   /////////////
 
   class GenericClass<NumType> {

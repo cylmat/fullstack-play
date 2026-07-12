@@ -2,17 +2,16 @@
 import Basics from "./basics"
 import Generics from "./generics"
 import Types from "./types"
-import UtilitiyTypes from "./utility"
 import ElementHTMLWrapper from "../components/ElementHTMLWrapper"
 
 // @see https://www.typescriptlang.org/cheatsheets/
+// @see https://coddy.tech/cheat-sheets/typescript
 
 function TsIndex(): HTMLElement {
 
     const basicsContent = new ElementHTMLWrapper(Basics())
     const genericsContent = new ElementHTMLWrapper(Generics())
     const typesContent = new ElementHTMLWrapper(Types())
-    const utilityTypesContent = new ElementHTMLWrapper(UtilitiyTypes())
 
     const container = document.createElement('div')
     container.innerHTML = `
@@ -21,7 +20,6 @@ function TsIndex(): HTMLElement {
             <div>${basicsContent}</div>
             <div>${genericsContent}</div>
             <div>${typesContent}</div>
-            <div>${utilityTypesContent}</div>
         </div>
     `
 

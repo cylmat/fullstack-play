@@ -23,7 +23,10 @@ function Basics(): HTMLElement {
   let intersection: object & { name: string } = { name: "Alice" } // intersection type
   let myObj: { name: string} = { name: "Alice" } // object type with specific properties
   let numbers: number[] = [1, 2, 3]
-  const UNIQUE_KEY: symbol = Symbol('r') // symbol is a primitive data type to create unique values
+  let UNIQUE_key1: symbol = Symbol('r')
+  let UNIQUE_key2: symbol = Symbol('r')
+  const UNIQUE_KEY: unique symbol = Symbol('r') // symbol is a primitive data type to create unique values
+  let testSymbol = UNIQUE_key1 !== UNIQUE_key2 // different but no errors
   enum Color {Red, Green, Blue}
   enum Direction { Up = 1, Down, Left, Right }
 
@@ -51,6 +54,8 @@ function Basics(): HTMLElement {
   // tuples with optional and rest elements
   let tuple: [string, number, number?, string?, ...boolean[]] = ["hello", 10] //  express an array with a fixed number of elements
   const oneHundred: bigint = BigInt(100)
+  type AllLocaleIDs = `${literaltype}_id`; // template type literal : type AllLocaleIDs = "hello_id" | "world_id"
+  let localeId: AllLocaleIDs = "hello_id"
 
   // Fct //
 
@@ -200,9 +205,9 @@ function Basics(): HTMLElement {
 
 // @ts-ignore
 let USE = {
-  age, first_name, isReady, UNIQUE_KEY, empty, undef, person, myObj, numbers, tuple, Color,
-  logg, myFct, my_fct, my_fct_declare, choice, intersection, child,
-  union, nevermind, literalValue, p: printId(2),
+  age, first_name, isReady, UNIQUE_key1, UNIQUE_KEY, empty, undef, person, myObj, numbers, tuple, Color,
+  logg, myFct, my_fct, my_fct_declare, choice, intersection, child, testSymbol,
+  union, nevermind, literalValue, p: printId(2), localeId,
   oneHundred, aliasValue, aliasId, str30, obj1, testFish,
 }
 

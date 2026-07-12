@@ -90,8 +90,58 @@ function Generics(): HTMLElement {
   // @see https://www.typescriptlang.org/docs/handbook/utility-types.htm
    **************/
 
+  // await
+  type Aw = Awaited<Promise<string>>
+  let myString: Aw = 'test'
+
+  // partial (make all properties optional)
+  type MyPartialTodo = Partial<{ title: string; description: string; completed: boolean }>
+  let myPartial: MyPartialTodo = { title: 'Clean room' }
+
+  // opposite: Required
+  type MyRequiredTodo = Required<{ title?: string; description?: string; completed?: boolean }>
+
+  type MyRO = Readonly<{ title: string; description: string; completed: boolean }>
+  let myRO: MyRO = { title: 'Clean room', description: 'Clean the room', completed: false }
+  // myRO.title = 'Clean room' // Error: Cannot assign to 'title' because it is a read-only property.
+
+  // Record<Keys, Type>
+  type CatName = "miffy" | "boris"
+  interface CatInfo { age: number; breed: string; info: string; adress: string; sevred: boolean; }
+  const cats: Record<CatName, CatInfo> = {
+    miffy: { age: 10, breed: "Persian", info: "Friendly cat", adress: "123 Street", sevred: true },
+    boris: { age: 5, breed: "Maine Coon", info: "Playful cat", adress: "456 Avenue", sevred: false },
+  }
+
+  // Pick<Type, Keys> and Omit<Type, Keys>
+  type TodoPreview = Pick<CatInfo, "age" | "breed"> // type is { age: number; breed: string; }
+  type TodoWithoutInfo = Omit<CatInfo, "info"> // type is { age: number; breed: string; adress: string; sevred: boolean; }
+
+  // Exclude<UnionType, ExcludedMembers> and Extract<Type, Union>
+  type T0 = Exclude<"a" | "b" | "c", "a">; // type is "b" | "c"
+  type T2 = Exclude<string | number | (() => void), Function> // type is string | number
+  type T3 = Extract<"a" | "b" | "c", "a" | "f"> // type is "a"
+
+  // Other
+  type TParams = Parameters<(s: string) => void> // type is [s: string]
+  type TReturn = ReturnType<() => string> // type is string
+  class C { x=0; y=0 }
+  type TypeC = InstanceType<typeof C> // let my: TypeC -like- let my: C
+  type Direction = "left" | "right" | "up" | "down";
+  let myUp:  Uppercase<Direction> = 'LEFT' // type is "LEFT" | "RIGHT" | "UP" | "DOWN"
+  // Lowercase
+  // Capitalize
+  // Uncapitalize
+
+  ///////////
+  // see also ConstructorParameters, ThisParameterType, ThisType
+
+
   // @ts-ignore
-  let USE = { myGen, loggingIdentity, myIdentity, long }
+  let USE = {
+    myGen, loggingIdentity, myIdentity, long,
+    myString
+  }
 
   const container = document.createElement('div')
     container.innerHTML = `
