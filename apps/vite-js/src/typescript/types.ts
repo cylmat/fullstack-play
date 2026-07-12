@@ -93,12 +93,12 @@ function Types(): HTMLElement {
   type DeclaredType = typeof name // DeclaredType is of type "Alice"
   let typeName: DeclaredType = "Alice"
 
-  const settings = {
+  const settingsAsType = {
     theme: "dark",
     fontSize: 16,
   };
-  type Settings = typeof settings
-  let appSettings: Settings = { theme: "dark", fontSize: 16 }
+  type SettingsType = typeof settingsAsType
+  let appSettings: SettingsType = { theme: "alpha", fontSize: 4 }
 
   // @ts-ignore
   let USE = {
