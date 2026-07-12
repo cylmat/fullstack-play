@@ -66,8 +66,8 @@ function Types(): HTMLElement {
   function createInstance<AType extends object = Blob>(c: new () => AType): AType {
     return new c()
   }
-  class Person { name = "Alice"; }
-  let a = createInstance(Person) // returns a Person instance
+  class PersonName { name = "Alice"; }
+  let a = createInstance(PersonName) // returns a PersonName instance
   let p = createInstance(class { name = "Bob" }) // returns an instance of an anonymous class with a name property
 
   ////////
@@ -100,9 +100,49 @@ function Types(): HTMLElement {
   type SettingsType = typeof settingsAsType
   let appSettings: SettingsType = { theme: "alpha", fontSize: 4 }
 
+  /////////////
+  // Indexed //
+  /////////////
+
+  type Person = { age: number; birth: {lets: number}; name: string; alive: boolean; bloc?: number };
+  type Age = Person["age"|"birth"]
+  type EveryKeys = Person[keyof Person] // union of all property types
+  let age: Age = 30; // age is of type number
+  let birth: Age = {lets: 5} // birth is of type {lets: number}
+
+  const MyArray = [
+    { name: "Alice", age: 15 },
+    { name: "Bob", age: 23 },
+    { name: "Eve", age: 38 },
+  ];
+  type PersonArbitraryIndex = typeof MyArray[0] // get the type of an element in the array
+  type PersonArbitraryGlobal = typeof MyArray[number] // get the type of an element in the array
+  let tryArray: PersonArbitraryGlobal = { name: "Charlie", age: 42 } // type is { name: string; age: number }
+
+  // CONDITIONAL //
+
+  interface Animal { live(): void }
+  interface Dog extends Animal { woof(): void }
+  interface Piou { piou(): void }
+  type ConditionNum = Dog extends Animal ? number : string
+  type ConditionStr = Piou extends Animal ? number : string
+  let testExtAnimal: ConditionNum = 5 // type is number
+  let testExtNot: ConditionStr = "hello" // type is string
+
+
+  interface IdLabel { id: number  }
+  interface NameLabel { name: string  }
+  type NameOrId<T extends number | string> = T extends number
+    ? IdLabel
+    : NameLabel
+  let testNameOrId: NameOrId<number> = { id: 5 }
+
+
   // @ts-ignore
   let USE = {
-    myNameCheked, myNameCheked2, classA, a, p, pointKey, testA, typeOfString, typeName, appSettings
+    myNameCheked, myNameCheked2, classA, a, p, pointKey, testA,
+    typeOfString, typeName, appSettings, age, birth, tryArray,
+    testExtAnimal, testExtNot, testNameOrId
   }
 
   const container = document.createElement('div')
