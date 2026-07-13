@@ -53,7 +53,7 @@ function Basics(): HTMLElement {
   let literalValue: literaltype = "hello"
   // tuples with optional and rest elements
   let tuple: [string, number, number?, string?, ...boolean[]] = ["hello", 10] //  express an array with a fixed number of elements
-  const oneHundred: bigint = BigInt(100)
+  const oneHundred: bigint = 9007199254740991n // BigInt(9007199254740991)
   type AllLocaleIDs = `${literaltype}_id`; // template type literal : type AllLocaleIDs = "hello_id" | "world_id"
   let localeId: AllLocaleIDs = "hello_id"
 
