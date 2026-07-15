@@ -19,14 +19,14 @@
 // 4. Rest and spread operators
 // 5. Iterators and for...of loops
 // 6. Map and Set data structures
+// 7. Classes
+// 8. Promises
+// 9. Symbols (unique identifier)
 
 // 5. Template literals
 // 6. Default parameters
-// 7. Classes
 // 8. Modules (import/export)
-// 9. Promises
 // 10. Generators
-// 12. Symbols
 // 14. Enhanced object literals
 // 15. New built-in methods (e.g., Object.assign, Array.from, String.includes)
 // 16. Block-scoped functions
@@ -58,8 +58,8 @@ function loadHtml() {
 
     //
 
-    for (variable of [56, 94, 23, 65, 71]) {}
-    for (prop in {a: 1, b: 2, c: 3}) {}
+    for (let variable of [56, 94, 23, 65, 71]) {}
+    for (let prop in {a: 1, b: 2, c: 3}) {}
     let p = {object: 5}
     const fruits = new Map([
         ["apples", 500],
@@ -72,20 +72,42 @@ function loadHtml() {
 
     //
 
-    class Car {
-        constructor(name, year) {
-            this.name = name
-            this.year = year
-        }
-        age() {
-            const date = new Date()
-        }
-        ageFrom(x) {
-            return x - this.year
-        }
-    }
-    console.log(Car)
-    const myCar1 = new Car("Ford", 2014)
+    // class Car {
+    //     constructor(name, year) {
+    //         this.name = name
+    //         this.year = year
+    //     }
+    //     static hello() { // defined in class itself
+    //         return "Hello!!";
+    //     }
+    //     age() {
+    //         const date = new Date()
+    //     }
+    //     ageFrom(x) {
+    //         return x - this.year
+    //     }
+    // }
+    // class Model extends Car { constructor(brand, mod) { super(brand) } }
+    // console.log(Car)
+    // const myCar1 = new Car("Ford", 2014)
+
+    // const myPromise = new Promise(function(myResolve, myReject) {
+    //     myResolve(); // when successful
+    //     myReject();  // when error
+    // });
+
+    //     // "Consuming Code" (Must wait for a fulfilled Promise).
+    // myPromise.then(
+    //     function(value) { /* code if successful */ },
+    //     function(error) { /* code if some error */ }
+    // );
+
+    //
+
+    // const person = { firstName: "John" }
+    // let id = Symbol('id')
+    // person[id] = 140353
+    // console.log(person)
 
     let content =  `
         let x = 10; const fct = (a, b) => a + b <br/>
@@ -101,6 +123,8 @@ function loadHtml() {
         uniqValues = new Set(); uniqValues.add("blop") <br/>
         <br/>
         class {} // A JavaScript class is a template for JavaScript objects. <br/>
+        const myPromise = new Promise(function(resolvSuccess, rejectError) { resolvSuccess();  rejectError(); })
+        <br/>
 `
 
 
