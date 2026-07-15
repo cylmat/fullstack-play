@@ -1,4 +1,6 @@
 
+// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript
+
 ////////
 // JS //
 ////////
@@ -15,6 +17,7 @@ let arr_items = new Array('a', 'b', 'c')
 
 function loadHtml() {
     const jsText = document.getElementById('js_text')
+
     // ! innerText is not fully implemented and can behave inconsistently, use textContent.
     jsText.textContent = 'my Vanilla JS'
 }
@@ -26,9 +29,5 @@ document.addEventListener(DOMContentLoaded, () => {
     loadHtml()
 })
 
-export {
-    loadHtml,
-    fct_construct,
-    arr_construct,
-    arr_items,
-}
+// "Export" must use "modules" <script type="module" src="script.js"></script>
+// export { loadHtml }
