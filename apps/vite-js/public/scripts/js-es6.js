@@ -166,7 +166,7 @@ function loadHtml() {
         <br/>
         for (variable of [56, 94, 23, 65, 71]) {} // (variable of iterable) <br/>
         for (prop in {a: 1, b: 2, c: 3}) {} // (property in object) <br/>
-        new Map([ ["apples", 500], ["key2", "value2"], [{object: 5}, 200] ]) // Map keys can be object<br/>
+        new Map([ ["apples", 500], ["key2", "value2"], [{object: 5}, 200] ]) // Map keys can be object <br/>
         let fruits.get("apples") // Map.get() <br/>
         uniqValues = new Set(); uniqValues.add("blop") <br/>
         <br/>
@@ -180,9 +180,9 @@ function loadHtml() {
         let entries = ["Banana", "Orange"].entries() <br/>
         let aFrom = Array.from('ABC') <br/>
         let keys = ["Banana", "Orange"].keys() <br/>
-        Object.assign(person, person2) // Assign Source to Target
-        let pattern = /\p{Emoji}/u; // "u" modifier for Unicode
-        let result = pattern.test("Hello 😄");
+        Object.assign(person, person2) // Assign Source to Target  <br/>
+        let pattern = /\p{Emoji}/u; // "u" modifier for Unicode  <br/>
+        let result = pattern.test("Hello 😄");  <br/>
         <br/>
         let firstPass_8 = [1, 6, 8, 12].find((val, index, arr) => val > 7 ) <br/>
         let firstIndex_8 = [1, 6, 8, 12].findIndex(fff) <br/>
