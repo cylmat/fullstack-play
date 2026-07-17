@@ -1,0 +1,84 @@
+{
+  "company": "Acme Corp",
+  "founded": 2012,
+  "active": true,
+  "departments": [
+    {
+      "id": 1,
+      "name": "Engineering",
+      "manager": {
+        "name": "Alice",
+        "email": "alice@example.com"
+      },
+      "employees": [
+        {
+          "id": 101,
+          "name": "John Doe",
+          "role": "Backend Engineer",
+          "salary": 85000,
+          "skills": ["Go", "Docker", "Kubernetes"],
+          "remote": true
+        },
+        {
+          "id": 102,
+          "name": "Jane Smith",
+          "role": "Frontend Engineer",
+          "salary": 80000,
+          "skills": ["React", "TypeScript"],
+          "remote": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Sales",
+      "manager": {
+        "name": "Bob",
+        "email": "bob@example.com"
+      },
+      "employees": [
+        {
+          "id": 201,
+          "name": "Charlie Brown",
+          "role": "Sales Executive",
+          "salary": 70000,
+          "skills": ["CRM", "Negotiation"],
+          "remote": true
+        }
+      ]
+    }
+  ],
+  "offices": [
+    {
+      "city": "Paris",
+      "country": "France",
+      "capacity": 120
+    },
+    {
+      "city": "Berlin",
+      "country": "Germany",
+      "capacity": 80
+    }
+  ],
+  "projects": [
+    {
+      "id": "P001",
+      "name": "Apollo",
+      "status": "active",
+      "budget": 500000,
+      "tags": ["cloud", "api"]
+    },
+    {
+      "id": "P002",
+      "name": "Hermes",
+      "status": "completed",
+      "budget": 250000,
+      "tags": ["mobile", "ios"]
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-01-15T10:30:00Z",
+    "version": 3,
+    "notes": null
+  }
+}

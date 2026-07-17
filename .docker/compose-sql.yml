@@ -27,7 +27,7 @@ services:
             MYSQL_DATABASE: mydb
             MYSQL_TCP_PORT: 3306 # Mandatory 3306 for Adminer
         volumes:
-            - ./data/init/mysql/:/docker-entrypoint-initdb.d/:ro
+            - ./data/mysql/init/:/docker-entrypoint-initdb.d/:ro
             # - ./data/config/mysql/my.cnf:/etc/mysql/my.cnf:ro
             # - ./data/config/mysql/conf.d/my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf:ro
             # - mysql:/var/lib/mysql

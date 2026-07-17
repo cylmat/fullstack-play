@@ -5,7 +5,7 @@
 <template>
   <div>
     <a href="https://vitejs.dev" target="_blank">
-      <img src="/assets/vite.svg" class="logo" alt="Vite logo" /><!-- loaded from public -->
+      <img src="/assets/info.svg" class="logo" alt="Vite logo" /><!-- loaded from public -->
     </a>
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" /><!-- loaded from component -->

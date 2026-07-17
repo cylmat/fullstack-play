@@ -17,8 +17,9 @@ ENV GID=1001
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y curl git vim wget zip
+RUN apt install -y busybox
 
-RUN apt update && apt-get install -y procps
+RUN apt-get install -y procps
 RUN apt install -y man-db manpages git-man
 
 ### UTILS ###
