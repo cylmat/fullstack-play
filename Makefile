@@ -69,7 +69,8 @@ db-down:
 
 # GIT PUSH #
 git-push:
-	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.dist.local -v .:/var/www/application fs-linux sh -c '\
+	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.dist.local \
+		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
 		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
 		git add . && git commit -m "Update by make" && git pull --rebase && git push'
 
