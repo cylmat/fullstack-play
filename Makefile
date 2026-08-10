@@ -67,8 +67,8 @@ db-up:
 db-down:
 	docker compose -f "compose-db.yml" --profile db down
 
-# Usage $ make git-push MSG="my message" #
-MSG ?= "Update by make"
+# Usage $ make git-push MSG="my message"
+MSG ?= Update by make
 git-push:
 	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.dist.local \
 		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
