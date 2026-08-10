@@ -67,12 +67,13 @@ db-up:
 db-down:
 	docker compose -f "compose-db.yml" --profile db down
 
-# GIT PUSH #
+# Usage $ make git-push MSG="my message" #
+MSG ?= "Update by make"
 git-push:
 	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.dist.local \
 		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
 		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
-		git add . && git commit -m "Update by make" && git pull --rebase && git push'
+		git add . && git commit -m "$(MSG)" && git pull --rebase && git push'
 
 linux-build:
 	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest ".docker"
