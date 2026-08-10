@@ -1,6 +1,7 @@
 
 include:
     - .docker/compose-kv.yml
+    - .docker/compose-nosql.yml
     - .docker/compose-sql.yml
 
 

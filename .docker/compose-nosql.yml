@@ -1,0 +1,75 @@
+
+# volumes:
+#     couchdb:
+
+networks:
+    default:
+        name: fs-network
+        driver: bridge
+
+services:
+
+    mongo:
+        image: mongo:8
+        restart: always
+        container_name: fs-mongo
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+        ports:
+        - 8802:27017
+        # volumes:
+            # - mongo-v:/data/db
+        profiles:
+            - db
+
+    ### ADMIN ###
+
+    mongo-express:
+        image: mongo-express:1
+        restart: always
+        container_name: fs-mongoexpress
+        ports:
+        - 8882:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+            ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+            ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017?authSource=admin
+            ME_CONFIG_BASICAUTH: false
+        depends_on:
+            - mongo
+        profiles:
+            - db
+
+
+    ################
+    ### COUCH DB ###
+    ################
+
+    # https://hub.docker.com/couchdb
+    # couchdb.apache.org
+    couchdb:
+        image: couchdb:3
+        container_name: fs-couchdb
+        restart: always
+        ports: [8803:5984]
+        environment:
+            COUCHDB_USER: admin
+            COUCHDB_PASSWORD: pass
+        # volumes:
+            # - ./data/config/couchdb/couchdb.ini:/opt/couchdb/etc/local.ini:ro
+            # - ./data/config/couchdb/local.d/:/opt/couchdb/etc/local.d/:ro
+            # - couchdb:/opt/couchdb/data
+        profiles:
+            - db
+
+
+    ### DYNAMODB ###
+
+    # https://hub.docker.com/r/amazon/dynamodb-local
+    # dynamodb:
+    #     image: amazon/dynamodb-local:3
+    #     container_name: fs-dynamodb
+    #     restart: always
+    #     profiles:
+    #       - db

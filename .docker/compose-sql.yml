@@ -9,15 +9,13 @@ networks:
 
 services:
 
-    ################
-    ### DATABASE ###
-    ################
-
+    #############
     ### MYSQL ###
+    #############
 
     # https://hub.docker.com/_/mysql
     mysql:
-        image: mysql:9.7
+        image: mysql:9
         container_name: fs-mysql
         restart: always
         environment:
@@ -31,16 +29,18 @@ services:
             # - ./data/config/mysql/my.cnf:/etc/mysql/my.cnf:ro
             # - ./data/config/mysql/conf.d/my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf:ro
             # - mysql:/var/lib/mysql
-        ports: [8801:3306]
+        ports: [8804:3306]
         profiles:
           - db
+
+    ### ADMIN ###
 
     # https://hub.docker.com/_/adminer
     adminer:
         image: adminer:5-standalone
         container_name: fs-adminer
         restart: always
-        ports: [8881:8080]
+        ports: [8884:8080]
         profiles:
           - db
 
@@ -54,3 +54,23 @@ services:
     #     external_links:
     #         - mysql:mysql
 
+
+
+    ################
+    ### POSTGRES ###
+    ################
+
+    postgres:
+        image: postgres:18
+        container_name: fs-postgres
+        restart: always
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: pass
+            POSTGRES_DB: postdb
+        ports:
+            - 8805:5432
+        # volumes:
+        #     - postgres-v:/var/lib/postgresql/data
+        profiles:
+            - db
