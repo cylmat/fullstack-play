@@ -21,6 +21,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y curl git vim zip
 RUN apt install -y ca-certificates
 
+# install dependencies for phpize and pecl ($PHPIZE_DEPS: autoconf, dpkg-dev, file, g++, gcc, libc-dev, make, pkg-config, re2c)
+RUN echo $PHPIZE_DEPS
+RUN apt-get install -y $PHPIZE_DEPS
+
 # For use pkill
 RUN apt-get update && apt-get install -y procps
 
@@ -61,32 +65,38 @@ RUN apt install -y pkg-config
 #
 # Extensions installed with docker-php-ext automatically created
 # /usr/local/etc/php/conf.d/docker-php-ext-***.ini
+#
+# Configuration, ex: docker-php-ext-configure gd --with-jpeg
 ##################
 
 # @see https://www.php.net/manual/en/refs.basic.other.php
 
 RUN apt install -y \
+    libicu-dev \
     libxslt1-dev \
     libzip-dev
 
+# ctype: allow to check for character classes in strings
+# intl: Internationalization extension (Intl) provides capabilities for software internationalization
+# spl: Standard PHP Library (SPL) is a collection of interfaces and classes that are meant to solve standard problems
 RUN docker-php-ext-install -j$(nproc) bcmath
 RUN docker-php-ext-install -j$(nproc) ctype
 RUN docker-php-ext-install -j$(nproc) fileinfo
 RUN docker-php-ext-install -j$(nproc) gettext
+RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) posix
 RUN docker-php-ext-install -j$(nproc) session
 RUN docker-php-ext-install -j$(nproc) xml
 RUN docker-php-ext-install -j$(nproc) xsl
 RUN docker-php-ext-install -j$(nproc) zip
 
-# RUN docker-php-ext-install -j$(nproc) intl
 # RUN docker-php-ext-install -j$(nproc) ldap
 # RUN docker-php-ext-configure odbc && docker-php-ext-install -j$(nproc) odbc
 # RUN docker-php-ext-install -j$(nproc) opcache (integrated in php 8.5, no need to install)
 # RUN docker-php-ext-install -j$(nproc) pcntl
 # RUN docker-php-ext-install -j$(nproc) phar
 # RUN docker-php-ext-install -j$(nproc) soap
-# RUN docker-php-ext-install -j$(nproc) spl
+# RUN docker-php-ext-install -j$(nproc) spl (integrated, no need to install)
 # RUN docker-php-ext-install -j$(nproc) sodium
 # RUN docker-php-ext-install -j$(nproc) sockets
 # RUN docker-php-ext-configure standard && docker-php-ext-install -j$(nproc) standard
@@ -105,18 +115,25 @@ RUN pecl channel-update pecl.php.net
 ### Add extension=*** in php.ini for each pecl's extensions
 # RUN apt install -y libmcrypt-dev libpcre3-dev
 
+RUN apt install -y \
+    libmcrypt-dev
+
+### starred: redis, memcached, mongodb, imagick, xdebug, pcov, xhprof, ast, ds, psr, phalcon, mcrypt, oauth
+#crypto #env #http_message #imagick #imap #ingres #lua #v8js
+
+# doc: https://phalcon.io/en-us
+# doc: https://wiki.swoole.com/en (https://www.php.net/manual/fr/book.swoole.php)
 
 RUN echo "\n" | pecl install apcu
 RUN echo "\n" | pecl install ast
 RUN echo "\n" | pecl install ds
+RUN echo "\n" | pecl install mcrypt
 RUN echo "\n" | pecl install psr
 
-# RUN echo "\n" | pecl install mcrypt
-# RUN echo "\n" | pecl install phalcon
 # RUN echo "\n" | pecl install oauth
+# RUN echo "\n" | pecl install phalcon
+# RUN echo "\n" | pecl install swoole
 
-
-#crypto #env #http_message #imagick #imap #ingres #lua #v8js
 
 
 
@@ -125,20 +142,39 @@ RUN echo "\n" | pecl install psr
 ### DB extensions ###
 #####################
 
-
 RUN apt install -y \
     libsqlite3-dev \
     libpq-dev
 
+
+# dba: Database (DBA) functions provide a uniform way to access various database formats
 RUN docker-php-ext-install -j$(nproc) dba
-RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
 RUN docker-php-ext-install -j$(nproc) pdo_pgsql
 RUN docker-php-ext-install -j$(nproc) pdo_sqlite
+
+# RUN docker-php-ext-install -j$(nproc) pdo
 # RUN docker-php-ext-install -j$(nproc) pdo_odbc
 
 RUN yes '' | pecl install redis
 # RUN echo "\yes" | pecl install mongodb
+
+
+
+
+############################
+### Coverage & Profiling ###
+############################
+
+
+### @see https://xdebug.org ###
+
+RUN pecl install \
+    # pcov
+    xdebug
+    # xhprof
+
+
 
 
 ################
@@ -216,20 +252,6 @@ USER user:user
 
 WORKDIR /var/www/application
 
-
-
-
-############################
-### Coverage & Profiling ###
-############################
-
-
-### @see https://xdebug.org ###
-
-# RUN pecl install \
-# #     pcov \
-#     xdebug
-# #     xhprof
 
 
 ### Ssh ###

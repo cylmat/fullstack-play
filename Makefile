@@ -155,12 +155,12 @@ sym-start:
 	docker exec -u 1000 fs-symfony-php npm run watch
 
 sym-migrate:
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:drop -f --if-exists
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:create
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:migrations:migrate -n
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:drop -f --if-exists || true
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:create || true
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:migrations:migrate -n || true
 
 sym-fixtures:
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:fixtures:load -n
+	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:fixtures:load -n || true
 
 sym-test:
 	docker exec -it fs-symfony-php  composer run-script test

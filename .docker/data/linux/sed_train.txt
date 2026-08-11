@@ -1,0 +1,48 @@
+2026-08-01 08:12:04 INFO user=alice action=login ip=192.168.1.20
+2026-08-01 08:15:31 INFO user=bob action=login ip=192.168.1.21
+2026-08-01 08:17:42 WARN user=charlie action=failed_login ip=10.0.0.45
+2026-08-01 08:21:09 INFO user=alice action=download file=rapport.pdf size=245KB
+2026-08-01 08:24:55 ERROR user=david action=payment amount=129.90 currency=EUR
+2026-08-01 08:30:12 INFO user=emma action=logout ip=192.168.1.25
+
+ID:1001 | Nom:Martin | Prenom:Sophie | Ville:Paris | Email:sophie.martin@example.com | Statut:actif
+ID:1002 | Nom:Bernard | Prenom:Lucas | Ville:Lyon | Email:lucas.bernard@example.com | Statut:actif
+ID:1003 | Nom:Dubois | Prenom:Camille | Ville:Nantes | Email:camille.dubois@example.com | Statut:inactif
+ID:1004 | Nom:Moreau | Prenom:Thomas | Ville:Toulouse | Email:thomas.moreau@example.com | Statut:actif
+ID:1005 | Nom:Laurent | Prenom:Julie | Ville:Bordeaux | Email:julie.laurent@example.com | Statut:inactif
+
+Produit:Clavier | Prix:49.90 | Stock:25 | Categorie:Informatique
+Produit:Souris | Prix:24.50 | Stock:42 | Categorie:Informatique
+Produit:Ecran 27 pouces | Prix:249.99 | Stock:8 | Categorie:Informatique
+Produit:Chaise de bureau | Prix:189.00 | Stock:12 | Categorie:Bureau
+Produit:Carnet A5 | Prix:6.90 | Stock:75 | Categorie:Fournitures
+
+Serveur:web-01 | IP:10.10.1.10 | Port:443 | Etat:UP
+Serveur:web-02 | IP:10.10.1.11 | Port:443 | Etat:DOWN
+Serveur:db-01 | IP:10.10.2.10 | Port:5432 | Etat:UP
+Serveur:cache-01 | IP:10.10.3.10 | Port:6379 | Etat:UP
+
+Commande #CMD-2026-001 | Client:Alice Dupont | Total:89.40 EUR | Paiement:CB | Statut:livree
+Commande #CMD-2026-002 | Client:Bob Martin | Total:245.00 EUR | Paiement:Paypal | Statut:en_cours
+Commande #CMD-2026-003 | Client:Claire Petit | Total:19.90 EUR | Paiement:CB | Statut:annulee
+Commande #CMD-2026-004 | Client:David Leroy | Total:512.75 EUR | Paiement:virement | Statut:livree
+
+contact:Jean Dupont <jean.dupont@example.com> tel:+33 6 12 34 56 78
+contact:Marie Curie <marie.curie@example.org> tel:+33 1 45 67 89 01
+contact:Paul Durand <paul.durand@example.net> tel:+33 7 98 76 54 32
+
+# Lignes de commentaire à conserver ou supprimer
+# TODO: remplacer ancien serveur
+# DEBUG: activer uniquement en environnement de test
+
+France
+Belgique
+Suisse
+Allemagne
+Espagne
+Italie
+
+ERROR: connexion impossible au serveur db-01
+WARNING: espace disque faible sur web-02
+INFO: sauvegarde terminee avec succes
+INFO: utilisateur alice modifie son profil
