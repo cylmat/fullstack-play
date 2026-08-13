@@ -20,7 +20,7 @@ if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 }
 
-// Mandatory to avoid Phpunit error
+// Avoid Phpunit error
 // \Symfony\Component\ErrorHandler\ErrorHandler::register();
 
 // Executes console command

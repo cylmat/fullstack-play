@@ -7,9 +7,8 @@ when@dev:
         # how to configure the bundle.
         clients:
             default:
-                #alias: local
                 type: predis
-                dsn: "%env(REDIS_DSN)%/0"
+                dsn: "%env(resolve:REDIS_DSN)%"
                 logging: '%kernel.debug%'
 
 when@test:
@@ -17,14 +16,8 @@ when@test:
         clients:
             default:
                 type: predis
-                dsn: "%env(REDIS_DSN)%/1"
+                dsn: "redis://not-used:0" # NOT used as redis client is mocked !
 
-            #  # @snc_redis.elasticache
-            # elasticache:
-            #     type: predis
-            #     alias: elasticache
-            #     dsn: "%env(AWS_TERMINAISON)%"
-            #     logging: '%kernel.debug%'
 
 ###
 # NO snc_redis PROD BUNDLE !

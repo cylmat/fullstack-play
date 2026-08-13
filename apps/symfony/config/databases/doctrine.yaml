@@ -70,3 +70,14 @@ doctrine:
                 #         prefix: 'App\AppBundle'
                 #         dir: '%kernel.project_dir%/src/AppBundle/Domain/Entity'
                 #         is_bundle: false # change 'dir' attribute as relative path
+
+when@test:
+    doctrine:
+        dbal:
+            connections:
+                default:
+                    url: 'mysql://not-used:0' # NOT used as redis client is mocked !
+                    # dbname_suffix: 'test_'
+                    # memory: false
+                    # driver: pdo_sqlite
+                    # server_version: '3'

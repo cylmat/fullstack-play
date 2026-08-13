@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Manager\Data;
 
-use Doctrine\DBAL\Result;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class MysqlManager
@@ -21,13 +20,20 @@ final class MysqlManager
     /** @return mixed[] */
     public function getData(): array
     {
-        $query = file_get_contents(__DIR__.'/Mysql.sql');
-        $this->runQuery($query);
+        try {
+            $query = file_get_contents(__DIR__.'/Mysql.sql');
+            $this->runQuery($query);
 
-        return [
-            'table6' => $this->runQuery('SELECT * FROM my_table6'),
-            'black_hole' => $this->runQuery('SELECT * FROM my_black_hole'),
-        ];
+            return [
+                'table6' => $this->runQuery('SELECT * FROM my_table6'),
+                'black_hole' => $this->runQuery('SELECT * FROM my_black_hole'),
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'error' => $e->getMessage(),
+            ];
+        }
+
     }
 
     /** @return mixed[] */

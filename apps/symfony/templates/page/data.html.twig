@@ -18,12 +18,11 @@
 
     <section id="data" class="text-center justify-content-center">
 
-        <div class="row">
+        {# <div class="row">
             <div class="col">
                 <fieldset id="factory" class="border border-2">
                     <legend>Factories</legend>
                     <div>
-                        {# <div id="factoriesList">Loading...</div> #}
                         <form>
                             <div class="form-group">
                                 <label for="factoryName">Factory name</label>
@@ -35,7 +34,7 @@
 
                 </fieldset>
             </div>
-        </div>
+        </div> #}
 
         <div class="row">
             <div class="col">
@@ -48,6 +47,28 @@
                             {{ key_data_type }}:
                             {% for k_data, my_data in my_data_type %}
                                 {# {{ k_data }}: {{ my_data }} #}
+
+                                {% for k_item, my_data_item in my_data %}
+                                    [{{ k_item }}]: {{ my_data_item }}
+                                {% endfor %}
+                            {% endfor %}
+                            <br/>
+                        {% endfor %}
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col">
+                <fieldset id="redis" class="border border-2">
+                    <legend>Redis</legend>
+                    <div>
+                        {% for key_data_type, my_data_type in redis %}
+                            ---
+                            {{ key_data_type }}:
+                            {% for k_data, my_data in my_data_type %}
 
                                 {% for k_item, my_data_item in my_data %}
                                     [{{ k_item }}]: {{ my_data_item }}

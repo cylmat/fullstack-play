@@ -22,7 +22,7 @@ services:
         user: 1000:1000
         environment:
             MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
-            REDIS_DSN: 'redis://redis:6379'
+            REDIS_DSN: 'redis://redis:6379/1'
         ports:
             - 8001:81   # symfony server
             - 8082:8080 # npm dev server (must match weback config)
