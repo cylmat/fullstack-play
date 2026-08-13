@@ -41,18 +41,15 @@
                 <fieldset id="mysql" class="border border-2">
                     <legend>MySQL</legend>
                     <div>
-                        {# <div id="mysqlData">Loading...</div> #}
                         {% for key_data_type, my_data_type in mysql %}
-                            ---
-                            {{ key_data_type }}:
+                            <br/>---<br/>
+                            {{ key_data_type }}
                             {% for k_data, my_data in my_data_type %}
-                                {# {{ k_data }}: {{ my_data }} #}
-
+                                <br/>
                                 {% for k_item, my_data_item in my_data %}
                                     [{{ k_item }}]: {{ my_data_item }}
                                 {% endfor %}
                             {% endfor %}
-                            <br/>
                         {% endfor %}
                     </div>
 
@@ -66,15 +63,14 @@
                     <legend>Redis</legend>
                     <div>
                         {% for key_data_type, my_data_type in redis %}
-                            ---
-                            {{ key_data_type }}:
+                            <br/>---<br/>
+                            {{ key_data_type }}
                             {% for k_data, my_data in my_data_type %}
-
+                                <br/>
                                 {% for k_item, my_data_item in my_data %}
                                     [{{ k_item }}]: {{ my_data_item }}
                                 {% endfor %}
                             {% endfor %}
-                            <br/>
                         {% endfor %}
                     </div>
 

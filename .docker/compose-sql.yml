@@ -32,6 +32,7 @@ services:
         ports: [8804:3306]
         profiles:
           - db
+          - db-sql
 
     ### ADMIN ###
 
@@ -43,6 +44,7 @@ services:
         ports: [8884:8080]
         profiles:
           - db
+          - db-sql
 
     # phpmyadmin:
     #     image: phpmyadmin:5.0
@@ -74,3 +76,4 @@ services:
         #     - postgres-v:/var/lib/postgresql/data
         profiles:
             - db
+            - db-sql

@@ -25,6 +25,7 @@ services:
         #     - ./data/config/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
         profiles:
           - db
+          - db-kv
 
     #############
     ### ADMIN ###
@@ -39,3 +40,4 @@ services:
         ports: [8881:5540]
         profiles:
           - db
+          - db-kv

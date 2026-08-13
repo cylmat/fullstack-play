@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Manager\Data;
 
+use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 final class MysqlManager
 {
@@ -28,9 +30,13 @@ final class MysqlManager
                 'table6' => $this->runQuery('SELECT * FROM my_table6'),
                 'black_hole' => $this->runQuery('SELECT * FROM my_black_hole'),
             ];
-        } catch (\Throwable $e) {
+        } catch (ConnectionException) {
             return [
-                'error' => $e->getMessage(),
+                '' => [['MySql not reachable.']],
+            ];
+        } catch (Throwable $e) {
+            return [
+                'error' => [[$e->getMessage()]],
             ];
         }
 

@@ -11,6 +11,12 @@ Available commands: \n\
 - docker-build: Build php Docker images \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
+- db-kv-up:     Start key-value database servers \n\
+- db-kv-down:   Stop key-value database servers \n\
+- db-nosql-up:  Start NoSQL database servers \n\
+- db-nosql-down: Stop NoSQL database servers \n\
+- db-sql-up:    Start SQL database servers \n\
+- db-sql-down:  Stop SQL database servers \n\
 - git-push:     Push all changes to git \n\
 - linux-bash:   Open a bash shell in the Linux container \n\
 - js-up:        Start Vanilla JS development server \n\
@@ -66,6 +72,24 @@ db-up:
 
 db-down:
 	docker compose -f "compose-db.yml" --profile db down
+
+db-kv-up:
+	docker compose -f "compose-db.yml" --profile db-kv up --build -d
+
+db-kv-down:
+	docker compose -f "compose-db.yml" --profile db-kv down
+
+db-nosql-up:
+	docker compose -f "compose-db.yml" --profile db-nosql up --build -d
+
+db-nosql-down:
+	docker compose -f "compose-db.yml" --profile db-nosql down
+
+db-sql-up:
+	docker compose -f "compose-db.yml" --profile db-sql up --build -d
+
+db-sql-down:
+	docker compose -f "compose-db.yml" --profile db-sql down
 
 # Usage $ make git-push MSG="my message"
 MSG ?= Update by make

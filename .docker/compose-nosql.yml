@@ -22,6 +22,7 @@ services:
             # - mongo-v:/data/db
         profiles:
             - db
+            - db-nosql
 
     ### ADMIN ###
 
@@ -40,6 +41,7 @@ services:
             - mongo
         profiles:
             - db
+            - db-nosql
 
 
     ################
@@ -62,6 +64,7 @@ services:
             # - couchdb:/opt/couchdb/data
         profiles:
             - db
+            - db-nosql
 
 
     ### DYNAMODB ###

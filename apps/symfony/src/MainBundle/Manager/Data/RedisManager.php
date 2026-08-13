@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\MainBundle\Manager\Data;
 
 use Predis\ClientInterface as PredisClientInterface;
+use Predis\Connection\Resource\Exception\StreamInitException;
+use Throwable;
 
 final class RedisManager
 {
@@ -19,11 +21,15 @@ final class RedisManager
             $script = $this->getRandomInt();
 
             return [
-                'randomScriptInt' => $script,
+                'randomScriptInt' => [[$script]],
             ];
-        } catch (\Throwable $e) {
+        } catch (StreamInitException) {
             return [
-                'error' => $e->getMessage(),
+                '' => [['Redis not reachable.']],
+            ];
+        } catch (Throwable $e) {
+            return [
+                'error' => [[$e->getMessage()]],
             ];
         }
     }
