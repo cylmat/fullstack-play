@@ -5,7 +5,7 @@ namespace App\Tests\MainBundle\Controller;
 use App\Tests\TestTrait;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
-use Predis\ClientInterface;
+use Predis\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,7 +33,7 @@ final class DataControllerTest extends WebTestCase
     # Allow testing without database service running
     private function mockClients(): void
     {
-        $redis = $this->createMock(ClientInterface::class);
+        $redis = $this->createMock(Client::class);
         // $redis->method('eval')->willReturn(42);
 
         $mysql = $this->createMock(EntityManager::class);
