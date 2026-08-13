@@ -28,6 +28,10 @@ RUN apt install -y man-db manpages git-man
 RUN apt install -y \
     jq
 
+### DATA
+
+COPY ./linux/data /var/www/data
+
 ### USER ###
 
 RUN echo 'root:root' | chgpasswd

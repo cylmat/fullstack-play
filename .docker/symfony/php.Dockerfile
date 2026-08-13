@@ -121,6 +121,7 @@ RUN apt install -y \
 ### starred: redis, memcached, mongodb, imagick, xdebug, pcov, xhprof, ast, ds, psr, phalcon, mcrypt, oauth
 #crypto #env #http_message #imagick #imap #ingres #lua #v8js
 
+# ast: Abstract Syntax Tree (AST) extension for PHP
 # doc: https://phalcon.io/en-us
 # doc: https://wiki.swoole.com/en (https://www.php.net/manual/fr/book.swoole.php)
 

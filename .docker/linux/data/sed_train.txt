@@ -42,7 +42,7 @@ Allemagne
 Espagne
 Italie
 
-ERROR: connexion impossible au serveur db-01
-WARNING: espace disque faible sur web-02
-INFO: sauvegarde terminee avec succes
-INFO: utilisateur alice modifie son profil
+ERROR: test connexion impossible au serveur db-01
+WARNING: test espace disque faible sur web-02
+INFO: test sauvegarde terminee avec succes
+INFO: test utilisateur alice modifie son profil
