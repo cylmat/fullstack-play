@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\MainBundle\Manager\Data;
 
+use Predis\Client as PredisClient;
 use Predis\ClientInterface as PredisClientInterface;
 use Predis\Connection\Resource\Exception\StreamInitException;
 use Throwable;
 
 final class RedisManager
 {
+    /** @param PredisClient $redisClient */
     public function __construct(
         private PredisClientInterface $redisClient,
     ) {}
