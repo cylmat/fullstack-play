@@ -18,19 +18,34 @@ final class RedisManager
     public function getData(): array
     {
         try {
+            $this->init();
+
             $script = $this->getRandomInt();
 
             return [
-                'randomScriptInt' => [[$script]],
+                'randomScriptInt' => $script,
+                'getAlpha' => $this->redisClient->get('ALPHA'),
             ];
         } catch (StreamInitException) {
             return [
-                '' => [['Redis not reachable.']],
+                '' => 'Redis not reachable.',
             ];
         } catch (Throwable $e) {
             return [
-                'error' => [[$e->getMessage()]],
+                'error' => $e->getMessage(),
             ];
+        }
+    }
+
+    private function init(): void
+    {
+        $script = file(__DIR__.'/Redis.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($script as $line) {
+            if (str_starts_with($line, '--')) {
+                continue;
+            }
+            $commands = explode(' ', $line);
+            $this->redisClient->executeRaw($commands);
         }
     }
 

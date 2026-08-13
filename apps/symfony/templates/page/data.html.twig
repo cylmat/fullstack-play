@@ -42,7 +42,6 @@
                     <legend>MySQL</legend>
                     <div>
                         {% for key_data_type, my_data_type in mysql %}
-                            <br/>---<br/>
                             {{ key_data_type }}
                             {% for k_data, my_data in my_data_type %}
                                 <br/>
@@ -50,6 +49,7 @@
                                     [{{ k_item }}]: {{ my_data_item }}
                                 {% endfor %}
                             {% endfor %}
+                            <br/>---<br/>
                         {% endfor %}
                     </div>
 
@@ -63,14 +63,8 @@
                     <legend>Redis</legend>
                     <div>
                         {% for key_data_type, my_data_type in redis %}
-                            <br/>---<br/>
-                            {{ key_data_type }}
-                            {% for k_data, my_data in my_data_type %}
-                                <br/>
-                                {% for k_item, my_data_item in my_data %}
-                                    [{{ k_item }}]: {{ my_data_item }}
-                                {% endfor %}
-                            {% endfor %}
+                            {{ key_data_type }}: {{my_data_type}}
+                            <br/>
                         {% endfor %}
                     </div>
 

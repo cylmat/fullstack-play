@@ -23,8 +23,7 @@ final class MysqlManager
     public function getData(): array
     {
         try {
-            $query = file_get_contents(__DIR__.'/Mysql.sql');
-            $this->runQuery($query);
+            $this->init();
 
             return [
                 'table6' => $this->runQuery('SELECT * FROM my_table6'),
@@ -39,7 +38,12 @@ final class MysqlManager
                 'error' => [[$e->getMessage()]],
             ];
         }
+    }
 
+    private function init(): void
+    {
+        $query = file_get_contents(__DIR__.'/Mysql.sql');
+        $this->runQuery($query);
     }
 
     /** @return mixed[] */
