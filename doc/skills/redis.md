@@ -1,5 +1,7 @@
 # Roadmap Redis avancée
 
+https://redis.io/docs/latest/commands
+
 ### 1. Structures de données
 
 - Strings

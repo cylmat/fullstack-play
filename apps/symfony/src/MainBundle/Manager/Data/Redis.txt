@@ -2,4 +2,36 @@
 -- INIT --
 -- -------
 
+-- Seven Databases in Seven Weeks (Luc Perkins)
+
 SET ALPHA INIT_DATA_5
+SET user:123 "Catherine" EX 3600
+
+-- TRANSACTION (all or nothing)
+
+MULTI
+SET test_trans http://transact
+SET trans_count 4
+INCR trans_count
+EXEC
+
+--
+-- (H)ASHES           (HSET key field value [field value ...])
+--      HDEL, HINCBY, HLEN, HGETALL, HSETNX
+-- (L)LIST / (R)LIST
+--      RPOPLPUSH
+-- (S)ET
+-- (Z) SORTED
+--
+
+-- @https://redis.io/docs/latest/commands/mset (multi-set)
+
+MSET user:luc123:name Luc user:luc123:pass s3cret
+HSET user:luc name Luc pass s3cret phone 123 willbedeleted 999
+HGET user:luc phone
+HDEL user:luc willbedeleted
+
+-- LIST (queue, stack)
+
+RPUSH eric:wishlist 7wks gog prag
+LREM eric:wishlist 5 100
