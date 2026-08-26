@@ -1,17 +1,22 @@
 Php
 ---
 
-- APCu
 - Php 8 features
-- Php patterns
+- Php Patterns
+- APCu
 - Websockets
+- Weakobject
+- SPL
 
 Symfony
 -------
 
-- Forms/Validation/CSRF
-- HTTP Cache
 - Symfony 8 features
+- Doctrine ORM advanced (relations, DQL, QueryBuilder, Lazy/Eager Loading, Lifecycle Callbacks, Migrations, Fixtures)
+- Forms/Validation/CSRF
+- Middleware/Event Dispatcher
+- HTTP Cache
+- Voter/Authorization
 
 Js
 --
@@ -28,6 +33,7 @@ Database
 --------
 
 - Redis "Seven Databases in Seven Weeks" (Luc Perkins)
+- RabbitMq
 
 Linux
 -----
