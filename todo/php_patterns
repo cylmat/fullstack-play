@@ -1,0 +1,614 @@
+Design Patterns in PHP
+======================
+
+Design patterns are reusable, language-independent approaches to recurring software-design problems. They are not copy-and-paste libraries or rigid frameworks; they are named design ideas that help developers communicate clearly, isolate change, and keep object-oriented code maintainable.
+
+This guide covers the major Gang of Four (GoF) patterns and several PHP-specific practices, with examples using modern PHP syntax. The examples assume PHP 8.1+ and use strict typing where practical.
+
+1. Creational Patterns
+----------------------
+
+Creational patterns deal with how objects are created. They help keep construction logic separate from business logic and make code easier to test and change.
+
+1.1 Factory Method
+
+Factory Method moves object-creation decisions into a dedicated method or creator class. Client code depends on an abstraction instead of knowing which concrete class to instantiate.
+
+    interface Logger
+    {
+        public function log(string $message): void;
+    }
+
+    final class FileLogger implements Logger
+    {
+        public function __construct(private string $file) {}
+
+        public function log(string $message): void
+        {
+            file_put_contents($this->file, $message . PHP_EOL, FILE_APPEND);
+        }
+    }
+
+    final class NullLogger implements Logger
+    {
+        public function log(string $message): void {}
+    }
+
+    final class LoggerFactory
+    {
+        public static function create(bool $enabled, string $file): Logger
+        {
+            return $enabled ? new FileLogger($file) : new NullLogger();
+        }
+    }
+
+    $logger = LoggerFactory::create(true, '/tmp/app.log');
+    $logger->log('Order created');
+
+Use Factory Method when the concrete implementation varies, creation involves validation or configuration, or callers should not be coupled to concrete classes. Avoid a factory that is only a thin wrapper around `new` unless it provides a meaningful abstraction.
+
+1.2 Abstract Factory
+
+Abstract Factory creates families of related objects without exposing their concrete classes. It is useful when a set of components must be compatible with one another.
+
+    interface Button { public function render(): string; }
+    interface Dialog { public function render(): string; }
+
+    interface UiFactory
+    {
+        public function button(): Button;
+        public function dialog(): Dialog;
+    }
+
+    final class WebButton implements Button
+    {
+        public function render(): string { return '<button>Save</button>'; }
+    }
+
+    final class WebDialog implements Dialog
+    {
+        public function render(): string { return '<dialog>Save changes?</dialog>'; }
+    }
+
+    final class WebUiFactory implements UiFactory
+    {
+        public function button(): Button { return new WebButton(); }
+        public function dialog(): Dialog { return new WebDialog(); }
+    }
+
+The same `UiFactory` interface could have a `MobileUiFactory` implementation. The application can switch product families without changing its business logic.
+
+1.3 Builder
+
+Builder separates the construction of a complex object from its representation. It is especially useful when an object has many optional parameters or must be assembled step by step.
+
+    final class Report
+    {
+        public function __construct(
+            public readonly string $title,
+            public readonly array $sections,
+            public readonly bool $includeFooter,
+        ) {}
+    }
+
+    final class ReportBuilder
+    {
+        private string $title = 'Untitled';
+        private array $sections = [];
+        private bool $includeFooter = false;
+
+        public function title(string $title): self
+        {
+            $this->title = $title;
+            return $this;
+        }
+
+        public function addSection(string $heading, string $body): self
+        {
+            $this->sections[] = compact('heading', 'body');
+            return $this;
+        }
+
+        public function withFooter(bool $include = true): self
+        {
+            $this->includeFooter = $include;
+            return $this;
+        }
+
+        public function build(): Report
+        {
+            return new Report($this->title, $this->sections, $this->includeFooter);
+        }
+    }
+
+    $report = (new ReportBuilder())
+        ->title('Monthly sales')
+        ->addSection('Summary', 'Sales increased this month.')
+        ->withFooter()
+        ->build();
+
+In modern PHP, named arguments and value objects can sometimes provide a simpler alternative to Builder. Use Builder when construction has meaningful sequencing or many optional settings.
+
+1.4 Singleton
+
+Singleton restricts a class to one instance and provides a global access point. Although historically common, it is usually discouraged because it introduces hidden global state, makes tests harder, and creates implicit coupling.
+
+Prefer dependency injection and an explicitly managed shared service:
+
+    final class Clock
+    {
+        public function now(): DateTimeImmutable
+        {
+            return new DateTimeImmutable();
+        }
+    }
+
+    final class InvoiceService
+    {
+        public function __construct(private Clock $clock) {}
+    }
+
+A dependency-injection container may manage one shared instance without making the class itself a Singleton.
+
+1.5 Prototype
+
+Prototype creates new objects by copying an existing object. PHP supports this with `clone`, although mutable nested properties require care.
+
+    final class EmailTemplate
+    {
+        public function __construct(
+            public string $subject,
+            public string $body,
+        ) {}
+    }
+
+    $base = new EmailTemplate('Welcome, {{name}}', 'Hello {{name}}');
+    $copy = clone $base;
+    $copy->subject = 'Welcome, Ada';
+
+Use Prototype when object initialization is expensive or when many similar objects are needed. Ensure cloned objects do not accidentally share mutable state.
+
+2. Structural Patterns
+----------------------
+
+Structural patterns explain how classes and objects can be composed into larger structures while keeping coupling manageable.
+
+2.1 Adapter
+
+Adapter converts one interface into another expected by the client. It is useful when integrating legacy code or a third-party service.
+
+    interface PaymentGateway
+    {
+        public function charge(int $cents, string $currency): string;
+    }
+
+    final class LegacyPaymentsApi
+    {
+        public function makePayment(float $amount, string $currency): int
+        {
+            // Legacy API expects major currency units and returns a numeric ID.
+            return 12345;
+        }
+    }
+
+    final class LegacyPaymentAdapter implements PaymentGateway
+    {
+        public function __construct(private LegacyPaymentsApi $api) {}
+
+        public function charge(int $cents, string $currency): string
+        {
+            $id = $this->api->makePayment($cents / 100, $currency);
+            return (string) $id;
+        }
+    }
+
+Keep translation, error mapping, and data conversion inside the adapter so the rest of the application uses the stable domain interface.
+
+2.2 Decorator
+
+Decorator attaches additional behavior to an object dynamically by wrapping it. It is an alternative to creating many subclasses.
+
+    interface Notifier
+    {
+        public function send(string $message): void;
+    }
+
+    final class EmailNotifier implements Notifier
+    {
+        public function send(string $message): void
+        {
+            // Send email.
+        }
+    }
+
+    final class LoggingNotifier implements Notifier
+    {
+        public function __construct(private Notifier $inner) {}
+
+        public function send(string $message): void
+        {
+            error_log('Sending notification');
+            $this->inner->send($message);
+        }
+    }
+
+    final class RetryNotifier implements Notifier
+    {
+        public function __construct(private Notifier $inner, private int $attempts = 3) {}
+
+        public function send(string $message): void
+        {
+            $last = null;
+            for ($i = 0; $i < $this->attempts; $i++) {
+                try {
+                    $this->inner->send($message);
+                    return;
+                } catch (Throwable $e) {
+                    $last = $e;
+                }
+            }
+            throw $last ?? new RuntimeException('Notification failed');
+        }
+    }
+
+    $notifier = new RetryNotifier(new LoggingNotifier(new EmailNotifier()));
+
+Decorators should preserve the wrapped component's contract. Middleware pipelines in web frameworks are a common practical application of this pattern.
+
+2.3 Facade
+
+Facade provides a small, convenient interface over a complicated subsystem.
+
+    final class CheckoutFacade
+    {
+        public function __construct(
+            private Cart $cart,
+            private PaymentGateway $payments,
+            private Inventory $inventory,
+            private OrderRepository $orders,
+        ) {}
+
+        public function checkout(int $userId, string $currency): string
+        {
+            $items = $this->cart->itemsFor($userId);
+            $this->inventory->reserve($items);
+            $paymentId = $this->payments->charge($this->cart->totalCents($userId), $currency);
+            return $this->orders->create($userId, $items, $paymentId);
+        }
+    }
+
+A Facade should simplify coordination, not become a giant class containing every business rule. Move domain decisions to focused services or entities.
+
+2.4 Proxy
+
+Proxy provides a substitute for another object and controls access to it. Common forms include lazy-loading proxies, access-control proxies, caching proxies, and remote-service proxies.
+
+    final class CachedProductRepository implements ProductRepository
+    {
+        public function __construct(
+            private ProductRepository $inner,
+            private Cache $cache,
+        ) {}
+
+        public function find(int $id): Product
+        {
+            $key = 'product:' . $id;
+            $cached = $this->cache->get($key);
+            if ($cached instanceof Product) {
+                return $cached;
+            }
+
+            $product = $this->inner->find($id);
+            $this->cache->set($key, $product, 300);
+            return $product;
+        }
+    }
+
+2.5 Composite
+
+Composite lets clients treat individual objects and groups of objects uniformly. A file-system tree is a typical example.
+
+    interface Node
+    {
+        public function size(): int;
+    }
+
+    final class FileNode implements Node
+    {
+        public function __construct(private int $bytes) {}
+        public function size(): int { return $this->bytes; }
+    }
+
+    final class DirectoryNode implements Node
+    {
+        /** @param Node[] $children */
+        public function __construct(private array $children) {}
+
+        public function size(): int
+        {
+            return array_sum(array_map(fn (Node $node) => $node->size(), $this->children));
+        }
+    }
+
+2.6 Bridge
+
+Bridge separates an abstraction from its implementation so both can vary independently. For example, a notification type (alert, digest) can be separated from its delivery mechanism (email, SMS, push). Use it when subclass combinations would otherwise grow rapidly.
+
+2.7 Flyweight
+
+Flyweight shares reusable intrinsic state to reduce memory usage when many similar objects exist. Keep object-specific extrinsic state outside the shared object. It is most valuable for large collections of repeated immutable data, not as a premature optimization.
+
+3. Behavioral Patterns
+----------------------
+
+Behavioral patterns focus on communication, responsibilities, and algorithms.
+
+3.1 Strategy
+
+Strategy encapsulates interchangeable algorithms behind a common interface.
+
+    interface ShippingStrategy
+    {
+        public function cost(Order $order): int;
+    }
+
+    final class StandardShipping implements ShippingStrategy
+    {
+        public function cost(Order $order): int { return 599; }
+    }
+
+    final class ExpressShipping implements ShippingStrategy
+    {
+        public function cost(Order $order): int { return 1499; }
+    }
+
+    final class ShippingCalculator
+    {
+        public function __construct(private ShippingStrategy $strategy) {}
+        public function cost(Order $order): int { return $this->strategy->cost($order); }
+    }
+
+Strategy is often cleaner than a large conditional statement and is easy to test with a fake strategy.
+
+3.2 Observer
+
+Observer defines a one-to-many relationship: when a subject changes, registered observers are notified.
+
+    interface EventListener
+    {
+        public function handle(object $event): void;
+    }
+
+    final class EventDispatcher
+    {
+        /** @var array<class-string, EventListener[]> */
+        private array $listeners = [];
+
+        public function subscribe(string $eventClass, EventListener $listener): void
+        {
+            $this->listeners[$eventClass][] = $listener;
+        }
+
+        public function dispatch(object $event): void
+        {
+            foreach ($this->listeners[$event::class] ?? [] as $listener) {
+                $listener->handle($event);
+            }
+        }
+    }
+
+Event systems and framework hooks are practical Observer implementations. Avoid uncontrolled event chains and document whether listeners execute synchronously or asynchronously.
+
+3.3 Command
+
+Command turns an action into an object. This supports queues, logging, retries, scheduling, undo, and authorization.
+
+    interface Command
+    {
+        public function execute(): void;
+    }
+
+    final class SendWelcomeEmail implements Command
+    {
+        public function __construct(
+            private Mailer $mailer,
+            private string $address,
+        ) {}
+
+        public function execute(): void
+        {
+            $this->mailer->send($this->address, 'Welcome');
+        }
+    }
+
+Commands should contain or reference the information needed for reliable execution. For queued commands, prefer serializable identifiers over live service objects.
+
+3.4 Chain of Responsibility
+
+Chain of Responsibility passes a request through a sequence of handlers. A handler may process the request or pass it onward.
+
+    abstract class Handler
+    {
+        private ?self $next = null;
+
+        public function setNext(self $next): self
+        {
+            $this->next = $next;
+            return $next;
+        }
+
+        public function handle(Request $request): Response
+        {
+            return $this->next?->handle($request)
+                ?? new Response(404, 'No handler accepted the request');
+        }
+    }
+
+HTTP middleware, validation pipelines, and approval workflows commonly use this structure.
+
+3.5 State
+
+State allows an object to change behavior when its internal state changes. Instead of a growing conditional over a status field, each state can encapsulate valid transitions.
+
+    interface OrderState
+    {
+        public function pay(Order $order): void;
+        public function cancel(Order $order): void;
+    }
+
+    final class PendingState implements OrderState
+    {
+        public function pay(Order $order): void { $order->markPaid(); }
+        public function cancel(Order $order): void { $order->markCancelled(); }
+    }
+
+State is appropriate when transitions and behavior vary substantially by state. For simple status labels, an enum plus explicit rules may be clearer.
+
+3.6 Template Method
+
+Template Method defines the invariant steps of an algorithm in a base class and lets subclasses customize selected steps. Prefer composition when inheritance would create fragile coupling.
+
+3.7 Iterator
+
+Iterator provides sequential access to elements without exposing the underlying representation. PHP's `Iterator` and `IteratorAggregate` interfaces make this straightforward.
+
+    final class UserCollection implements IteratorAggregate
+    {
+        public function __construct(private array $users) {}
+
+        public function getIterator(): Traversable
+        {
+            yield from $this->users;
+        }
+    }
+
+3.8 Mediator
+
+Mediator centralizes communication among objects so they do not depend directly on one another. A form coordinator or chat-room service is a typical example. Keep the mediator cohesive; otherwise it becomes a God object.
+
+3.9 Memento
+
+Memento captures an object's state without exposing its internals, enabling undo or snapshots. In PHP, immutable value objects or serialized snapshots can serve this purpose, but validate and version persisted snapshots.
+
+3.10 Visitor
+
+Visitor separates operations from the object structure on which they operate. It can be useful for stable object structures with many operations, but adding a new element type often requires changing every visitor.
+
+3.11 Interpreter
+
+Interpreter represents a small grammar and evaluates sentences in that grammar. It is suitable for limited rule languages or filters; for complex languages, use a parser or a dedicated library rather than building an ad hoc interpreter.
+
+4. Common PHP Patterns and Practices
+------------------------------------
+
+4.1 Dependency Injection
+
+Pass dependencies into constructors or methods rather than creating them inside business classes.
+
+    final class UserService
+    {
+        public function __construct(
+            private UserRepository $users,
+            private PasswordHasher $hasher,
+        ) {}
+    }
+
+Dependency injection makes dependencies explicit, improves substitution in tests, and supports inversion of control. A container can assemble the object graph, but the class should still depend on interfaces or focused abstractions where that improves design.
+
+4.2 Repository
+
+A Repository presents a collection-like interface for persistence. Keep database-specific query details out of domain services, but do not hide important query costs or turn repositories into generic query bags.
+
+4.3 Data Transfer Object (DTO)
+
+A DTO carries validated data between boundaries such as HTTP, application, and infrastructure layers. DTOs should be explicit and usually immutable. They are not a replacement for domain entities or value objects.
+
+4.4 Service Layer
+
+A service coordinates a use case that does not naturally belong to one entity. Keep services focused on a cohesive application operation and avoid classes named `SomethingService` that accumulate unrelated behavior.
+
+4.5 Value Object
+
+A value object represents a concept by its value rather than identity, such as EmailAddress, Money, or DateRange. Make invalid values impossible to construct when practical.
+
+    final class EmailAddress
+    {
+        public readonly string $value;
+
+        public function __construct(string $value)
+        {
+            $normalized = strtolower(trim($value));
+            if (filter_var($normalized, FILTER_VALIDATE_EMAIL) === false) {
+                throw new InvalidArgumentException('Invalid email address');
+            }
+            $this->value = $normalized;
+        }
+    }
+
+5. SOLID Principles and Pattern Selection
+-----------------------------------------
+
+Patterns work best when guided by sound principles:
+
+- Single Responsibility: a class should have one cohesive reason to change.
+- Open/Closed: extend behavior through abstractions rather than repeatedly editing stable code.
+- Liskov Substitution: implementations must honor the contract of their abstraction.
+- Interface Segregation: prefer small client-specific interfaces to large interfaces.
+- Dependency Inversion: high-level policy should not depend directly on low-level details.
+
+Useful selection questions:
+
+- Is the problem about choosing or constructing an object? Consider Factory or Builder.
+- Is an external or legacy API incompatible? Consider Adapter.
+- Do you need to add cross-cutting behavior without subclass combinations? Consider Decorator or Proxy.
+- Are several algorithms interchangeable? Consider Strategy.
+- Must many components react to an event? Consider Observer or an event dispatcher.
+- Is a request processed by a sequence of independent checks? Consider Chain of Responsibility.
+- Does behavior change with an object's lifecycle state? Consider State.
+- Is a complex subsystem being used repeatedly by callers? Consider Facade.
+
+6. Testing and Practical Guidance
+--------------------------------
+
+- Depend on interfaces only where substitution is meaningful; do not create interfaces mechanically for every class.
+- Favor composition over inheritance for optional behavior and cross-cutting concerns.
+- Keep constructors small enough to reveal a cohesive responsibility; a very large dependency list can signal design problems.
+- Prefer immutable objects for values and messages where possible.
+- Use strict types, return types, readonly properties, enums, and named arguments when they improve clarity.
+- Test each strategy, adapter, decorator, and state transition independently.
+- Test integration boundaries separately from domain logic.
+- Keep factories and containers out of core business rules when direct dependency injection is sufficient.
+- Do not apply a pattern merely because it has a name. A straightforward function, class, or conditional is often better than unnecessary abstraction.
+- Document important contracts: nullability, exceptions, idempotency, transaction boundaries, and whether operations are synchronous.
+
+7. Example Composition
+----------------------
+
+A realistic application may combine patterns without making them visible to its callers:
+
+    final class PlaceOrder
+    {
+        public function __construct(
+            private OrderRepository $orders,
+            private PaymentGateway $payments,
+            private ShippingStrategy $shipping,
+            private EventDispatcher $events,
+        ) {}
+
+        public function execute(PlaceOrderData $data): string
+        {
+            $order = Order::from($data);
+            $order->addShippingCost($this->shipping->cost($order));
+            $paymentId = $this->payments->charge($order->totalCents(), $data->currency);
+            $this->orders->save($order, $paymentId);
+            $this->events->dispatch(new OrderPlaced($order->id()));
+            return $order->id();
+        }
+    }
+
+Here, dependency injection assembles the use case, Strategy chooses shipping behavior, a Repository persists the order, an Adapter could implement the payment gateway, and Observer-style event dispatching informs other parts of the system.
+
+Conclusion
+----------
+
+PHP design patterns are tools for managing change. The strongest designs use the smallest pattern that makes a dependency, variation, or responsibility clear. Start with the domain problem, introduce an abstraction only when it reduces coupling or clarifies intent, and verify the result with focused tests. Patterns should make the code easier to understand and evolve—not merely make it look more object-oriented.

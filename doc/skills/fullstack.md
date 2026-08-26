@@ -4,7 +4,7 @@
 
 1. Architecture logicielle   - Clean Architecture   - Hexagonal Architecture   - Onion Architecture   - DDD (Domain Driven Design) 
     - CQRS   - Event Sourcing   - Repository Pattern   - Unit of Work   - Dependency Injection
-2. Design Patterns   - Factory   - Abstract Factory   - Builder   - Strategy   - Observer   - Command   - Decorator  
+2. Design Patterns   - Factory   - Abstract Factory   - Builder   - Strategy   - Observer   - Command   - Decorator
    - Adapter   - Facade   - Singleton (quand l'utiliser)   - Proxy   - Chain of Responsibility
 3. Principes de conception   - SOLID   - DRY   - KISS   - YAGNI   - GRASP   - Tell Don't Ask   - Law of Demeter
 4. API   - REST   - GraphQL   - gRPC   - OpenAPI / Swagger   - Versionning   - Pagination   - Rate Limiting   - Idempotence

@@ -1,0 +1,35 @@
+Php
+---
+
+- APCu
+- Php 8 features
+- Php patterns
+- Websockets
+
+Symfony
+-------
+
+- Forms/Validation/CSRF
+- HTTP Cache
+- Symfony 8 features
+
+Js
+--
+
+(done)
+- ES6 [OK]
+
+React
+-----
+
+- useMemo, useCallback, useRef, useContext
+
+Database
+--------
+
+- Redis "Seven Databases in Seven Weeks" (Luc Perkins)
+
+Linux
+-----
+
+- ...

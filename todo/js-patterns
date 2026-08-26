@@ -1,0 +1,545 @@
+Here is the content of js_react_design_patterns.txt:
+
+🔥 Most Used Design Patterns in JavaScript & React
+
+📌 Creational Patterns
+(Focus on object creation mechanisms)
+1. Singleton
+
+Ensures a class has only one instance.
+Used in state management (Redux, Zustand) and global configuration.
+
+Example (JavaScript):
+class Singleton {
+  static #instance = null;
+
+  constructor() {
+    if (Singleton.#instance) return Singleton.#instance;
+    Singleton.#instance = this;
+  }
+
+  static getInstance() {
+    if (!Singleton.#instance) new Singleton();
+    return Singleton.#instance;
+  }
+}
+
+const instance1 = new Singleton();
+const instance2 = Singleton.getInstance();
+console.log(instance1 === instance2); // true
+In React (using Context API):
+import { createContext, useContext } from 'react';
+
+const GlobalStateContext = createContext();
+
+export const GlobalStateProvider = ({ children }) => {
+  const state = { theme: 'dark', user: null };
+  return (
+    <GlobalStateContext.Provider value={state}>
+      {children}
+    </GlobalStateContext.Provider>
+  );
+};
+
+export const useGlobalState = () => useContext(GlobalStateContext);
+
+2. Factory Method
+
+Defines an interface for creating objects, but lets subclasses decide which class to instantiate.
+Used in React component factories and dynamic UI rendering.
+
+Example (JavaScript):
+class Button {
+  render() { return "<button>Click</button>"; }
+}
+
+class Link {
+  render() { return "<a href='#'>Click</a>"; }
+}
+
+class ButtonFactory {
+  createButton(type) {
+    return type === 'link' ? new Link() : new Button();
+  }
+}
+
+const factory = new ButtonFactory();
+const button = factory.createButton('button');
+console.log(button.render()); // "<button>Click</button>"
+In React:
+const ButtonFactory = ({ type }) => {
+  const Button = type === 'primary' ? PrimaryButton : SecondaryButton;
+  return <Button />;
+};
+
+3. Builder
+
+Separates the construction of a complex object from its representation.
+Used in React component composition and API request builders.
+
+Example (JavaScript):
+class Pizza {
+  constructor() {
+    this.toppings = [];
+  }
+
+  addTopping(topping) {
+    this.toppings.push(topping);
+    return this;
+  }
+}
+
+const pizza = new Pizza()
+  .addTopping('cheese')
+  .addTopping('pepperoni')
+  .addTopping('mushrooms');
+In React:
+const PizzaBuilder = ({ children }) => {
+  const [toppings, setToppings] = useState([]);
+
+  const addTopping = (topping) => {
+    setToppings([...toppings, topping]);
+  };
+
+  return children({ toppings, addTopping });
+};
+
+// Usage:
+<PizzaBuilder>
+  {({ toppings, addTopping }) => (
+    <div>
+      {toppings.map(t => <span>{t}</span>)}
+      <button onClick={() => addTopping('cheese')}>Add Cheese</button>
+    </div>
+  )}
+</PizzaBuilder>
+
+🔹 Structural Patterns
+(Focus on object composition)
+4. Adapter
+
+Allows incompatible interfaces to work together.
+Used in API wrappers and third-party library integration.
+
+Example (JavaScript):
+class OldAPI {
+  fetchData() {
+    return { data: [1, 2, 3] };
+  }
+}
+
+class NewAPI {
+  getData() {
+    return { results: [4, 5, 6] };
+  }
+}
+
+class APIAdapter {
+  constructor(api) {
+    this.api = api;
+  }
+
+  fetchData() {
+    const data = this.api.getData();
+    return { data: data.results };
+  }
+}
+
+const oldApi = new OldAPI();
+const newApi = new NewAPI();
+const adapter = new APIAdapter(newApi);
+
+console.log(adapter.fetchData()); // { data: [4, 5, 6] }
+In React:
+const ThirdPartyChart = ({ data }) => {
+  // Assume this expects a different data format
+  return <div>{JSON.stringify(data)}</div>;
+};
+
+const ChartAdapter = ({ data }) => {
+  const adaptedData = { values: data };
+  return <ThirdPartyChart data={adaptedData} />;
+};
+
+5. Decorator
+
+Adds new behavior to objects dynamically.
+Used in React HOCs (Higher-Order Components) and middleware.
+
+Example (JavaScript):
+class Coffee {
+  cost() { return 5; }
+}
+
+class MilkDecorator {
+  constructor(coffee) {
+    this.coffee = coffee;
+  }
+
+  cost() {
+    return this.coffee.cost() + 2;
+  }
+}
+
+const coffee = new Coffee();
+const coffeeWithMilk = new MilkDecorator(coffee);
+console.log(coffeeWithMilk.cost()); // 7
+In React (HOC):
+const withLogger = (Component) => {
+  return (props) => {
+    console.log('Props:', props);
+    return <Component {...props} />;
+  };
+};
+
+const MyComponent = () => <div>Hello</div>;
+const EnhancedComponent = withLogger(MyComponent);
+
+6. Facade
+
+Provides a simplified interface to a complex subsystem.
+Used in API services and utility libraries.
+
+Example (JavaScript):
+class CPU {
+  execute() { console.log("Executing..."); }
+}
+
+class Memory {
+  load() { console.log("Loading..."); }
+}
+
+class ComputerFacade {
+  constructor() {
+    this.cpu = new CPU();
+    this.memory = new Memory();
+  }
+
+  start() {
+    this.memory.load();
+    this.cpu.execute();
+  }
+}
+
+const computer = new ComputerFacade();
+computer.start(); // "Loading...", "Executing..."
+In React:
+const ApiFacade = {
+  fetchUser: async (id) => {
+    const response = await fetch(`/api/users/${id}`);
+    return response.json();
+  },
+  fetchPosts: async (userId) => {
+    const response = await fetch(`/api/posts?userId=${userId}`);
+    return response.json();
+  },
+};
+
+// Usage:
+const user = await ApiFacade.fetchUser(1);
+const posts = await ApiFacade.fetchPosts(1);
+
+🔹 Behavioral Patterns
+(Focus on communication between objects)
+7. Observer
+
+Defines a one-to-many dependency between objects.
+Used in React state management (useState, useReducer) and event emitters.
+
+Example (JavaScript):
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+
+  subscribe(observer) {
+    this.observers.push(observer);
+  }
+
+  notify(data) {
+    this.observers.forEach(observer => observer.update(data));
+  }
+}
+
+class Observer {
+  update(data) {
+    console.log(`Received: ${data}`);
+  }
+}
+
+const subject = new Subject();
+const observer1 = new Observer();
+const observer2 = new Observer();
+
+subject.subscribe(observer1);
+subject.subscribe(observer2);
+subject.notify("Hello"); // "Received: Hello" (twice)
+In React:
+import { useState, useEffect } from 'react';
+
+const useObserver = (subject) => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const observer = (newData) => setData(newData);
+    subject.subscribe(observer);
+    return () => subject.unsubscribe(observer);
+  }, [subject]);
+
+  return data;
+};
+
+// Usage:
+const subject = new Subject();
+const MyComponent = () => {
+  const data = useObserver(subject);
+  return <div>{data}</div>;
+};
+
+8. Strategy
+
+Defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+Used in React form validation and payment gateways.
+
+Example (JavaScript):
+class PaymentStrategy {
+  pay(amount) { throw new Error("Not implemented"); }
+}
+
+class CreditCardStrategy extends PaymentStrategy {
+  pay(amount) { return `Paid $${amount} via Credit Card`; }
+}
+
+class PayPalStrategy extends PaymentStrategy {
+  pay(amount) { return `Paid $${amount} via PayPal`; }
+}
+
+class ShoppingCart {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+
+  checkout(amount) {
+    return this.strategy.pay(amount);
+  }
+}
+
+const cart1 = new ShoppingCart(new CreditCardStrategy());
+console.log(cart1.checkout(100)); // "Paid $100 via Credit Card"
+
+const cart2 = new ShoppingCart(new PayPalStrategy());
+console.log(cart2.checkout(50)); // "Paid $50 via PayPal"
+In React:
+const PaymentForm = ({ strategy }) => {
+  const [amount, setAmount] = useState(0);
+
+  const handleSubmit = () => {
+    alert(strategy.pay(amount));
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+      <button type="submit">Pay</button>
+    </form>
+  );
+};
+
+// Usage:
+<PaymentForm strategy={new CreditCardStrategy()} />
+
+9. Command
+
+Encapsulates a request as an object, allowing for parameterization of clients.
+Used in React undo/redo functionality and event handling.
+
+Example (JavaScript):
+class Command {
+  execute() { throw new Error("Not implemented"); }
+}
+
+class LightOnCommand extends Command {
+  execute() { console.log("Light is ON"); }
+}
+
+class LightOffCommand extends Command {
+  execute() { console.log("Light is OFF"); }
+}
+
+class RemoteControl {
+  submit(command) {
+    command.execute();
+  }
+}
+
+const remote = new RemoteControl();
+remote.submit(new LightOnCommand()); // "Light is ON"
+remote.submit(new LightOffCommand()); // "Light is OFF"
+In React:
+import { useReducer } from 'react';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'TOGGLE_LIGHT':
+      return { lightOn: !state.lightOn };
+    default:
+      return state;
+  }
+};
+
+const LightSwitch = () => {
+  const [state, dispatch] = useReducer(reducer, { lightOn: false });
+
+  return (
+    <div>
+      <button onClick={() => dispatch({ type: 'TOGGLE_LIGHT' })}>
+        Toggle Light
+      </button>
+      <p>{state.lightOn ? 'ON' : 'OFF'}</p>
+    </div>
+  );
+};
+
+10. Proxy
+
+Provides a placeholder for another object to control access to it.
+Used in lazy loading, caching, and API mocking.
+
+Example (JavaScript):
+class RealImage {
+  display() { console.log("Displaying image"); }
+}
+
+class ProxyImage {
+  constructor() {
+    this.realImage = null;
+  }
+
+  display() {
+    if (!this.realImage) {
+      this.realImage = new RealImage();
+    }
+    this.realImage.display();
+  }
+}
+
+const image = new ProxyImage();
+image.display(); // "Displaying image" (only loaded once)
+In React:
+import { useState, useEffect } from 'react';
+
+const ImageComponent = ({ src }) => {
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    const loadImage = async () => {
+      const img = new Image();
+      img.src = src;
+      await img.decode();
+      setImage(img);
+    };
+    loadImage();
+  }, [src]);
+
+  return image ? <img src={src} alt="Loaded" /> : <div>Loading...</div>;
+};
+
+📊 Most Used Patterns in React
+Copier le tableau
+
+
+Pattern
+Use Case
+React Example
+
+
+
+Singleton
+Global state (Redux, Zustand)
+createContext + useContext
+
+
+Factory Method
+Dynamic component creation
+<ButtonFactory type="primary" />
+
+
+Observer
+State management (useState, Redux)
+useState, useReducer
+
+
+Strategy
+Payment gateways, validation
+Custom hooks for different strategies
+
+
+Decorator
+Higher-Order Components (HOCs)
+withLogger(MyComponent)
+
+
+Facade
+Simplified API calls
+Custom API service wrappers
+
+
+Proxy
+Lazy loading, caching
+React.lazy + Suspense
+
+
+Command
+Undo/redo, event handling
+useReducer for state management
+
+
+
+🚀 Best Practices in React
+
+Use useContext for Singleton-like state (instead of Redux for simple cases).
+Prefer Custom Hooks over HOCs for reusability (Decorator pattern).
+Use React.lazy and Suspense for lazy loading (Proxy pattern).
+Leverage useReducer for complex state logic (Command pattern).
+Create API service wrappers (Facade pattern) for cleaner code.
+
+
+📌 When to Use Which?
+Copier le tableau
+
+
+Scenario
+Recommended Pattern
+
+
+
+Global state (e.g., theme, user)
+Singleton (Context API)
+
+
+Dynamic component rendering
+Factory Method
+
+
+State management (complex logic)
+Observer (useReducer)
+
+
+Payment gateways / validation
+Strategy
+
+
+Logging / Analytics
+Decorator (HOCs)
+
+
+API calls
+Facade
+
+
+Lazy loading / caching
+Proxy (React.lazy)
+
+
+Undo/redo functionality
+Command (useReducer)
