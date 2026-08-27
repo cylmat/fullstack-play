@@ -4,13 +4,25 @@
 
 {% block content %}
 
-    <section id="php" class="">
+    <section id="php" class="text-start">
         <div>
-            <h2>Php 8.0</h2>
             <p>
                 {% for feature, value in php80 %}
-                    {{ feature }}: {{ value }}<br/>
+                    {% if feature == 'title' %}
+                        <h2>{{ value }}</h2>
+                    {% elseif feature == 'ref' %}
+                        <a href="{{ value }}" target="_blank">{{ value }}</a>
+                    {% endif %}
                 {% endfor %}
+            </p>
+            <p>
+                <table>
+                {% for feature, value in php80 %}
+                    {% if feature != 'title' and feature != 'ref' %}
+                        <tr><td>{{ feature }}</td><td>{{ value }}</td></tr>
+                    {% endif %}
+                {% endfor %}
+                </table>
             </p>
         </div>
     </section>
