@@ -94,16 +94,16 @@ db-sql-down:
 # Usage $ make git-push MSG="my message"
 MSG ?= Update by make
 git-push:
-	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.dist.local \
+	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
 		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
 		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
 		git add . && git commit -m "$(MSG)" && git pull --rebase && git push'
 
 linux-build:
-	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest ".docker"
+	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest .docker
 
 linux-bash:
-	docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.dist.local -v .:/var/www/application fs-linux:latest bash
+	docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.local -v .:/var/www/application fs-linux:latest bash
 
 # VANILLA JS #
 

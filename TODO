@@ -21,6 +21,10 @@ Symfony
 Js
 --
 
+- https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules
+- https://nextjs.org
+- https://vitejs.fr
+
 (done)
 - ES6 [OK]
 
@@ -37,5 +41,3 @@ Database
 
 Linux
 -----
-
-- ...
