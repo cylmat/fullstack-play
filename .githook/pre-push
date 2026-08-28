@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Rediriger l'entrée standard vers le terminal pour pouvoir lire la saisie utilisateur
+exec < /dev/tty
+
+echo "⚠️  Voulez-vous vraiment pusher cette branche ? (y/N)"
+read response
+
+if [ "$response" != "y" ] && [ "$response" != "Y" ]; then
+    echo "❌ Push annulé par l'utilisateur."
+    exit 1 # Un code de sortie différent de 0 annule le push
+fi
+
+exit 0
