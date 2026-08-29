@@ -5,10 +5,15 @@ SHELL := /bin/bash
 help list:
 	@echo -e " \
 Available commands: \n\
+  Common \n\
+- docker-build: Build php Docker images \n\
+- git-push:     Push all changes to git \n\
+- linux-bash:   Open a bash shell in the Linux container \n\
+  All \n\
 - all-stop:     Stop all development servers \n\
 - all-down:     Stop all development servers \n\
 - all-test:     Test all applications \n\
-- docker-build: Build php Docker images \n\
+  Database \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
 - db-kv-up:     Start key-value database servers \n\
@@ -17,20 +22,16 @@ Available commands: \n\
 - db-nosql-down: Stop NoSQL database servers \n\
 - db-sql-up:    Start SQL database servers \n\
 - db-sql-down:  Stop SQL database servers \n\
-- git-push:     Push all changes to git \n\
-- linux-bash:   Open a bash shell in the Linux container \n\
-- js-up:        Start Vanilla JS development server \n\
+  JavaScript \n\
+- react-up:     Start React development server \n\
+- vanilla-up:   Start Vanilla JS development server \n\
+- vue-up:       Start Vue development server \n\
 - js-bash:      Open a bash shell in the Vanilla JS container \n\
 - js-start:     Run Vanilla JS development server \n\
 - js-test:      Test Vanilla JS application \n\
 - js-stop:      Stop Vanilla JS development server \n\
 - js-down:      Stop Vanilla JS development server \n\
-- react-up:     Start React development server \n\
-- react-bash:   Open a bash shell in the React container \n\
-- react-start:  Run React development server \n\
-- react-test:   Test React application \n\
-- react-stop:   Stop React development server \n\
-- react-down:   Stop React development server \n\
+  Symfony \n\
 - sym-up:       Start Symfony/webpack development server \n\
 - sym-bash:     Open a bash shell in the Symfony container \n\
 - sym-build:    Build Symfony assets \n\
@@ -97,7 +98,7 @@ git-push:
 	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
 		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
 		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
-		git add . && git commit -m "$(MSG)" && git pull --rebase && git push'
+		git add . || true && git commit -m "$(MSG)" && git pull --rebase && git push'
 
 linux-build:
 	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest .docker
@@ -105,53 +106,39 @@ linux-build:
 linux-bash:
 	docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.local -v .:/var/www/application fs-linux:latest bash
 
-# VANILLA JS #
 
-js-up:
-	docker compose --profile vanilla up --build -d
-	@echo "Vanilla JS app is available at http://localhost:5171"
+
+# JS #
+
+react-up:
+	HOST_VOLUME=./apps/vite-react docker compose --profile node up --build -d
+
+vanilla-up:
+	HOST_VOLUME=./apps/vite-vanilla docker compose --profile node up --build -d
+
+vue-up:
+	HOST_VOLUME=./apps/vite-vue docker compose --profile node up --build -d
 
 js-bash:
-	docker exec -it fs-vanilla-node bash
+	docker exec -it fs-node bash
 
 js-start:
 	@echo 'Should run "npm install"'
-	docker exec -it fs-vanilla-node pkill node || true
-	docker exec -it -u 1000 fs-vanilla-node npm run dev
+	docker exec -it fs-node pkill node || true
+	docker exec -it -u 1000 fs-node npm run dev
+	@echo "Node JS app is available at http://localhost:5101"
 
 js-test:
-	docker exec -it fs-vanilla-node npm run test
+	docker exec -it fs-node npm run test
 
 js-stop:
-	docker exec -it fs-vanilla-node pkill node || true
-	docker exec -it fs-vanilla-node pkill npm || true
+	docker exec -it fs-node pkill node || true
+	docker exec -it fs-node pkill npm || true
 
 js-down:
-	docker compose --profile vanilla down
+	docker compose --profile node down
 
-# REACT #
 
-react-up:
-	docker compose --profile react up --build -d
-	@echo "React app is available at http://localhost:5172"
-
-react-bash:
-	docker exec -it fs-react-node bash
-
-react-start:
-	@echo 'Should run "npm install"'
-	docker exec -it fs-react-node pkill node || true
-	docker exec -it -u 1000 fs-react-node npm run dev
-
-react-test:
-	docker exec -it fs-react-node npm run test
-
-react-stop:
-	docker exec -it fs-react-node pkill node || true
-	docker exec -it fs-react-node pkill npm || true
-
-react-down:
-	docker compose --profile react down
 
 # SYMFONY #
 
@@ -160,38 +147,38 @@ sym-up:
 	@echo 'To make Symfony assets displayed, use "make sym-build"'
 
 sym-bash:
-	docker exec -it fs-symfony-php bash
+	docker exec -it fs-php bash
 
 sym-bash-root:
-	docker exec -it -u root fs-symfony-php bash
+	docker exec -it -u root fs-php bash
 
 sym-build:
-	docker exec -it fs-symfony-php pkill webpack || true
-	docker exec -it -u 1000 fs-symfony-php npm run build
+	docker exec -it fs-php pkill webpack || true
+	docker exec -it -u 1000 fs-php npm run build
 
 sym-start:
 	@echo 'Should run "composer install"'
-	docker exec -it -u 1000 fs-symfony-php symfony serve --listen-ip=0.0.0.0 --port=81 -d
+	docker exec -it -u 1000 fs-php symfony serve --listen-ip=0.0.0.0 --port=81 -d
 	${MAKE}	sym-migrate
 	${MAKE}	sym-fixtures
 	@echo "Symfony/webpack app is available at http://localhost:8001"
-	docker exec -it fs-symfony-php pkill webpack || true
-	docker exec -u 1000 fs-symfony-php npm run watch
+	docker exec -it fs-php pkill webpack || true
+	docker exec -u 1000 fs-php npm run watch
 
 sym-migrate:
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:drop -f --if-exists || true
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:database:create || true
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:migrations:migrate -n || true
+	docker exec -it -u 1000 fs-php bin/console doctrine:database:drop -f --if-exists || true
+	docker exec -it -u 1000 fs-php bin/console doctrine:database:create || true
+	docker exec -it -u 1000 fs-php bin/console doctrine:migrations:migrate -n || true
 
 sym-fixtures:
-	docker exec -it -u 1000 fs-symfony-php bin/console doctrine:fixtures:load -n || true
+	docker exec -it -u 1000 fs-php bin/console doctrine:fixtures:load -n || true
 
 sym-test:
-	docker exec -it fs-symfony-php  composer run-script test
+	docker exec -it fs-php  composer run-script test
 
 sym-stop:
-	docker exec -it -u 1000 fs-symfony-php symfony server:stop
-	docker exec -it fs-symfony-php pkill webpack || true
+	docker exec -it -u 1000 fs-php symfony server:stop
+	docker exec -it fs-php pkill webpack || true
 
 sym-down:
 	docker compose --profile symfony down

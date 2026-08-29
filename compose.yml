@@ -11,8 +11,8 @@ services:
     # docker run -it php:latest bash
     #######
 
-    symfony:
-        container_name: fs-symfony-php
+    php:
+        container_name: fs-php
         # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
         image: fs-php:latest
         # build:
@@ -24,8 +24,8 @@ services:
             MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
             REDIS_DSN: 'redis://redis:6379/1'
         ports:
-            - 8001:81   # symfony server
-            - 8082:8080 # npm dev server (must match weback config)
+            - 8101:81   # symfony server
+            - 8201:8080 # npm dev server (must match webpack "options.port" config)
         command: sleep infinity
         volumes:
             - ./apps/symfony:/var/www/application
@@ -38,47 +38,21 @@ services:
     # NODE #
     ########
 
-    vanilla:
+    node:
         image: node:24
-        container_name: fs-vanilla-node
+        container_name: fs-node
         restart: always
         user: 1000:1000
         working_dir: /var/www/application
         volumes:
-            - ./apps/vite-js:/var/www/application
+            - ${HOST_VOLUME:-./not}:/var/www/application
         command: sleep infinity
         ports:
-            - 5171:5173 # npm dev server
+            - 5101:5173 # npm dev server
         profiles:
-          - vanilla
+          - node
 
-    react:
-        image: node:24
-        container_name: fs-react-node
-        restart: always
-        user: 1000:1000
-        working_dir: /var/www/application
-        volumes:
-            - ./apps/vite-react:/var/www/application
-        command: sleep infinity
-        ports:
-            - 5172:5173 # npm dev server
-        profiles:
-          - react
 
-    vue:
-        image: node:24
-        container_name: fs-vue-node
-        restart: always
-        user: 1000:1000
-        working_dir: /var/www/application
-        volumes:
-            - ./apps/vite-vue:/var/www/application
-        command: sleep infinity
-        ports:
-            - 5173:5173 # npm dev server
-        profiles:
-          - vue
 
     ### TRAEFIK
     # @https://doc.traefik.io/traefik/getting-started/quick-start
