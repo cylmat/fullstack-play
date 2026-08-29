@@ -9,10 +9,11 @@ Available commands: \n\
 - docker-build: Build php Docker images \n\
 - git-push:     Push all changes to git \n\
 - linux-bash:   Open a bash shell in the Linux container \n\
+- ports:        List all ports used by containers \n\
   All \n\
+- all-test:     Test all applications \n\
 - all-stop:     Stop all development servers \n\
 - all-down:     Stop all development servers \n\
-- all-test:     Test all applications \n\
   Database \n\
 - db-up:        Start database servers \n\
 - db-down:      Stop database servers \n\
@@ -43,28 +44,44 @@ Available commands: \n\
 
 # COMMON #
 
+docker-build:
+	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+
+# Usage $ make git-push MSG="my message"
+MSG ?= Update by make
+git-push:
+	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
+		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
+		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
+		git add . || true && git commit -m "$(MSG)" && git pull --rebase && git push'
+
+linux-build:
+	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest .docker
+
+linux-bash:
+	docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.local -v .:/var/www/application fs-linux:latest bash
+
+ports:
+	@echo "Ports used by  -fullstack- containers:"
+	@docker ps --format "table {{.Names}}\t{{.Ports}}" | grep "fs-"
+
+
+# ALL #
+
+all-tests:
+	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-node; then $(MAKE) react-test; fi'
+	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-php; then $(MAKE) sym-test; fi'
+
 all-stop:
 	${MAKE} db-stop
 	${MAKE} js-stop
-	${MAKE} react-stop
-	${MAKE} vue-stop
 	${MAKE} sym-stop
 
 all-down:
 	${MAKE} db-down
 	${MAKE} js-down
-	${MAKE} react-down
-	${MAKE} vue-down
 	${MAKE} sym-down
 
-all-tests:
-	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-react-node; then $(MAKE) react-test; fi'
-	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-vanilla-node; then $(MAKE) js-test; fi'
-	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-vue-node; then $(MAKE) vue-test; fi'
-	@sh -c 'if docker ps --format "{{.Names}}" | grep -q fs-symfony-php; then $(MAKE) sym-test; fi'
-
-docker-build:
-	docker compose build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 
 # DB #
 
@@ -91,20 +108,6 @@ db-sql-up:
 
 db-sql-down:
 	docker compose -f "compose-db.yml" --profile db-sql down
-
-# Usage $ make git-push MSG="my message"
-MSG ?= Update by make
-git-push:
-	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
-		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
-		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
-		git add . || true && git commit -m "$(MSG)" && git pull --rebase && git push'
-
-linux-build:
-	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest .docker
-
-linux-bash:
-	docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.local -v .:/var/www/application fs-linux:latest bash
 
 
 
@@ -137,7 +140,6 @@ js-stop:
 
 js-down:
 	docker compose --profile node down
-
 
 
 # SYMFONY #
