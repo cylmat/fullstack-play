@@ -58,13 +58,17 @@ RUN apt install -y pkg-config
 
 # Use sudo apt-get install -y php-swoole instead
 # Use pecl install swoole 2>&1 | tee swoole-build.log to debug
-RUN apt install -y libbrotli-dev libssl-dev
-RUN echo "\n" | pecl install phalcon -j$(nproc)
-RUN echo "\n" | pecl install swoole -j$(nproc)
+# RUN apt install -y libbrotli-dev libssl-dev
+# RUN echo "\n" | pecl install -of phalcon -j$(nproc)
+# RUN echo "\n" | pecl install -of swoole -j$(nproc)
+# RUN apt install -y php-phalcon
+# RUN apt install -y php-swoole
 
 
-RUN apt install -y libmemcached-dev zlib1g-dev
-RUN echo 'yes' | pecl install memcached
+# RUN apt install -y libmemcached-dev zlib1g-dev
+# RUN echo 'yes' | pecl install -of memcached
+# RUN echo 'yes' | pecl install mongodb
+
 
 
 ###############
@@ -140,7 +144,7 @@ RUN docker-php-ext-install -j$(nproc) pdo_sqlite
 # RUN docker-php-ext-configure odbc --with-unixODBC && docker-php-ext-install -j$(nproc) pdo_odbc
 
 RUN yes '' | pecl install redis
-RUN echo 'yes' | pecl install mongodb
+
 
 # RUN docker-php-ext-install -j$(nproc) pdo
 

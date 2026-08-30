@@ -45,7 +45,7 @@ Available commands: \n\
 # COMMON #
 
 docker-build:
-	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+	docker build -f ".docker/symfony/php.Dockerfile" --no-cache --pull -t fs-php:latest ".docker"
 
 # Usage $ make git-push MSG="my message"
 MSG ?= Update by make
