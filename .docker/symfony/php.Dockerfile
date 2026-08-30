@@ -5,13 +5,14 @@
 # Use this Dockerfile as a base template,
 # (Un)comment extensions for own application.
 #
-# docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+# docker buildx -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 ##############
 
 ### Debian GNU/Linux 11 (bullseye) ###
 
 FROM php:8.4 AS core
 
+# root:root is 0
 
 ENV UID=1000
 ENV GID=1000
@@ -47,144 +48,23 @@ RUN apt install -y pkg-config
 
 
 
-##################
-# PHP extensions #
-##################
+###################
+# HEAVY install ! #
+###################
 
 
-##################
-# Already installed extensions "php -m" :
-# ctype curl date dom fileinfo filter ftp hash iconv json libxml mbstring mysqlnd openssl pcre pdo pdo_sqlite Phar
-# posix readline Reflection session SimpleXML sodium spl sqlite3 standard tokenizer xml xmlreader xmlwriter zlib
-#
-# Available extensions with "docker-php-ext-install" :
-# bcmath bz2 calendar ctype curl dba dl_test dom enchant exif ffi fileinfo filter ftp gd gettext gmp hash iconv
-# imap intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci pdo_odbc
-# pdo_pgsql pdo_sqlite pgsql phar posix pspell readline reflection session shmop simplexml snmp soap sockets sodium
-# spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader xmlwriter xsl zend_test zip
-#
-# Extensions installed with docker-php-ext automatically created
-# /usr/local/etc/php/conf.d/docker-php-ext-***.ini
-#
-# Configuration, ex: docker-php-ext-configure gd --with-jpeg
-##################
+# PUT IT FIRST TO CACHE IT !
+# Can take a LOOOONG time (~~10min each) to build and install !
 
-# @see https://www.php.net/manual/en/refs.basic.other.php
-
-RUN apt install -y \
-    libicu-dev \
-    libxslt1-dev \
-    libzip-dev
-
-# ctype: allow to check for character classes in strings
-# intl: Internationalization extension (Intl) provides capabilities for software internationalization
-# spl: Standard PHP Library (SPL) is a collection of interfaces and classes that are meant to solve standard problems
-RUN docker-php-ext-install -j$(nproc) bcmath
-RUN docker-php-ext-install -j$(nproc) ctype
-RUN docker-php-ext-install -j$(nproc) fileinfo
-RUN docker-php-ext-install -j$(nproc) gettext
-RUN docker-php-ext-install -j$(nproc) intl
-RUN docker-php-ext-install -j$(nproc) posix
-RUN docker-php-ext-install -j$(nproc) session
-RUN docker-php-ext-install -j$(nproc) xml
-RUN docker-php-ext-install -j$(nproc) xsl
-RUN docker-php-ext-install -j$(nproc) zip
-
-# RUN docker-php-ext-install -j$(nproc) ldap
-# RUN docker-php-ext-configure odbc && docker-php-ext-install -j$(nproc) odbc
-# RUN docker-php-ext-install -j$(nproc) opcache (integrated in php 8.5, no need to install)
-# RUN docker-php-ext-install -j$(nproc) pcntl
-# RUN docker-php-ext-install -j$(nproc) phar
-# RUN docker-php-ext-install -j$(nproc) soap
-# RUN docker-php-ext-install -j$(nproc) spl (integrated, no need to install)
-# RUN docker-php-ext-install -j$(nproc) sodium
-# RUN docker-php-ext-install -j$(nproc) sockets
-# RUN docker-php-ext-configure standard && docker-php-ext-install -j$(nproc) standard
-# RUN docker-php-ext-install -j$(nproc) tokenizer
-
-#bz2 #gd #hash
+# Use sudo apt-get install -y php-swoole instead
+# Use pecl install swoole 2>&1 | tee swoole-build.log to debug
+RUN apt install -y libbrotli-dev libssl-dev
+RUN echo "\n" | pecl install phalcon -j$(nproc)
+RUN echo "\n" | pecl install swoole -j$(nproc)
 
 
-### PECL extensions ###
-
-RUN pecl channel-update pecl.php.net
-
-
-### (http://pecl.php.net/packages.php)
-### Use "pecl list-all" for all supported modules.
-### Add extension=*** in php.ini for each pecl's extensions
-# RUN apt install -y libmcrypt-dev libpcre3-dev
-
-RUN apt install -y \
-    libmcrypt-dev
-
-### starred: redis, memcached, mongodb, imagick, xdebug, pcov, xhprof, ast, ds, psr, phalcon, mcrypt, oauth
-#crypto #env #http_message #imagick #imap #ingres #lua #v8js
-
-# ast: Abstract Syntax Tree (AST) extension for PHP
-# doc: https://phalcon.io/en-us
-# doc: https://wiki.swoole.com/en (https://www.php.net/manual/fr/book.swoole.php)
-
-RUN echo "\n" | pecl install apcu
-RUN echo "\n" | pecl install ast
-RUN echo "\n" | pecl install ds
-RUN echo "\n" | pecl install mcrypt
-RUN echo "\n" | pecl install psr
-
-# RUN echo "\n" | pecl install oauth
-# RUN echo "\n" | pecl install phalcon
-# RUN echo "\n" | pecl install swoole
-
-
-
-
-
-#####################
-### DB extensions ###
-#####################
-
-RUN apt install -y \
-    libsqlite3-dev \
-    libpq-dev
-
-
-# dba: Database (DBA) functions provide a uniform way to access various database formats
-RUN docker-php-ext-install -j$(nproc) dba
-RUN docker-php-ext-install -j$(nproc) pdo_mysql
-RUN docker-php-ext-install -j$(nproc) pdo_pgsql
-RUN docker-php-ext-install -j$(nproc) pdo_sqlite
-
-# RUN docker-php-ext-install -j$(nproc) pdo
-# RUN docker-php-ext-install -j$(nproc) pdo_odbc
-
-RUN yes '' | pecl install redis
-# RUN echo "\yes" | pecl install mongodb
-
-
-
-
-############################
-### Coverage & Profiling ###
-############################
-
-
-### @see https://xdebug.org ###
-
-RUN pecl install \
-    # pcov
-    xdebug
-    # xhprof
-
-
-
-
-################
-### composer ###
-################
-
-# Composer install
-COPY ./symfony/composer.sh /tmp/composer.sh
-RUN chmod +x /tmp/composer.sh && /tmp/composer.sh
+RUN apt install -y libmemcached-dev zlib1g-dev
+RUN echo 'yes' | pecl install memcached
 
 
 ###############
@@ -233,6 +113,165 @@ RUN echo 'export NVM_DIR="/usr/local/nvm"' >> /etc/bash.bashrc && \
 # RUN nvm --version && node -v && npm -v
 RUN bash -ic "nvm --version && node -v && npm -v"
 
+
+
+#####################
+### DB extensions ###
+#####################
+
+# zlib1g-dev    # Required for memcached
+# libmemcached-dev   # Required for memcached PECL
+
+RUN apt install -y \
+    libsqlite3-dev \
+    libpq-dev
+
+
+# dba: Database (DBA) functions provide a uniform way to access various database formats
+RUN docker-php-ext-install -j$(nproc) dba
+RUN docker-php-ext-install -j$(nproc) pdo_mysql
+RUN docker-php-ext-install -j$(nproc) pdo_pgsql
+RUN docker-php-ext-install -j$(nproc) pdo_sqlite
+
+# ODBC (https://www.php.net/manual/en/odbc.installation.php)
+# install unixodbc-dev for ODBC support and tell on config
+# (exists: unixODBC, iODBC, ibm-db2, or generic)
+# RUN apt-get install -y unixodbc unixodbc-dev
+# RUN docker-php-ext-configure odbc --with-unixODBC && docker-php-ext-install -j$(nproc) pdo_odbc
+
+RUN yes '' | pecl install redis
+RUN echo 'yes' | pecl install mongodb
+
+# RUN docker-php-ext-install -j$(nproc) pdo
+
+
+
+##################
+# PHP extensions #
+##################
+
+
+##################
+# Already installed extensions "php -m" :
+# ctype curl date dom fileinfo filter ftp hash iconv json libxml mbstring mysqlnd openssl pcre pdo pdo_sqlite Phar
+# posix readline Reflection session SimpleXML sodium spl sqlite3 standard tokenizer xml xmlreader xmlwriter zlib
+#
+# Available extensions with "docker-php-ext-install" :
+# bcmath bz2 calendar ctype curl dba dl_test dom enchant exif ffi fileinfo filter ftp gd gettext gmp hash iconv
+# imap intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci pdo_odbc
+# pdo_pgsql pdo_sqlite pgsql phar posix pspell readline reflection session shmop simplexml snmp soap sockets sodium
+# spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader xmlwriter xsl zend_test zip
+#
+# Extensions installed with docker-php-ext automatically created
+# /usr/local/etc/php/conf.d/docker-php-ext-***.ini
+#
+# Configuration, ex: docker-php-ext-configure gd --with-jpeg
+##################
+
+# @see https://www.php.net/manual/en/refs.basic.other.php
+
+RUN apt install -y \
+    libicu-dev \
+    libsodium-dev \
+    libxslt1-dev \
+    libzip-dev
+
+# bcmath: Binary Calculator extension (BCMath) provides support for arbitrary precision mathematics
+# ctype: allow to check for character classes in strings (https://www.php.net/manual/en/book.ctype.php)
+# intl: Internationalization extension (Intl) provides capabilities for software internationalization
+# odbc: Open Database Connectivity (ODBC) extension for PHP, allows you to connect to databases using the ODBC interface
+# pcntl: Process Control support for PHP, allows you to spawn and manage processes (for Ratchet)
+# session: Session support for PHP, allows you to manage user sessions (https://www.php.net/manual/en/book.session.php)
+# sockets: Sockets support for PHP, allows you to create and manage network sockets (https://www.php.net/manual/en/book.sockets.php)
+# sodium: Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more
+# spl: Standard PHP Library (SPL) is a collection of interfaces and classes that are meant to solve standard problems
+RUN docker-php-ext-install -j$(nproc) bcmath
+RUN docker-php-ext-install -j$(nproc) ctype
+RUN docker-php-ext-install -j$(nproc) fileinfo
+RUN docker-php-ext-install -j$(nproc) gettext
+RUN docker-php-ext-install -j$(nproc) intl
+RUN docker-php-ext-install -j$(nproc) pcntl
+RUN docker-php-ext-install -j$(nproc) posix
+RUN docker-php-ext-install -j$(nproc) session
+RUN docker-php-ext-install -j$(nproc) sockets
+RUN docker-php-ext-install -j$(nproc) sodium
+RUN docker-php-ext-install -j$(nproc) xml
+RUN docker-php-ext-install -j$(nproc) xsl
+RUN docker-php-ext-install -j$(nproc) zip
+
+# RUN docker-php-ext-install -j$(nproc) ldap
+# RUN docker-php-ext-configure odbc && docker-php-ext-install -j$(nproc) odbc
+# RUN docker-php-ext-install -j$(nproc) phar
+# RUN docker-php-ext-install -j$(nproc) soap
+# RUN docker-php-ext-configure standard && docker-php-ext-install -j$(nproc) standard
+# RUN docker-php-ext-install -j$(nproc) tokenizer
+
+# RUN docker-php-ext-install -j$(nproc) opcache (integrated in php 8.5, no need to install)
+# RUN docker-php-ext-install -j$(nproc) spl (integrated, no need to install)
+
+
+
+### PECL extensions ###
+
+### IF PECL DOESN'T INSTALL JUST LOG IN CONTAINER AS ROOT AND MANUALLY INSTALL IT ###
+
+# RUN mkdir -p /tmp/pear_tmp -m 755 && \
+#     pear config-set temp_dir /tmp/pear_tmp && \
+#     chown -R root:root /tmp/pear_tmp && \
+#     chmod -R 777 /tmp/pear_tmp
+
+RUN pecl channel-update pecl.php.net
+
+
+### (http://pecl.php.net/packages.php)
+### Use "pecl list-all" for all supported modules.
+### -of : --override --force 
+### Add extension=*** in php.ini for each pecl's extensions
+# RUN apt install -y libmcrypt-dev libpcre3-dev
+# Brotli est une bibliothèque de compression libre à source ouverte
+# Libpcre est une bibliothèque de fonctions pour les expressions régulières Perl
+
+# Pre-install pear dependencies for pecl extensions
+RUN apt install -y \
+    libmcrypt-dev 
+
+### starred: redis, memcached, mongodb, imagick, xdebug, pcov, xhprof, ast, ds, psr, phalcon, mcrypt, oauth
+#crypto #env #http_message #imagick #imap #ingres #lua #v8js
+
+# ast: Abstract Syntax Tree (AST) extension for PHP
+# doc: https://phalcon.io/en-us
+# doc: https://wiki.swoole.com/en (https://www.php.net/manual/fr/book.swoole.php)
+
+RUN echo "\n" | pecl install -of apcu
+RUN echo "\n" | pecl install -of ast
+RUN echo "\n" | pecl install -of ds
+RUN echo "\n" | pecl install -of mcrypt
+RUN echo "\n" | pecl install -of psr
+
+
+############################
+### Coverage & Profiling ###
+############################
+
+
+### @see https://xdebug.org ###
+
+RUN pecl install -of \
+    # pcov
+    xdebug
+    # xhprof
+
+
+# Clean up pear cache
+RUN pear clear-cache
+
+################
+### composer ###
+################
+
+# Composer install
+COPY ./symfony/composer.sh /tmp/composer.sh
+RUN chmod +x /tmp/composer.sh && /tmp/composer.sh
 
 
 ##############

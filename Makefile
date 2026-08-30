@@ -163,7 +163,7 @@ sym-start:
 	docker exec -it -u 1000 fs-php symfony serve --listen-ip=0.0.0.0 --port=81 -d
 	${MAKE}	sym-migrate
 	${MAKE}	sym-fixtures
-	@echo "Symfony/webpack app is available at http://localhost:8001"
+	@echo "Symfony/webpack app is available at http://localhost:8101"
 	docker exec -it fs-php pkill webpack || true
 	docker exec -u 1000 fs-php npm run watch
 

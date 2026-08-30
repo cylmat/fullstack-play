@@ -8,6 +8,8 @@ Php
 - Weakobject
 - SPL
 
+runtime: PHP-PM, ReactPHP, Swoole, FrankenPHP
+
 Symfony
 -------
 
