@@ -19,55 +19,21 @@ ENV GID=1000
 ENV NODE_VERSION=20
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt update && apt install -y curl git vim zip
-RUN apt install -y ca-certificates
-
-# install dependencies for phpize and pecl ($PHPIZE_DEPS: autoconf, dpkg-dev, file, g++, gcc, libc-dev, make, pkg-config, re2c)
-RUN echo $PHPIZE_DEPS
-RUN apt-get install -y $PHPIZE_DEPS
-
-# For use pkill
-RUN apt-get update && apt-get install -y procps
-
+# procps for use pkill
+RUN apt update && apt install -y ca-certificates curl git procps vim zip
 
 ### Common and build (https://packages.debian.org) ###
 
 RUN apt install -y \
+    apt-utils \
     bzip2 \
     gnupg \
     sqlite3 \
     wget
 
-RUN apt install -y apt-utils
-RUN apt install -y autoconf
-RUN apt install -y gcc
-RUN apt install -y libc6-dev
-RUN apt install -y make
-RUN apt install -y pkg-config
-
-
-
-
-###################
-# HEAVY install ! #
-###################
-
-
-# PUT IT FIRST TO CACHE IT !
-# Can take a LOOOONG time (~~10min each) to build and install !
-
-# Use sudo apt-get install -y php-swoole instead
-# Use pecl install swoole 2>&1 | tee swoole-build.log to debug
-# RUN apt install -y libbrotli-dev libssl-dev
-# RUN echo "\n" | pecl install -of phalcon -j$(nproc)
-# RUN echo "\n" | pecl install -of swoole -j$(nproc)
-# RUN apt install -y php-phalcon
-# RUN apt install -y php-swoole
-
-
-# RUN apt install -y libmemcached-dev zlib1g-dev
-# RUN echo 'yes' | pecl install -of memcached
-# RUN echo 'yes' | pecl install mongodb
+# install dependencies for phpize and pecl ($PHPIZE_DEPS: autoconf, dpkg-dev, file, g++, gcc, libc-dev, make, pkg-config, re2c)
+RUN echo $PHPIZE_DEPS
+RUN apt-get install -y $PHPIZE_DEPS
 
 
 
@@ -83,6 +49,16 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && rm -rf /root/.symfony5
 
 RUN symfony completion bash | tee /etc/bash_completion.d/symfony
+
+
+
+################
+### composer ###
+################
+
+# Composer install
+COPY ./symfony/composer.sh /tmp/composer.sh
+RUN chmod +x /tmp/composer.sh && /tmp/composer.sh
 
 
 
@@ -217,14 +193,15 @@ RUN docker-php-ext-install -j$(nproc) zip
 
 ### PECL extensions ###
 
-### IF PECL DOESN'T INSTALL JUST LOG IN CONTAINER AS ROOT AND MANUALLY INSTALL IT ###
-
-# RUN mkdir -p /tmp/pear_tmp -m 755 && \
-#     pear config-set temp_dir /tmp/pear_tmp && \
-#     chown -R root:root /tmp/pear_tmp && \
-#     chmod -R 777 /tmp/pear_tmp
+### CAUTION : Use PIE (PHP Installer for Extensions) ###
+### https://github.com/php/pie                       ###
+### AS PECL is DEPRECATED !!!                        ###
 
 RUN pecl channel-update pecl.php.net
+
+### IF PECL DOESN'T INSTALL JUST LOG IN CONTAINER AS ROOT AND MANUALLY INSTALL IT ###
+
+
 
 
 ### (http://pecl.php.net/packages.php)
@@ -269,14 +246,6 @@ RUN pecl install -of \
 # Clean up pear cache
 RUN pear clear-cache
 
-################
-### composer ###
-################
-
-# Composer install
-COPY ./symfony/composer.sh /tmp/composer.sh
-RUN chmod +x /tmp/composer.sh && /tmp/composer.sh
-
 
 ##############
 ### APACHE ###
@@ -295,6 +264,49 @@ USER user:user
 
 
 WORKDIR /var/www/application
+
+
+
+
+##########
+# SWOOLE #
+##########
+
+FROM core AS swoole
+
+USER root:root
+
+WORKDIR /tmp
+RUN apt install -y libbrotli-dev libssl-dev
+RUN echo 'y' | pecl install -of swoole
+RUN echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini
+
+USER user:user
+WORKDIR /var/www/application
+
+
+
+
+# HEAVY install ! #
+
+# Can take a LOOOONG time (~~10min each) to build and install !
+
+# Use sudo apt-get install -y php-swoole instead
+# Use pecl install swoole 2>&1 | tee swoole-build.log to debug
+# RUN apt install -y libbrotli-dev libssl-dev
+# RUN echo "\n" | pecl install -of phalcon -j$(nproc)
+# RUN echo "\n" | pecl install -of swoole -j$(nproc)
+# RUN apt install -y php-phalcon
+# RUN docker-php-ext-install -j$(nproc) swoole
+# RUN apt install -y php-swoole
+
+
+# RUN apt install -y libmemcached-dev zlib1g-dev
+# RUN echo 'yes' | pecl install -of memcached
+# RUN echo 'yes' | pecl install mongodb
+
+
+
 
 
 
