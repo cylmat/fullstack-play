@@ -119,6 +119,7 @@ db-sql-down:
 react-up:
 	HOST_VOLUME=./apps/vite-react docker compose --profile node up --build -d
 
+# JS and SCSS
 vanilla-up:
 	HOST_VOLUME=./apps/vite-vanilla docker compose --profile node up --build -d
 
