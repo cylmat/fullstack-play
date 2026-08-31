@@ -45,10 +45,10 @@ Available commands: \n\
 # COMMON #
 
 docker-build:
-	docker build -f ".docker/symfony/php.Dockerfile" --no-cache --pull -t fs-php:latest --target core ".docker"
+	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 
-docker-build-swoole:
-	docker build -f ".docker/symfony/php.Dockerfile" --no-cache --pull -t fs-php-swoole:latest --target swoole ".docker"
+docker-build-core:
+	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php-core:latest --target core ".docker"
 
 # Usage $ make git-push MSG="my message"
 MSG ?= Update by make

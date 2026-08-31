@@ -14,7 +14,7 @@ services:
     php:
         container_name: fs-php
         # docker buildx -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
-        image: fs-php-swoole:latest
+        image: fs-php:latest
         # build:
         #     context: .docker
         #     dockerfile: php.Dockerfile

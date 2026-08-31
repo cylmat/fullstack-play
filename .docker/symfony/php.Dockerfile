@@ -5,12 +5,12 @@
 # Use this Dockerfile as a base template,
 # (Un)comment extensions for own application.
 #
-# docker buildx -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+# docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 ##############
 
 ### Debian GNU/Linux 11 (bullseye) ###
 
-FROM php:8.4 AS core
+FROM php:8.5 AS core
 
 # root:root is 0
 
@@ -121,7 +121,6 @@ RUN docker-php-ext-install -j$(nproc) pdo_sqlite
 
 RUN yes '' | pecl install redis
 
-
 # RUN docker-php-ext-install -j$(nproc) pdo
 
 
@@ -160,7 +159,8 @@ RUN apt install -y \
 # ctype: allow to check for character classes in strings (https://www.php.net/manual/en/book.ctype.php)
 # intl: Internationalization extension (Intl) provides capabilities for software internationalization
 # odbc: Open Database Connectivity (ODBC) extension for PHP, allows you to connect to databases using the ODBC interface
-# pcntl: Process Control support for PHP, allows you to spawn and manage processes (for Ratchet)
+# pcntl: Process Control support for PHP, allows you to spawn and manage processes (ex for Ratchet)
+# posix: POSIX (Portable Operating System Interface) support for PHP, provides access to POSIX-compliant operating system features
 # session: Session support for PHP, allows you to manage user sessions (https://www.php.net/manual/en/book.session.php)
 # sockets: Sockets support for PHP, allows you to create and manage network sockets (https://www.php.net/manual/en/book.sockets.php)
 # sodium: Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more
@@ -267,12 +267,14 @@ WORKDIR /var/www/application
 
 
 
+                                    #####################################################
+
 
 ##########
 # SWOOLE #
 ##########
 
-FROM core AS swoole
+FROM core AS ext
 
 USER root:root
 
@@ -286,6 +288,39 @@ WORKDIR /var/www/application
 
 
 
+###########
+# PHALCON #
+###########
+
+
+USER root:root
+
+WORKDIR /tmp
+RUN echo '' | pecl install -of phalcon
+RUN echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini
+
+USER user:user
+WORKDIR /var/www/application
+
+
+#############
+# MEMCACHED #
+#############
+
+
+USER root:root
+
+WORKDIR /tmp
+RUN apt install -y libmemcached-dev 
+RUN echo '' | pecl install -of memcached
+RUN echo "extension=memcached.so" > /usr/local/etc/php/conf.d/memcached.ini
+
+USER user:user
+WORKDIR /var/www/application
+
+
+
+
 
 # HEAVY install ! #
 
@@ -293,12 +328,9 @@ WORKDIR /var/www/application
 
 # Use sudo apt-get install -y php-swoole instead
 # Use pecl install swoole 2>&1 | tee swoole-build.log to debug
-# RUN apt install -y libbrotli-dev libssl-dev
+
 # RUN echo "\n" | pecl install -of phalcon -j$(nproc)
 # RUN echo "\n" | pecl install -of swoole -j$(nproc)
-# RUN apt install -y php-phalcon
-# RUN docker-php-ext-install -j$(nproc) swoole
-# RUN apt install -y php-swoole
 
 
 # RUN apt install -y libmemcached-dev zlib1g-dev
@@ -319,6 +351,8 @@ WORKDIR /var/www/application
 #     ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519 -N "" && \
 #     eval "$(ssh-agent -s)" && \
 #     ssh-add ~/.ssh/id_ed25519
+
+
 
 #############
 ### Clean ###
