@@ -270,6 +270,16 @@ WORKDIR /var/www/application
                                     #####################################################
 
 
+                                    
+# HEAVY install ! #
+
+# Can take a LOOOONG time (~~10min each) to build and install !
+
+# Use sudo apt-get install -y php-swoole instead
+# Use pecl install swoole 2>&1 | tee swoole-build.log to debug
+
+
+
 ##########
 # SWOOLE #
 ##########
@@ -281,7 +291,6 @@ USER root:root
 WORKDIR /tmp
 RUN apt install -y libbrotli-dev libssl-dev
 RUN echo 'y' | pecl install -of swoole
-RUN echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini
 
 USER user:user
 WORKDIR /var/www/application
@@ -297,7 +306,6 @@ USER root:root
 
 WORKDIR /tmp
 RUN echo '' | pecl install -of phalcon
-RUN echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini
 
 USER user:user
 WORKDIR /var/www/application
@@ -311,9 +319,8 @@ WORKDIR /var/www/application
 USER root:root
 
 WORKDIR /tmp
-RUN apt install -y libmemcached-dev 
+RUN apt install -y libmemcached-dev zlib1g-dev
 RUN echo '' | pecl install -of memcached
-RUN echo "extension=memcached.so" > /usr/local/etc/php/conf.d/memcached.ini
 
 USER user:user
 WORKDIR /var/www/application
@@ -322,24 +329,22 @@ WORKDIR /var/www/application
 
 
 
-# HEAVY install ! #
+#############
+### Clean ###
+#############
 
-# Can take a LOOOONG time (~~10min each) to build and install !
+USER root:root
 
-# Use sudo apt-get install -y php-swoole instead
-# Use pecl install swoole 2>&1 | tee swoole-build.log to debug
+RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-# RUN echo "\n" | pecl install -of phalcon -j$(nproc)
-# RUN echo "\n" | pecl install -of swoole -j$(nproc)
-
-
-# RUN apt install -y libmemcached-dev zlib1g-dev
-# RUN echo 'yes' | pecl install -of memcached
-# RUN echo 'yes' | pecl install mongodb
+USER user:user
 
 
-
-
+##############
+# FRANKENPHP #
+# https://caddyserver.com
+# https://frankenphp.dev
+##############
 
 
 ### Ssh ###
@@ -353,11 +358,6 @@ WORKDIR /var/www/application
 #     ssh-add ~/.ssh/id_ed25519
 
 
-
-#############
-### Clean ###
-#############
-# RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 
 

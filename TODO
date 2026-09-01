@@ -19,6 +19,11 @@ Symfony
 - Middleware/Event Dispatcher
 - HTTP Cache
 - Voter/Authorization
+- Symfony UX Turbo + Stimulus
+- Webhook ?
+- Runtime Component (https://symfony.com/doc/current/components/runtime.html)
+- Passwordless Auth, WebAuthn
+- ux-live-component (https://symfony.com/bundles/ux-live-component/current/index.html)
 
 Js
 --

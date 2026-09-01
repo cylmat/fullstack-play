@@ -34,6 +34,7 @@ services:
         profiles:
           - symfony
 
+
     ########
     # NODE #
     ########
@@ -52,6 +53,31 @@ services:
         profiles:
           - node
 
+
+    # swoole:
+    #     image: phpswoole/swoole:latest
+    #     container_name: fs-swoole
+    #     restart: always
+    #     user: 1000:1000
+    #     working_dir: /var/www/application
+    #     volumes:
+    #         - ./apps/swoole:/var/www/application
+    #     command: sleep infinity
+    #     profiles:
+    #       - swoole
+
+    # # docker run -v .:/app/public   -p 80:80 -p 443:443 -p 443:443/udp  dunglas/frankenphp
+    # frankenphp:
+    #     image: dunglas/frankenphp:latest
+    #     container_name: fs-frankenphp
+    #     restart: always
+    #     user: 1000:1000
+    #     working_dir: /var/www/application
+    #     volumes:
+    #         - ./apps/frankenphp:/var/www/application
+    #     command: sleep infinity
+    #     profiles:
+    #       - frankenphp
 
 
     ### TRAEFIK
