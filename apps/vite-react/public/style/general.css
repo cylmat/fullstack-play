@@ -32,6 +32,7 @@ body {
   margin: 0;
   display: grid;
   grid-template-rows: auto 1fr; /* auto for header, and 1fr (one fraction unit) for main content */
+  padding-top: 80px;
 }
 
 header#menu {
@@ -94,7 +95,14 @@ button:focus-visible {
 /** menu */
 
 #menu {
-  margin-bottom: 2em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #242424;
+  margin: 0;
+  width: 100%;
 }
 
 #menu > div {
