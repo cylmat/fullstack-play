@@ -1,14 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import ApiCall from "../react/components/ApiCall"
-
-function Api() {
-  return (
-    <>
-      <ApiCall />
-    </>
-  );
-}
+import ApiCall from "../pages/api/ApiCall"
 
 import {
   QueryClient,
@@ -20,7 +12,7 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-        <Api />
+        <ApiCall />
     </QueryClientProvider>
   </React.StrictMode>
 )

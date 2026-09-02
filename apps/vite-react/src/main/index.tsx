@@ -1,7 +1,7 @@
 // import { StrictMode }  from 'react'
 import React  from 'react'
 import ReactDOM from 'react-dom/client'
-import Index from '../react/Index'
+import Index from '../pages/home/Index'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -9,9 +9,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Index />
   </React.StrictMode>
 )
-
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )

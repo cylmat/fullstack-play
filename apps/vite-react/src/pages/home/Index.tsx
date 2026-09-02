@@ -1,10 +1,13 @@
-import { useState } from "react";
-import CssSample from "./components/css/CssSample";
-import Logo from "./components/logo/Logo";
-import Tabs from "./components/tab/Tabs";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/favicon.svg";
-import "./App.css";
+import React from "react";
+import { useState } from "react"; //@todo move it
+import CssSample from "../../components/css/CssSample";
+import Loader from "../../components/loader/Loader";
+import Logo from "../../components/logo/Logo";
+import Tabs from "../../components/tab/Tabs";
+import reactLogo from "../../assets/icons/react.svg";
+import viteLogo from "../../assets/icons/favicon.svg";
+import './index.css'
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,9 +38,7 @@ function App() {
         </p>
       </div>
       <Tabs />
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
       <CssSample />
     </>
   );

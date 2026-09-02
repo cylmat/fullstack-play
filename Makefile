@@ -44,11 +44,12 @@ Available commands: \n\
 
 # COMMON #
 
-docker-build:
-	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
 
-docker-build-core:
-	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php-core:latest --target core ".docker"
+docker-build:
+	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest --target core ".docker"
+
+docker-build-server:
+	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php-server:latest ".docker"
 
 # Usage $ make git-push MSG="my message"
 MSG ?= Update by make

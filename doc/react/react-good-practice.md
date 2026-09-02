@@ -82,6 +82,66 @@
 * avoid prop drilling
 * keep components small ([nareshit.com][4])
 
+--- Directory structure
+
+https://dev.to/pramod_boda/recommended-folder-structure-for-react-2025-48mc
+
+```shell
+my-app/
+├── public/
+│   ├── favicon.ico
+│   ├── robots.txt
+│   └── index.html
+├── src/
+│   ├── assets/                  # Static assets
+│   │   ├── images/
+│   │   ├── fonts/
+│   │   └── icons/
+│   ├── components/               # Reusable, UI components
+│   │   ├── common/               # Buttons, Inputs, Modals, etc.
+│   │   │   ├── Button/
+│   │   │   │   ├── Button.jsx
+│   │   │   │   ├── Button.module.css
+│   │   │   │   ├── Button.test.jsx
+│   │   │   │   └── index.js
+│   │   └── layout/               # Header, Footer, Sidebar, Navbar
+│   │       ├── Header/
+│   │       └── Footer/
+│   ├── features/                 # Feature-based modules (recommended for scale)
+│   │   ├── auth/
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── services/         # API calls specific to auth
+│   │   │   ├── authSlice.js      # Redux slice / Zustand store
+│   │   │   └── index.js
+│   │   ├── dashboard/
+│   ├── pages/                    # Route-level components / views
+│   │   ├── Home/
+│   │   │   ├── Home.jsx
+│   │   │   └── Home.module.css
+│   ├── routes/                   # Routing configuration
+│   │   ├── AppRoutes.jsx
+│   ├── hooks/                    # Global/shared custom hooks
+│   │   ├── useAuth.js
+│   ├── context/                  # React Context providers
+│   │   ├── ThemeContext.jsx
+│   ├── store/                    # Global state management (Redux/Zustand/Recoil)
+│   │   ├── index.js
+│   ├── services/                 # API/axios instances, external service logic
+│   │   ├── api.js                # Axios instance/config
+│   ├── utils/                    # Helper/utility functions
+│   │   ├── formatDate.js
+│   ├── types/                    # TypeScript types/interfaces (if using TS)
+│   │   ├── user.types.ts
+│   ├── styles/                   # Global styles
+│   │   ├── globals.css
+│   ├── config/                   # App-level configuration
+│   ├── App.jsx
+│   ├── App.css
+│   ├── main.jsx                  # Entry point (Vite) / index.js (CRA)
+│   └── index.css
+```
+
 ---
 
 # 🧠 Important insight (very senior-level)

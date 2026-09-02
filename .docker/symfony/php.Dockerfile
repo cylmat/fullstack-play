@@ -270,7 +270,6 @@ WORKDIR /var/www/application
                                     #####################################################
 
 
-                                    
 # HEAVY install ! #
 
 # Can take a LOOOONG time (~~10min each) to build and install !
@@ -327,6 +326,13 @@ WORKDIR /var/www/application
 
 
 
+##############
+# FRANKENPHP #
+# https://caddyserver.com
+# https://frankenphp.dev
+##############
+
+
 
 
 #############
@@ -338,13 +344,6 @@ USER root:root
 RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 USER user:user
-
-
-##############
-# FRANKENPHP #
-# https://caddyserver.com
-# https://frankenphp.dev
-##############
 
 
 ### Ssh ###

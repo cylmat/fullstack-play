@@ -66,6 +66,19 @@ services:
     #     profiles:
     #       - swoole
 
+    # memcache:
+    #     image: bitnami/memcached:latest
+    #     container_name: fs-memcache
+    #     restart: always
+    #     user: 1000:1000
+    #     environment:
+    #         MEMCACHED_USERNAME: user
+    #         MEMCACHED_PASSWORD: pass
+    #     ports:
+    #         - 11211:11211
+    #     profiles:
+    #       - memcache
+
     # # docker run -v .:/app/public   -p 80:80 -p 443:443 -p 443:443/udp  dunglas/frankenphp
     # frankenphp:
     #     image: dunglas/frankenphp:latest
