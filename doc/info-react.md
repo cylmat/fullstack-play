@@ -30,3 +30,7 @@ Classical structure
 ## Docs
 
 - https://react.dev
+
+## Other
+
+- https://react-icons.github.io/react-icons/
