@@ -1,0 +1,485 @@
+Tilt / Skaffold / Garden
+
+OpenAPI / AsyncAPI + contract testing
+
+Claude Desktop
+
+---
+
+```bash
+docker run -i --rm \
+  -e GITHUB_PERSONAL_ACCESS_TOKEN=<ton-token> \
+  ghcr.io/github/github-mcp-server
+```
+
+---
+
+## Exercice
+
+Prends un cas d'usage, par exemple *« corriger automatiquement les PR sur GitHub et générer de la documentation »*, et fais un diagramme d'architecture (Mermaid ou PlantUML) avec :
+
+- Host (client IA) ;
+- MCP clients ;
+- MCP servers (GitHub, local, CI, documentation) ;
+- microservices ou middlewares, si besoin ;
+- AWS ou l'infrastructure sous-jacente.
+
+---
+
+Prends un cas d'usage, par exemple *« corriger automatiquement les PR sur GitHub et générer de la documentation »*, et fais un diagramme d'architecture (Mermaid ou PlantUML) avec :
+
+- Host (client IA) ;
+- MCP clients ;
+- MCP servers (GitHub, local, CI, documentation) ;
+- microservices ou middlewares, si besoin ;
+- AWS ou l'infrastructure sous-jacente.
+
+Pour t'entraîner à devenir **architecte AI**, le plus efficace est de structurer ton apprentissage autour de trois axes : **architecture logicielle moderne**, **agents AI & MCP**, et **pratique sur cloud / GitHub / local**.
+
+Tu as déjà des bases dev (Symfony, React, Docker, Linux). L'objectif maintenant est de passer au niveau *architecte* : concevoir des systèmes complets d'**agents AI** qui utilisent MCP, des microservices, du cloud, de la documentation et de l'automatisation (PR, tests, etc.).
+
+---
+
+### 1. Ce que doit savoir un architecte AI moderne
+
+Un bon architecte AI aujourd'hui maîtrise au moins :
+
+- **Architecture d'agents**
+  - agents simples vs multi-agents ;
+  - séparation entre logique métier, outils et modèles ;
+  - gestion du contexte, de la mémoire et des sources de vérité.
+- **Protocoles d'intégration**
+  - **MCP (Model Context Protocol)** comme « USB-C de l'IA » pour brancher des outils, APIs, bases de données, GitHub, AWS, etc. [3][5][8][11][13] ;
+  - conception de MCP servers pour des API internes ou microservices.
+- **Architecture cloud / data**
+  - microservices, event-driven, API Gateway ;
+  - data lake / lakehouse, catalogues de données, gouvernance [12][14][15] ;
+  - sécurité, authentification, observabilité et monitoring des agents.
+- **Cycle de vie et pratique d'ingénierie**
+  - CI/CD, tests, évaluation des agents et métriques ;
+  - documentation d'architecture, ADR, diagrammes et documentation d'API ;
+  - stratégie de tooling (GitHub, Docker, AWS, etc.) [14].
+
+Ton envie de **correction automatique de PR**, **génération de documentation** et **usage MCP sur AWS/GitHub/local** est exactement dans ce scope.
+
+---
+
+### 2. MCP comme centre de ton entraînement d'architecte AI
+
+MCP est un excellent terrain d'entraînement parce qu'il t'oblige à penser **architecture propre** :
+
+- **Architecture MCP**
+  - **MCP Host** : l'application IA (par exemple un IDE ou un client desktop) qui orchestre les agents et leurs outils [3] ;
+  - **MCP Client** : composant qui maintient la connexion aux serveurs, gère les outils et ressources [3][6][10][13] ;
+  - **MCP Server** : adaptateurs vers les systèmes : GitHub, AWS, base de données, microservice et fichiers locaux [3][5][8][11][13].
+- **Couches du protocole**
+  - **Data layer** : JSON-RPC, capabilities, versions, outils, ressources, prompts et notifications [3][7] ;
+  - **Transport layer** : stdio, HTTP streaming, SSE, authentification, etc. [3][2][6][13].
+
+Te former comme architecte AI avec MCP signifie :
+
+- concevoir quels **MCP servers** représentent tes domaines (GitHub, CI/CD, AWS, data, services métiers) ;
+- définir comment tes **agents** consomment ces serveurs via MCP clients ;
+- penser sécurité, authentification, gouvernance et monitoring autour de cette couche.
+
+---
+
+### 3. Parcours d'entraînement concret adapté à ton profil
+
+Je te propose un **plan en 5 étapes**, que tu peux faire **en local avec Docker**, puis étendre à AWS / GitHub.
+
+#### Étape 1 - Maîtriser l'architecture AI + MCP (théorie appliquée)
+
+**Objectif :** comprendre la **cartographie globale**.
+
+- Étudier :
+  - l'architecture officielle MCP (host/client/server, couches data/transport) [3][5][6][7][8][13] ;
+  - les guides développeurs MCP côté serveur et client : tools, resources, prompts, lifecycle, transports et sécurité [2][6][11][13] ;
+  - les bonnes pratiques « AI agents en entreprise » : démarrer petit, instrumentation, multi-agents, tooling et tests continus [14].
+- Exercice :
+  - prends le cas d'usage *« corriger automatiquement les PR sur GitHub et générer de la documentation »* ;
+  - fais un **diagramme d'architecture** (Mermaid ou PlantUML) avec le Host, les MCP clients, les MCP servers (GitHub, local, CI, documentation), les microservices ou middlewares, et AWS ou l'infrastructure sous-jacente.
+
+Tu te comportes déjà comme architecte en choisissant la découpe.
+
+#### Étape 2 - Construire plusieurs MCP servers autour d'un repo GitHub
+
+**Objectif :** faire un **atelier de micro-architecture AI** autour de GitHub.
+
+1. **Serveur MCP GitHub**
+   - serveur dédié aux opérations GitHub : PR, issues, fichiers et branches ;
+   - tools bien définis : `list_pull_requests`, `get_diff`, `comment_on_pr`, `apply_patch`, etc. [11][13].
+2. **Serveur MCP « local dev »**
+   - outils pour lire ou écrire dans le repo local, lancer les tests, formatter et générer de la documentation ;
+   - tools tels que `run_tests`, `format_code`, `generate_readme` et `build_docs`.
+3. **Serveur MCP « documentation »**
+   - spécialisé dans la documentation : génération de Markdown, ADR, diagrammes et documentation d'API ;
+   - tools : `generate_adr`, `update_api_docs`, `create_arch_diagram`.
+
+Exercices d'architecte AI :
+
+- définir pour chaque serveur son **domaine fonctionnel**, sa responsabilité, ses **tools** (signature, paramètres, résultats et erreurs) et ses **resources** (fichiers, endpoints, données) ;
+- documenter ces serveurs (README, diagrammes) comme des composants d'architecture.
+
+#### Étape 3 - Concevoir un flux complet de « PR review automatique »
+
+**Objectif :** passer de la **vision architecte** à un use case de bout en bout.
+
+**Scénario :**
+
+1. Une PR est ouverte sur GitHub.
+2. L'agent est déclenché, via GitHub Actions ou manuellement.
+3. L'agent utilise :
+   - le **MCP GitHub server** pour lire le diff, les fichiers modifiés et les tests CI ;
+   - le **MCP local server** pour lancer des tests en local, le linting ou le formatter ;
+   - le **MCP doc server** pour mettre à jour la documentation si nécessaire.
+4. L'agent propose des corrections, applique des patchs et ajoute un commentaire de review à la PR.
+
+Travail d'architecte :
+
+- définir les **interfaces** entre ces serveurs (quelle information transite via le host ou client) ;
+- décider du **mode d'orchestration** : un seul agent « monolithique » ou plusieurs agents spécialisés (code, documentation, tests) orchestrés par un **meta-agent** [14] ;
+- intégrer ce workflow dans la **CI/CD** (GitHub Actions + Docker + éventuellement AWS).
+
+Tu peux simuler tout ça **en local** avec Docker, puis connecter à un repo GitHub réel.
+
+#### Étape 4 - Ajouter une couche data / cloud façon « Agentic AI + lakehouse »
+
+**Objectif :** te rapprocher de la **vision architecte data + AI**.
+
+Inspiré des bonnes pratiques AWS :
+
+- penser un **context layer** pour tes agents : une couche qui agrège les données accessibles (catalogues, bases, fichiers et API) via MCP ou SDKs [12][15] ;
+- définir des **MCP servers pour les sources de données** qui n'ont pas d'intégration standard [12][15].
+
+Exemple pour ton entraînement :
+
+- ajouter un **MCP server pour ton data store** (Postgres, S3 ou un mini lakehouse local) ;
+- exposer des tools comme `query_business_metrics`, `get_events_for_pr` et `get_user_activity_for_repo` ;
+- concevoir comment un agent de review de PR utilise ces données pour enrichir ses décisions (risque, historique, performance, etc.).
+
+Tu te formes ainsi à :
+
+- l'architecture **data pour agents AI** (catalogues, schémas, rafraîchissement de métadonnées, caches et timeouts) [15] ;
+- les bonnes pratiques d'accès aux données par agents (validation de schéma, timeouts et caching) [15].
+
+#### Étape 5 - Pratique continue comme architecte
+
+Pour consolider, adopte une routine orientée « architecte » :
+
+- à chaque nouveau projet d'agent ou de MCP server, produis systématiquement :
+  - un **diagramme d'architecture** ;
+  - une **ADR** (Architecture Decision Record) par décision importante ;
+  - une **documentation d'API / tools MCP** claire (contrats, erreurs et limites) ;
+  - un plan de **monitoring / évaluation de l'agent** (métriques, logs et tests) [14].
+- multiplie les **variantes d'architecture** pour un même problème :
+  - correction de PR avec un seul agent vs multi-agents ;
+  - agents branchés directement à GitHub/AWS vs agents passant par une couche MCP d'entreprise ;
+  - architecture « cloud-only » vs « local-first » puis synchronisation.
+
+C'est vraiment la posture d'architecte : comparer, expliciter, documenter, puis tester.
+
+---
+
+### 4. Comment utiliser ton environnement existant (Symfony / React / Docker / Ubuntu)
+
+Avec ce que tu as déjà :
+
+- **Docker / Docker Compose**
+  - crée des **stacks d'entraînement** : un compose avec plusieurs MCP servers (GitHub, local, documentation et data), ainsi que des services de développement (API Symfony/Node, base de données) ;
+  - joue le rôle d'architecte infra : réseau interne, volumes, secrets et politiques de restart.
+- **Symfony / Node / React**
+  - construis des microservices qui deviennent des **backends pour MCP servers** (par exemple, un microservice de documentation ou de policy) ;
+  - intègre des agents AI dans une application React pour en faire un **client MCP custom**.
+- **Ubuntu / JQ / grep / find**
+  - excellent pour construire un **MCP server « toolbox dev »** qui expose des outils de manipulation de fichiers, logs et métriques.
+
+---
+
+### 5. Si tu veux un prochain pas très concret
+
+Je peux te proposer un **plan de projet complet d'entraînement** avec :
+
+- un `docker-compose.yaml` pour un lab « Architecte AI » ;
+- les composants : MCP server GitHub, MCP server local dev, service API (Symfony ou Node), Postgres et service de documentation ;
+- une liste de **scénarios d'architecture** à concevoir et tester : PR review, documentation automatique et déploiement AWS simulé.
+
+Choisis entre :
+
+- un **lab minimal** (GitHub + local + documentation) ;
+- un **lab plus cloud-orienté** avec AWS et un data store.
+
+---
+
+Tu peux tout à fait utiliser **un serveur MCP local**, sans passer par GitHub, et le faire tourner **avec Docker**. L'idée la plus utile est un serveur MCP qui donne accès au **filesystem local** (et éventuellement à Docker lui-même), que tu peux ensuite brancher à ton client IA.
+
+### 1. Serveur MCP « filesystem » local
+
+Il existe un **serveur MCP dédié au système de fichiers local**, fourni officiellement dans les serveurs MCP et aussi par la communauté. Son rôle est d'exposer des *tools* pour lire ou écrire des fichiers, lister des dossiers, etc., sur une partie de ton disque.
+
+Typiquement, on le lance en lui donnant un ou plusieurs **répertoires autorisés**. En mode classique (sans Docker), c'est souvent une commande du type :
+
+```bash
+npx -y @modelcontextprotocol/server-filesystem /chemin/vers/projets /chemin/vers/docs
+```
+
+Puis tu le déclares dans la configuration de ton client MCP (Claude Desktop, VS Code ou autre), par exemple :
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/chemin/vers/projets",
+        "/chemin/vers/docs"
+      ]
+    }
+  }
+}
+```
+
+Tu obtiens alors un **serveur MCP purement local** que l'agent peut utiliser pour manipuler ton code, ta documentation, etc.
+
+---
+
+### 2. Même serveur, mais dans Docker (local, avec contrôle des accès)
+
+Puisque tu aimes travailler avec Docker, tu peux faire tourner ce serveur MCP filesystem **dans un conteneur**, tout en lui donnant accès à ton disque via des volumes.
+
+Le principe :
+
+1. Tu builds (ou récupères) une image Docker du serveur filesystem :
+
+   ```bash
+   docker build -t mcp/filesystem -f src/filesystem/Dockerfile .
+   ```
+
+2. Tu le lances avec un `docker run` qui monte les dossiers que tu veux que l'agent voie :
+
+   ```bash
+   docker run -i --rm \
+     --mount type=bind,src=/home/toi/projets,dst=/projects/projets \
+     --mount type=bind,src=/home/toi/docs,dst=/projects/docs,ro \
+     mcp/filesystem \
+     /projects
+   ```
+
+   - `src=...` : chemin sur ton host (Ubuntu, macOS, etc.) ;
+   - `dst=...` : chemin dans le conteneur ;
+   - `ro` : *read-only* si tu veux empêcher les écritures ;
+   - le dernier argument `/projects` : répertoire racine autorisé dans le conteneur pour le serveur MCP.
+
+3. Tu déclares ce serveur dans la configuration de ton client MCP en indiquant la commande `docker` et les bons `args` :
+
+   ```json
+   {
+     "mcpServers": {
+       "filesystem": {
+         "command": "docker",
+         "args": [
+           "run",
+           "-i",
+           "--rm",
+           "--mount",
+           "type=bind,src=/home/toi/projets,dst=/projects/projets",
+           "--mount",
+           "type=bind,src=/home/toi/docs,dst=/projects/docs,ro",
+           "mcp/filesystem",
+           "/projects"
+         ]
+       }
+     }
+   }
+   ```
+
+Résultat : tu as un **serveur MCP local**, dans Docker, qui ne dépend absolument pas de GitHub et qui sert d'interface vers tes dossiers de développement et ta documentation. C'est parfait pour t'entraîner à être architecte AI sur ton code local.
+
+---
+
+### 3. Autres serveurs MCP locaux utiles pour ton entraînement
+
+En plus du filesystem, il existe des serveurs MCP :
+
+- pour **piloter Docker** lui-même (containers, images et stacks), en montant le socket Docker du host dans le conteneur (`/var/run/docker.sock`). Configuration typique dans ton client MCP :
+
+  ```json
+  {
+    "mcpServers": {
+      "docker-local": {
+        "command": "docker",
+        "args": [
+          "run",
+          "-i",
+          "--rm",
+          "-v",
+          "/var/run/docker.sock:/var/run/docker.sock",
+          "mcp-server-docker:latest"
+        ]
+      }
+    }
+  }
+  ```
+
+  Cela te permet de concevoir des **agents AI architectes d'infrastructure**, qui créent ou inspectent des conteneurs, des réseaux, etc.
+
+- des **templates de serveur MCP** en Python ou Node, pensés pour tourner dans Docker. Tu peux les adapter à ton domaine (tests, documentation, CI locale ou microservice Symfony/Node), les builder puis les exposer via `docker-compose` et les ajouter comme `mcpServers` dans ton client.
+
+---
+
+### 4. Comment les intégrer à ton entraînement d'architecte AI
+
+Pour ne pas utiliser GitHub et rester en **local**, tu peux monter un petit lab MCP avec Docker Compose :
+
+```yaml
+version: "3.8"
+
+services:
+  mcp-filesystem:
+    image: mcp/filesystem
+    command: ["/projects"]
+    volumes:
+      - /home/toi/projets:/projects/projets
+      - /home/toi/docs:/projects/docs:ro
+
+  mcp-docker:
+    image: mcp-server-docker:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```
+
+Ensuite, dans ton client IA (Claude Desktop, VS Code ou autre), tu ajoutes ces deux serveurs dans la configuration `mcpServers` avec la commande `docker` ou `docker compose` selon ce qui est supporté.
+
+Sur cette base, tu peux t'entraîner à être **architecte AI** en local en définissant un agent qui :
+
+- lit ton code via le serveur **filesystem** ;
+- lance des conteneurs ou tests via le serveur **docker** ;
+- génère et met à jour la documentation dans ton repo local.
+
+Tu n'as ainsi besoin d'aucun serveur MCP GitHub : tout est **local + Docker**, ce qui correspond exactement à ce que tu cherches.
+
+---
+
+Tu n'as pas besoin de Claude Desktop pour t'entraîner comme architecte AI avec MCP et des serveurs locaux. Tu peux utiliser d'autres **clients MCP** ou même créer le tien.
+
+### 1. Utiliser un autre client MCP (VS Code, terminal, web)
+
+Même sans Claude Desktop, tu peux avoir un **MCP host** via :
+
+- **VS Code + extension MCP (communautaire)**
+  - certaines extensions permettent de déclarer des serveurs MCP (filesystem, Docker, etc.) et d'utiliser un modèle (API OpenAI ou autre) pour interagir avec ces serveurs ;
+  - tu continues à travailler dans VS Code, et l'agent utilise tes serveurs MCP locaux.
+- **Client MCP en ligne de commande**
+  - tu peux utiliser ou créer un petit **client MCP CLI** ;
+  - il se connecte à tes serveurs MCP (filesystem, docker, etc.), affiche les tools disponibles et exécute des requêtes ;
+  - tu peux le combiner avec une API de modèle (OpenAI ou autre) pour simuler un agent.
+- **Client web maison**
+  - avec tes compétences React/Node : backend Node jouant le rôle de **MCP client** et frontend React pour discuter avec l'agent ;
+  - tu y branches tes serveurs MCP Docker (filesystem, docker, tests, etc.).
+
+On peut partir sur l'option « client MCP Node + petit front React » et définir une architecture simple.
+
+---
+
+### 2. Travailler uniquement avec des serveurs MCP locaux + un modèle via API
+
+Même sans application officielle comme Claude Desktop, tu peux déjà t'entraîner sur l'architecture :
+
+1. **Lancer tes serveurs MCP en local (Docker)**
+
+   Exemple : serveur MCP filesystem local en Node, dans Docker.
+
+   ```yaml
+   version: "3.8"
+
+   services:
+     mcp-filesystem:
+       image: mcp/filesystem
+       command: ["/projects"]
+       volumes:
+         - /home/toi/projets:/projects/projets
+         - /home/toi/docs:/projects/docs:ro
+
+     mcp-docker:
+       image: mcp-server-docker:latest
+       volumes:
+         - /var/run/docker.sock:/var/run/docker.sock
+   ```
+
+2. **Écrire un petit orchestrateur en Node/Python**
+
+   Ce programme :
+
+   - se connecte aux serveurs MCP (JSON-RPC, stdio) ;
+   - expose leurs tools (lecture/écriture de fichiers, exécution de containers, etc.) ;
+   - appelle une API de modèle (GPT ou autre) en lui indiquant les tools disponibles, la documentation et la question de l'utilisateur, afin qu'il décide quels tools utiliser.
+
+Tu seras déjà en train de faire du **design d'architecture d'agent AI + MCP**, sans Claude Desktop.
+
+---
+
+### 3. Ce que tu peux faire maintenant concrètement
+
+Comme tu ne peux pas installer Claude Desktop, voici deux chemins :
+
+1. **Chemin simple (pour commencer tout de suite)**
+   - continue à utiliser tes Docker existants (PHP/Symfony, Node/React et Ubuntu) ;
+   - ajoute un **serveur MCP filesystem** en Node dans Docker, qui donne accès à ton code et à ta documentation ;
+   - écris un petit script Node qui envoie des requêtes au serveur MCP, appelle un modèle via API et renvoie les actions à effectuer : lire un fichier, lancer un test ou modifier un fichier.
+
+   Tu verras clairement le rôle des **serveurs MCP** (outils et accès au monde), du **modèle** (raisonnement et décisions) et du **client** (qui les relie).
+
+2. **Chemin « architecte complet » (un peu plus ambitieux)**
+   - crée un **client MCP maison** : backend Node (MCP client) et frontend React (interface de l'architecte AI) ;
+   - branche un serveur MCP filesystem, un serveur MCP docker et éventuellement un serveur MCP pour les tests (PHPUnit, Jest, etc.).
+
+   Tu travailles alors sur la **séparation des microservices**, la **documentation d'architecture**, la **gestion des droits** (read-only vs write) et la mise en place de scénarios : correction automatique de PR locale, génération de documentation, etc.
+
+---
+
+### 4. On fait quoi ensemble ensuite ?
+
+Le plus utile est de bâtir un **lab MCP local sans Claude**. Indique :
+
+- ton OS (Ubuntu, Windows ou macOS) ;
+- le modèle que tu peux appeler (par API : OpenAI, autre, ou rien du tout pour l'instant).
+
+Je peux alors te donner :
+
+- un `docker-compose.yml` avec un serveur MCP filesystem et un serveur MCP docker ;
+- un **exemple de petit client Node** qui se connecte à ces serveurs MCP et exécute une requête simple, par exemple « liste les fichiers du projet et renvoie la structure ».
+
+Ce sera une bonne base pour t'entraîner à être architecte AI **sans dépendre de Claude Desktop**.
+
+---
+
+## Autres protocoles et standards de tool calling / agents
+
+Oui, il existe plusieurs autres **protocoles** et **standards de tool calling / agents** utilisés en plus de MCP.
+
+Les principaux types d'alternatives sont :
+
+- **Protocoles de tool calling des fournisseurs de modèles**
+  - **OpenAI function calling** : format JSON largement utilisé pour décrire des fonctions ou outils que le modèle peut appeler (nom, description, paramètres en JSON Schema) [6][15] ;
+  - **Anthropic tool use** : format proche, avec quelques différences de structure, qui a précédé MCP chez Anthropic [6] ;
+  - ces formats ne sont pas des protocoles réseau complets comme MCP, mais des **standards de description et d'appel de fonctions** côté LLM [6][15].
+- **Protocoles d'interopérabilité entre agents / outils (alternatives directes à MCP)**
+  - **UTCP - Universal Tool Calling Protocol** : protocole ouvert conçu explicitement comme alternative à MCP, où l'agent appelle directement les endpoints natifs (HTTP, gRPC, WebSocket ou CLI) sans serveur intermédiaire, pour réduire la latence et garder l'authentification et la sécurité existantes [10][14] ;
+  - **ACP - Agent Communication Protocol (IBM)** : standard d'interopérabilité pour la communication entre agents, applications et humains, basé sur une architecture RESTful HTTP, avec support des interactions synchrones et asynchrones [4][7] ;
+  - **A2A - Agent2Agent (Google)** : protocole lancé avec de nombreux partenaires pour la communication et l'orchestration entre agents et services, positionné comme concurrent significatif de MCP [2][7].
+- **Frameworks / plateformes qui fournissent leur propre pseudo-protocole**
+  - **LangChain, Spring AI, Flowise, Composio, TrueFoundry, etc.** fournissent des abstractions de tool calling (définition de tools, paramètres et exécution) reposant généralement sur des conventions JSON inspirées d'OpenAI, sans nécessairement définir un protocole réseau standard comme MCP [1][4][13][9][15] ;
+  - certains frameworks revendiquent pouvoir **remplacer MCP** en combinant OpenAPI, function calling et stratégies de validation [8][1].
+- **Standards plus anciens ou connexes**
+  - **Language Server Protocol (LSP)** : protocole entre éditeurs/IDE et serveurs de langage (autocomplétion, go to definition, etc.). Ce n'est pas destiné aux LLM, mais c'est un exemple de protocole d'outillage standardisé servant d'inspiration à certains designs d'agents [4] ;
+  - **Agent Client Protocol** et **Agent Communication Protocol (ACP)** : standards orientés IDE ou coding agents qui définissent comment un éditeur parle à un agent qui modifie du code [5][4].
+
+Pour ton objectif d'architecte AI, cela donne en pratique :
+
+- utilise **MCP** lorsque tu veux une intégration standardisée d'outils et de ressources ;
+- utilise les formats de tool calling intégrés aux fournisseurs (OpenAI function calling ou Anthropic tool use) lorsque tu veux quelque chose de simple et direct ;
+- envisage des protocoles d'interopérabilité comme **UTCP**, **ACP** ou **A2A** lorsque tu conçois une architecture d'agents plus large : multi-agents, multi-services, latence, sécurité et gouvernance.
+
+Tu peux ensuite comparer les différences architecturales entre **MCP**, **UTCP** et **ACP/A2A** et définir des scénarios d'entraînement adaptés : quand choisir MCP, quand préférer un protocole de direct tool calling comme UTCP.

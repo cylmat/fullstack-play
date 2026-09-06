@@ -1,0 +1,250 @@
+Voici un **lab MCP minimal en local** avec :
+
+- un `docker-compose.yml` qui lance deux serveurs :
+  - un **serveur MCP filesystem** (accès aux fichiers du projet) ;
+  - un **serveur MCP docker** (interactions avec Docker) ;
+- un **petit client Node** qui se connecte au serveur filesystem et demande la liste des fichiers.
+
+Je pars sur une organisation simple : `mcp-servers/` (Docker) et `mcp-client-node/` (client Node).
+
+---
+
+## 1. `docker-compose.yml` avec 2 serveurs MCP
+
+Dans un dossier, par exemple `mcp-servers/`, crée ce fichier :
+
+```yaml
+version: "3.8"
+
+services:
+  mcp-filesystem:
+    image: ghcr.io/anthropic/mcp-server-fs:latest
+    container_name: mcp-filesystem
+    # Le serveur MCP filesystem expose un binaire qui parle MCP via stdio.
+    # On monte ton projet dans /workspace.
+    volumes:
+      - ./workspace:/workspace
+    working_dir: /workspace
+    # On utilise un petit wrapper pour le connecter ensuite au client Node via stdio
+    # ou via un RPC que tu définiras. Pour l'instant on garde une commande simple.
+    command: ["mcp-server-fs", "--root", "/workspace"]
+
+  mcp-docker:
+    image: ghcr.io/anthropic/mcp-server-docker:latest
+    container_name: mcp-docker
+    # Ce serveur offre des tools pour gérer les containers Docker sur l'hôte.
+    # Il faut monter le socket Docker.
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: ["mcp-server-docker"]
+```
+
+Commentaires importants :
+
+- Le **serveur MCP filesystem** :
+  - suppose que ton code est dans `./workspace` sur ta machine ;
+  - dans le conteneur, ce sera `/workspace`.
+- Le **serveur MCP docker** doit voir le socket Docker de l'hôte (`/var/run/docker.sock`) pour pouvoir lister ou contrôler des containers.
+- Ces images sont indicatives. Dans la pratique, tu peux utiliser soit :
+  - des images officielles Anthropic quand elles sont publiées pour leurs serveurs de référence ;
+  - tes propres serveurs MCP Node/Python packagés en Docker, plus réaliste aujourd'hui.
+
+Si tu préfères, je peux te donner un exemple de **serveur MCP filesystem écrit en Node** avec `mcp-server` et le `Dockerfile` associé.
+---
+
+## 2. Exemple de petit client Node qui liste les fichiers
+
+Je te montre un client Node très simple qui :
+
+- démarre le **serveur MCP filesystem** en sous-processus, comme le ferait un host MCP ;
+- parle avec lui en **JSON-RPC sur stdio** ;
+- appelle un tool `list_directory`, à adapter au tool réel exposé par ton serveur, pour lister les fichiers.
+
+### 2.1. Initialisation du projet Node
+
+Dans `mcp-client-node/` :
+
+```bash
+mkdir mcp-client-node
+cd mcp-client-node
+npm init -y
+npm install typescript ts-node @types/node
+npx tsc --init
+```
+
+On va écrire tout en TypeScript pour la clarté.
+
+---
+
+### 2.2. Client MCP minimal via stdio
+
+Crée un fichier `src/mcpClient.ts` :
+
+```ts
+import { spawn } from "child_process";
+
+type JsonRpcRequest = {
+  jsonrpc: "2.0";
+  id: number;
+  method: string;
+  params?: any;
+};
+
+type JsonRpcResponse = {
+  jsonrpc: "2.0";
+  id: number;
+  result?: any;
+  error?: { code: number; message: string; data?: any };
+};
+
+export class MCPClient {
+  private proc;
+  private nextId = 1;
+  private pending = new Map<number, (res: JsonRpcResponse) => void>();
+
+  constructor(command: string, args: string[] = []) {
+    this.proc = spawn(command, args, {
+      stdio: ["pipe", "pipe", "inherit"],
+    });
+
+    let buffer = "";
+
+    this.proc.stdout.on("data", (chunk) => {
+      buffer += chunk.toString("utf8");
+      let index;
+
+      while ((index = buffer.indexOf("\n")) >= 0) {
+        const line = buffer.slice(0, index).trim();
+        buffer = buffer.slice(index + 1);
+
+        if (!line) continue;
+
+        try {
+          const msg: JsonRpcResponse = JSON.parse(line);
+          const handler = this.pending.get(msg.id);
+
+          if (handler) {
+            this.pending.delete(msg.id);
+            handler(msg);
+          }
+        } catch (error) {
+          console.error("Error parsing JSON from MCP server:", error, line);
+        }
+      }
+    });
+  }
+
+  call(method: string, params?: any): Promise<JsonRpcResponse> {
+    const id = this.nextId++;
+    const req: JsonRpcRequest = {
+      jsonrpc: "2.0",
+      id,
+      method,
+      params,
+    };
+
+    return new Promise((resolve) => {
+      this.pending.set(id, resolve);
+      this.proc.stdin.write(JSON.stringify(req) + "\n");
+    });
+  }
+
+  close() {
+    this.proc.kill();
+  }
+}
+```
+
+Ce client :
+
+- lance un serveur MCP via `spawn`, par exemple `mcp-server-fs` ;
+- envoie des messages JSON-RPC ligne par ligne ;
+- stocke les promesses en attente par `id`.
+
+---
+
+### 2.3. Script pour lister les fichiers du projet
+
+Crée `src/listFiles.ts` :
+
+```ts
+import { MCPClient } from "./mcpClient";
+
+// Adapte ces constantes à ton environnement.
+const SERVER_COMMAND = "mcp-server-fs";
+const SERVER_ARGS = ["--root", "/workspace"];
+
+async function main() {
+  const client = new MCPClient(SERVER_COMMAND, SERVER_ARGS);
+
+  try {
+    // 1. Lister les tools disponibles.
+    const toolsRes = await client.call("tools/list");
+    console.log("Tools disponibles:", JSON.stringify(toolsRes.result, null, 2));
+
+    // Supposons qu'il y a un tool "list_directory" qui prend un paramètre "path".
+    const listRes = await client.call("tools/call", {
+      name: "list_directory",
+      arguments: {
+        path: ".",
+      },
+    });
+
+    console.log("Contenu du répertoire:", JSON.stringify(listRes.result, null, 2));
+  } catch (error) {
+    console.error("Erreur MCP:", error);
+  } finally {
+    client.close();
+  }
+}
+
+main();
+```
+
+À adapter en fonction des **methods** et **tools** réellement exposés par ton serveur MCP filesystem :
+
+- `tools/list` pour obtenir la liste des tools, leur nom, leur description et leurs paramètres ;
+- `tools/call` pour appeler un tool spécifique avec des arguments.
+
+Si tu utilises le **SDK officiel MCP Node** (`@anthropic-ai/mcp` ou similaire), ces méthodes seront probablement déjà wrapées et tu n'auras pas besoin d'implémenter le JSON-RPC à la main. Ici, je t'ai montré la mécanique brute pour bien voir l'architecture.
+
+---
+
+## 3. Comment relier ça à ton `docker-compose`
+
+Tu as deux options principales :
+
+1. **Le client Node lance directement les binaires des serveurs dans des conteneurs Docker** en utilisant `docker exec` ou en exposant un port ou un pipe.
+2. **Tu testes d'abord hors Docker**, puis tu dockerises tes serveurs MCP.
+
+Pour un lab simple :
+
+- Tu peux démarrer les serveurs MCP, filesystem et docker, **hors Docker** pendant que tu comprends bien le protocole.
+- Ensuite, tu écris un `Dockerfile` pour chacun et tu utilises `docker-compose.yml` comme plus haut.
+
+Par exemple, si ton serveur filesystem est lui-même écrit en Node et installé dans une image Docker, ta commande dans `docker-compose.yml` sera quelque chose comme :
+
+```yaml
+command: ["node", "dist/serverFs.js", "--root", "/workspace"]
+```
+
+Et ton **client Node** pourra :
+
+- soit parler au serveur via stdio en étant **dans le même conteneur** (multi-process) ;
+- soit utiliser un autre protocole, WebSocket ou HTTP, si tu implémentes MCP sur ce transport.
+
+---
+
+## 4. Prochaine étape possible ensemble
+
+Dis-moi :
+
+- si tu veux que je **remplace les images `ghcr.io/anthropic/...` par des serveurs Node/Python écrits à la main** ;
+- si tu préfères **tout en Node** (serveurs et client) ou un mix avec des serveurs Python et un client Node.
+
+Je te donne alors :
+
+- un **serveur MCP filesystem minimal en Node** (définition des tools, JSON-RPC) ;
+- le `Dockerfile` pour ce serveur ;
+- une version ajustée de `docker-compose.yml` qui marche de bout en bout avec ton client Node.
+
