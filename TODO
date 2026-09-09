@@ -1,18 +1,25 @@
+Docker architecture
+docker mcp server
+javascript modules
+Php Websockets
+finish Redis "Seven Databases in Seven Weeks" (Luc Perkins)
+css chatty (box..)
+php patterns
+php apcu
+
+
+
+
+
+
 Php
 ---
-
 - Php 8 features
-- Php Patterns
-- APCu
-- Websockets
 - Weakobject
 - SPL
 
-runtime: PHP-PM, ReactPHP, Swoole, FrankenPHP
-
 Symfony
 -------
-
 - Symfony 8 features
 - Doctrine ORM advanced (relations, DQL, QueryBuilder, Lazy/Eager Loading, Lifecycle Callbacks, Migrations, Fixtures)
 - Forms/Validation/CSRF
@@ -26,25 +33,20 @@ Symfony
 - ux-live-component (https://symfony.com/bundles/ux-live-component/current/index.html)
 
 Js
---
-
+---
 - https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules
 - https://nextjs.org
 - https://vitejs.fr
 
-(done)
-- ES6 [OK]
-
 React
 -----
-
 - useMemo, useCallback, useRef, useContext
 
 Database
 --------
-
-- Redis "Seven Databases in Seven Weeks" (Luc Perkins)
 - RabbitMq
 
-Linux
------
+DONE
+----
+- ES6
+- TS
