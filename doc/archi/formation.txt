@@ -1,0 +1,162 @@
+========
+= Cnam =
+========
+
+https://www.cnam-paris.fr/choisir-ma-formation/par-discipline/architectures-cloud-integration
+
+Introduction aux architectures distribuées (Client-Serveur, n-tiers) et virtualisées dans le Cloud.
+
+Briques techniques des architectures réparties
+Middleware orientés messages (MOM).
+Procédures distantes (RPC). Objets distribuées (RMI). Web Services (SOAP-XML).
+Bases de données réparties (Cloud et Réplication). Systèmes transactionnels.
+Virtualisation des infrastructures (Hardware et performances serveurs, machines virtuelles).
+
+Sécurité des systèmes d'information
+Panorama des menaces et des risques. Outils de la cybersécurité, cryptographie, normes.
+
+Architectures Cloud
+Introduction au Cloud computing (déploiement, scalabilité, OpenStack).
+Architectures REST et WebAPI.
+Architectures MVC : introduction à Django (serveur) et AngularJS (client).
+Virtualisation des applications (JVM, Python, Javascript, Docker).
+Déploiement sur le Cloud : exemple d'intégration avec OpenStack et AWS.
+
+Introduction à l'urbanisation des SI, SOA et BPM.
+
+
+=================
+= Openclassroom =
+=================
+
+https://openclassrooms.com/fr/paths/2459-architecte-logiciel
+
+Vous maîtriserez les outils et méthodologies les plus demandés :
+     UML, DDD, Git, GitHub, Docker, CI/CD, Clean Architecture, Agile, OpenAPI, Design Patterns, Mermaid.
+
+=========
+= DAWAN =
+=========
+
+https://www.dawan.fr/formations/architecte-it
+
+Programme Architecture logicielle : Fondamentaux
+Comprendre l'architecture logicielle
+Processus de développement logiciel, intégration continue
+Architecture logicielle : définition, représentations (composants, relations, interactions)
+Acteurs du projet, l'architecture applicative dans le cycle de vie d'un projet
+L'architecture logicielle dans un contexte Agile
+Facteurs de choix d'une architecture
+Vue architecturale : notion, types de liens, exemples
+Documentation de l'architecture logicielle : Dossier d'Architecture Technique, Guide du design de composants
+Problématiques de packaging/déploiement
+
+Atelier : construction d'une trame pour un dossier d'architecture technique
+
+Découvrir les styles architecturaux
+Notion de style, guide
+Panorama des styles architecturaux :
+- Architecture en appels et retours
+- Architecture en couches
+- Architecture centrée sur les données
+- Architecture en flot de données
+- Architecture orientée objets
+- Architecture orientée agents
+
+Maîtriser les critères de qualité logicielle
+Attributs de qualité
+Scénarios de mesure et représentation graphique
+Qualité logicielle dans une approche agile
+
+Atelier : Choix d'attributs de qualité, stratégie de mesure et actions à prévoir
+
+Choisir un tactique architecturale
+Notion de tactique architecturale
+Tactiques orientées utilisateur : performances, utilisabilité, ...
+Tactiques orientées développeur : testabilité, modifiabilité, ...
+
+Atelier : Choix de tactiques en rapport avec les attributs de qualité choisis
+
+Apprendre les composants et technologies disponibles
+Middleware requête/réponse, asynchrones
+Architectures basées sur les composants : JavaEE ou autre
+Architectures multi-niveaux : clustering et répartition de charge
+Applications riches (Rich Internet Applications)
+Applications mobiles : natif vs hybride
+Infrastructure Cloud : IaaS vs PaaS vs SaaS
+ 
+
+Architecture Orientée Services (SOA), REST
+Définition de l'architecture
+ESB
+Architectures RESTFul
+Protocole SOAP vs Architecture REST
+Microservices
+Web Services Message Router vs Enterprise Service Bus
+
+Concevoir et évaluer une architecture
+Modèles d'analyse d'une architecture
+Conception d'une architecture
+Évaluation d'une architecture
+Modélisation UML d'une architecture :
+- Analyse fonctionnelle et diagrammes de cas d'utilisation
+- Diagrammes de composants et de structure composite
+- Diagrammes de déploiement
+
+Atelier : Finalisation du Dossier d'Architecture Technique.
+
+-------------------
+
+Programme Architecture logicielle Avancée pour développeurs Java
+Se rappeler des fondamentaux
+Architecture logicielle : définition, documentation, vues architecturales
+Démarche de production d'un dossier d'architecture technique
+Panorama de composants logiciels et contraintes d'architecture
+Styles d'architecture et organisation des couches d'une application
+
+Concevoir une application basée sur les microservices
+Décomposition fonctionnelle et Domain Driven Design
+Exigences de conception des microservices : réactivité, compatibilité rétroactive, communication flexible, idempotency, fonctionnement efficace
+La méthodologie à 12 facteurs
+Structure d'un microservice, organisation des couches
+Utilisation des évènements au sein d'un microservice
+
+Atelier : Implémenter un micro-service avec Spring Boot, Web et Data JPA
+
+Utiliser un message broker
+Middleware Orienté Messages : intérêt, modes, protocoles
+Architecture microservices orientée évènements
+Panorama de messages brokers et comparaison
+
+Atelier : Implémentation d'une architecture microservices orientée messages (producer/consumer) avec Spring AMQP ou JMS
+
+Implémenter des WebSockets
+WebSocket : le standard, intérêt et contextes d'utilisation
+Schéma de communication des WebSockets
+APIs disponibles
+
+Atelier : Implémentation de web sockets avec Spring WebSocket et utilisation du protocole STOMP
+
+Gérer efficacement des logs
+Démarche globale de gestion des traces : support, type, quoi stocker
+Interfaçage d'un microservice avec une solution de logs : ELK ou Graylog
+Réflexion d'architecture : log direct, log via message broker, log direct vers fichier puis agrégation via un outil
+
+Atelier : Configuration d'un microservice pour tracer en direct vers Elasticsearch, ou vers un message broker puis consommation via Logstash
+
+Anti-patterns d'architecture logicielle
+Anti-patterns : définition, détection
+Panorama d'anti-patterns :
+- Autogenerated Stovepipe
+- Stovepipe Enterprise
+- Jumble
+- Stovepipe System
+- Cover Your Assets
+- Vendor Lock-In
+- Wolf Ticket
+- Architecture by Implication
+- Warm Bodies
+- Design by Committee
+- Swiss Army Knife
+- Reinvent the Wheel
+- The Grand Old Duke of York

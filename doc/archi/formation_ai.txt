@@ -1,0 +1,83 @@
+L’intégrateur IA est un expert technique chargé d’intégrer des solutions d’intelligence artificielle dans les systèmes informatiques des entreprises. Il adapte, déploie et optimise des modèles d’IA, comme des algorithmes de prédiction ou de reconnaissance d’images, pour les rendre opérationnels. Découvrez ses missions, sa formation, les qualités attendues, le salaire de l’intégration en intelligence artificielle dans notre fiche métier pratique.
+
+Au quotidien, les missions d’un intégrateur IA peuvent se décliner à travers différentes activités :
+
+Étudier les systèmes informatiques de l’entreprise pour comprendre comment intégrer une solution d’intelligence artificielle.
+Adapter les programmes d’IA aux besoins et contraintes techniques de l’entreprise.
+Suivre les évolutions technologiques en matière d’IA pour utiliser les outils et méthodes les plus récents.
+Installer les solutions d’IA dans les systèmes informatiques de l’entreprise.
+Tester les solutions IA pour vérifier qu’elles fonctionnent correctement et sont compatibles avec les systèmes existants.
+Améliorer les performances des programmes IA pour qu’ils soient plus rapides et efficaces en situation réelle.
+Corriger les problèmes techniques qui surviennent lors de l’installation ou de l’utilisation des solutions IA.
+Garantir la sécurité des solutions IA en respectant les règles, notamment sur la protection des données.
+Travailler avec les data scientists et les ingénieurs pour s’assurer que les solutions IA répondent aux besoins de l’entreprise.
+Former les employés à utiliser les nouveaux outils IA.
+Documenter le processus d’intégration pour garder une trace claire des étapes et des résultats.
+Maintenir et mettre à jour les solutions IA pour qu’elles restent performantes et adaptées aux besoins de l’entreprise.
+
+
+
+==========
+= ZENIKA =
+==========
+
+https://training.zenika.com/fr/formations/268/github-copilot
+
+Dans cette formation pratique, vous mettrez en place une méthodologie AI Driven Dev basée sur une flotte d’agents IA spécialisés, 
+capable de vous accompagner sur l’ensemble du cycle de développement : planification, implémentation, tests et documentation.
+
+Vos objectifs pédagogiques
+Expliquer les mécanismes de fonctionnement des outils de développement augmenté et les spécificités des modèles de génération de code.
+Développer des agents IA personnalisés dédiés aux phases de planification stratégique et d'implémentation technique.
+Modéliser et configurer un workflow "Agentic AI" pour orchestrer l'autonomie des agents de développement.
+Exécuter une stratégie de refactoring sur une base de code legacy complexe en s'appuyant sur les assistants IA.
+Mettre en œuvre des serveurs MCP (Model Context Protocol) pour interfacer l'IA avec des outils tiers tels que Playwright et Figma.
+Utiliser les fondamentaux du Spec Driven Development pour structurer le cycle de vie d'un projet assisté par l'IA.
+
+Le programme
+Comprendre l'écosystème des outils AI Driven Development.
+Les différentes approches : AI Driven Development, Vibe Coding, AI-native
+Différence entre les outils intégrés à l'environnement de développement et les outils en ligne de commande
+
+
+Principes de base de l'AI Driven Development
+Mise en place d'un fichier d'instructions
+Travail avec des agents personnalisés pour la planification et l'implémentation
+Supervision de la génération de code
+L'approche AI Driven Dev pour la génération de tests unitaires
+
+
+Workflows Agentic AI pour une base de code importante
+Mise en place d'un workflow Agentic AI
+Intégration de la documentation dans le workflow
+Modernisation d'applications legacy
+Utilisation d'outils en ligne de commande comme ArchUnit et SonarQube avec le LLM *
+
+
+Utilisation de MCP pour l'intégration avec des systèmes externes
+Intégration avec Figma pour la génération de code frontend à partir du design
+Utilisation de PlayWright pour la génération automatisée de tests
+Utilisation de Context7 pour que la génération de code soit en phase avec les versions de bibliothèques utilisées
+
+
+Spec Driven Development
+Parallèle entre la génération de code et la génération de spécifications logicielles : les principes sont les mêmes !
+Utilisation d'instructions personnalisées pour la génération de spécifications
+Utilisation d'un framework Spec Driven Dev
+
+
+
+============
+= STUDERIA =
+============
+
+https://www.studeria.fr/parcours-de-formation
+
+La Studeria Academy
+Les Fondamentaux (prompt, assistants, analyse, images & vidéos, cadre éthique et légal)
+L’Accélérateur (Marketing, Sales, RH, Admin)
+LLMs (ChatGPT, Gemini, Copilot, Mistral, etc.)
+Productivité (Notion, Airtable, Leexi)
+No-code (Make, n8n, Softr, Lovable, etc.)
+Créativité (Gamma, Midjourney, ElevenLabs, HeyGen, etc.)
+Agents IA (marketing, sales, RH, facturation, SAV)
