@@ -17,6 +17,7 @@ Php
 - Php 8 features
 - Weakobject
 - SPL
+- Fiber
 
 Symfony
 -------
@@ -37,6 +38,7 @@ Js
 - https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules
 - https://nextjs.org
 - https://vitejs.fr
+- https://storybook.js.org
 
 React
 -----
@@ -46,7 +48,12 @@ Database
 --------
 - RabbitMq
 
+----------------------------------------
+
 DONE
 ----
+Back
+- Php8.0
+Front
 - ES6
 - TS
