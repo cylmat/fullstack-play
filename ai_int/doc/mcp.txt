@@ -1,0 +1,117 @@
+
+
+Interest
+--------
+The most widely used MCP servers today cluster around a few core categories: local filesystem, developer tooling (GitHub, Playwright, Jira), databases (Postgres/Supabase, SQLite), and productivity / SaaS APIs (Google Drive, Slack, etc.). These are what you’ll want to practice with as an AI integrator/architect.
+1. Baseline / “non‑negotiable” MCP: Filesystem
+Across multiple rankings and reviews, the filesystem MCP server is consistently described as a baseline that almost every developer installs first.2 5 11 12 13 15 
+
+Many guides say it is “non‑negotiable baseline” for developer tools and agent setups.12 
+One analysis notes that filesystem MCP has relatively low search volume (hundreds per month) but is probably installed more often than higher‑ranked servers because it is a reference server in official docs that people copy without searching.11 
+Another article calls the official filesystem MCP “the one most people install first” and highlights that it ships on npm as @modelcontextprotocol/server-filesystem.13 
+
+For your learning path, this is the first MCP server you should master (local file access from AI tools/VS Code).
+
+2. Developer‑centric MCP servers
+Several ecosystem leaderboards and “best of 2026” lists show developer tooling MCP servers at the top:
+
+A server ecosystem leaderboard ranks Playwright (browser automation) and GitHub (repo management) as top MCP servers by adoption, with tens of thousands of monthly searches.1 4 
+Popular developer‑focused lists consistently include:
+GitHub – repo browsing, PRs, issues, code search.1 4 8 9 
+Jira/Confluence – project management, tickets, documentation.1 4 9 
+Puppeteer / Playwright – browser automation for testing, scraping, and UI flows.1 4 8 10 
+Slack – team messaging and notifications.8 9 10 
+Memory – persistent datastore for agent context.4 8 15 
+
+
+
+These are heavily used when wiring AI agents into dev workflows (CI, code review, issue triage, browser tests).
+
+3. Database MCP servers
+Database integrations are among the highest‑value MCP servers for production systems:
+
+Leaderboards and “best MCP servers” guides highlight:
+Supabase / PostgreSQL – full Postgres access with auth and row‑level security.1 4 8 10 15 
+Postgres (standalone) – direct queries against relational databases.1 4 10 15 
+SQLite – lightweight local DB, used heavily in dev and prototyping.8 10 15 
+MySQL, MongoDB, Snowflake, Redis – common in multi‑DB setups.1 4 10 
+MindsDB MCP – federated query engine across multiple data sources.10 
+
+
+
+One developer‑focused article lists Filesystem, GitHub, Brave Search, PostgreSQL, Memory, Puppeteer, Slack, and SQLite as the “best MCP servers for developers in 2026,” which is a good proxy for what is most used in practice.8 
+If you’re training as an architect, these are critical: they turn your agent from “code assistant” into a full data‑aware system.
+
+4. Search and web MCP servers
+Popular search / web MCP servers:
+
+Brave Search, Exa, and similar search MCP servers appear in top‑50 lists with thousands of monthly searches.4 8 
+They’re standard choices when you want agents to:
+Do web research.
+Pull documentation or examples from the open web.
+Enrich context for coding or architecture tasks.
+
+
+
+Agents use these constantly in real workflows, so they’re very common MCP integrations.
+
+5. SaaS / productivity MCP servers
+Several rankings and guides show strong use of MCP servers that connect to everyday SaaS tools:
+
+Frequently appearing in “top MCP servers” lists:
+Google Drive, Google Calendar, Gmail, Google Workspace.4 9 
+Stripe, Shopify – commerce and billing workflows.4 9 
+HubSpot, Salesforce – CRM and marketing automation.4 9 
+Notion, WordPress – content and knowledge bases.4 9 
+Asana, Jira, Confluence – project and task management.1 4 9 
+
+
+These are key in business process automation where agents act as glue between code, data, and operations.
+
+
+6. Cloud / infra MCP servers
+For infra‑heavy stacks, several cloud‑oriented MCP servers are commonly used:
+
+A developer‑oriented guide lists:
+AWS MCP Suite – official servers for DynamoDB, Aurora, Neptune.10 
+Kubernetes, Docker Hub, Cloudflare, Terraform, Vercel – infra and deployment tooling.4 9 10 
+
+
+These are popular when agents are used for:
+Inspecting deployments.
+Managing configuration.
+Running scripts or updates in cloud environments.
+
+
+
+
+7. How to use this as an AI integrator / architect
+If your goal is to “train as an AI integrator / architect,” the most used MCP stack to practice with would be:
+
+Core / baseline
+
+Filesystem MCP for local code and config access.2 5 11 12 13 15 
+Memory MCP for persistent agent context.4 8 15 
+
+
+Developer tooling
+
+GitHub, Jira/Confluence, Playwright/Puppeteer, Slack.1 4 8 9 10 
+
+
+Data layer
+
+Supabase / PostgreSQL, SQLite, plus whichever DB your stack uses (MySQL, MongoDB, Snowflake).1 4 8 10 15 
+
+
+Search / web
+
+Brave Search or similar search MCP.4 8 
+
+
+SaaS / business tools
+
+One or two of Google Drive/Workspace, Notion, Stripe, Shopify, HubSpot/Salesforce depending on your domain.4 9 
+
+By building small projects where an agent uses this mix of servers end‑to‑end
+ (read files, query DB, call SaaS APIs, post to Slack, open Jira tickets), you’ll be working with the same MCP building blocks that are most prevalent in real‑world deployments.

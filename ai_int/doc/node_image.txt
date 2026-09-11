@@ -1,0 +1,97 @@
+1. Official Node filesystem MCP server (recommended)
+The official reference filesystem MCP server is published on npm as @modelcontextprotocol/server-filesystem.  
+You can run it in several ways:
+
+Direct via npx (no install):
+npx -y @modelcontextprotocol/server-filesystem /path/to/allowed/dir1 /path/to/allowed/dir2
+
+Configured as an MCP server in a client (e.g. VS Code, Claude Desktop):
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/you/projects",
+        "/Users/you/notes"
+      ]
+    }
+  }
+}
+
+
+This is the canonical Node implementation, so it’s the best choice for learning MCP as an integrator/architect.
+If you want Docker on top of this, you can create a simple Dockerfile that installs Node, adds this package, and runs the server with your desired root path.
+
+2. Other Node filesystem MCP servers
+There are several alternative Node-based filesystem MCP implementations, useful to study different designs and security models:
+
+@gabrielmaialva33/mcp-filesystem  
+
+Install globally:npm install -g @gabrielmaialva33/mcp-filesystem
+
+Run:mcp-filesystem /path/to/allowed/directory
+
+Or with npx:npx @gabrielmaialva33/mcp-filesystem /path/to/allowed/directory
+
+
+
+@shtse8/filesystem-mcp (and similar packages)  
+
+Example client config:{
+  "mcpServers": {
+    "filesystem-mcp": {
+      "command": "node",
+      "args": ["/path/to/filesystem-mcp/build/index.js"],
+      "name": "Filesystem (Local Build)"
+    }
+  }
+}
+
+
+
+Other Node-based filesystem MCP repos (e.g., hardened/specialized variants) also follow the same pattern: node dist/index.js --root /path/to/workspace.
+
+
+These are good if you want to:
+
+Read and modify the server code.
+Compare different security constraints (allowed paths, read-only modes, etc.).
+Practice building and publishing your own Node MCP servers.
+
+
+3. Docker + Node pattern
+If you prefer your MCP filesystem server to run inside Docker but still be Node-based, a common pattern is:
+
+Base image:
+FROM node:20-alpine
+
+WORKDIR /app
+RUN npm install -g @modelcontextprotocol/server-filesystem
+
+CMD ["mcp-server-filesystem", "/workspace"]
+
+Bind-mount your host directory when you run it:
+docker build -t my-node-mcp-filesystem .
+docker run -i --rm -v /host/path:/workspace my-node-mcp-filesystem
+
+Point your client (VS Code MCP config) at Docker:
+{
+  "mcpServers": {
+    "filesystem-docker": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "/host/path:/workspace",
+        "my-node-mcp-filesystem"
+      ]
+    }
+  }
+}
+
+
+That gives you: Node-based MCP server + Docker isolation + host VS Code as client, which is exactly the kind of integration pattern you’d design as an AI architect.

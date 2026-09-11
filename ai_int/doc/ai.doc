@@ -1,0 +1,27 @@
+# AI integrator/architect.
+
+IMAGES
+------
+
+https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/
+https://hub.docker.com/mcp
+https://mcpservers.org/fr/
+
+Tips
+----
+MCP “the one most people install first” as @modelcontextprotocol/server-filesystem
+
+- Start with the official mcp/filesystem
+- Once that works, add openmcpserver/mcp-filesystem as a second server.2   
+- Use it to practice multi‑server setups (files + search + DB).
+- A Node-based npm server (@shtse8/filesystem-mcp).11 
+- A hardened image like dhi.io/filesystem-mcp.7 10
+
+Most used
+---------
+The most widely used MCP servers today cluster around a few core categories:
+ local filesystem, developer tooling (GitHub, Playwright, Jira), 
+ databases (Postgres/Supabase, SQLite), 
+ and productivity / SaaS APIs (Google Drive, Slack, etc.). 
+ 
+

@@ -19,10 +19,10 @@ services:
             MYSQL_DSN: ''
             REDIS_DSN: ''
         ports:
-            - 8111:81   # symfony server
+            - 8141:81   # symfony server
         command: sleep infinity
         volumes:
-            - ./archi:/var/www/application
+            - .:/var/www/application
         profiles:
           - archi
 
@@ -36,11 +36,7 @@ services:
         environment:
             MYSQL_DSN: ''
             REDIS_DSN: ''
-        ports:
-            - 8111:81   # symfony server
         command: sleep infinity
-        volumes:
-            - ./archi:/var/www/application
         profiles:
           - archi
 
