@@ -40,7 +40,7 @@
 **Tools**
 
 - Mermaid, modèle C4 (Contexte, Conteneurs , Composants , Code), PlantUML, likec4, asciidoc
-- draw.io / diagrams.net,  Lucidchart, Miro, draw.io, visual-paradigm
+- diagrams.net,  Lucidchart, Miro, visual-paradigm
 - structurizr.com-dsl (domain specific language)
 
 ## Roadmap
@@ -55,7 +55,7 @@ A. Fondamentaux d’architecture logicielle
     - Monolithe structuré vs microservices.  
     - Architecture hexagonale.  
     - CQRS (Command Query Responsibility Segregation). 
-     - Event‑driven (events de domaine, messaging).
+    - Event‑driven (events de domaine, messaging).
 
 B. Architecture de systèmes web
 - Front web (React), backend (API Symfony), base de données, cache, fichiers statiques, services externes (paiement, mail, etc.)

@@ -1,0 +1,31 @@
+https://fr.itpedia.nl/2025/08/30/architectuurprincipes-software-6-vragen-die-ontwikkelaars-stellen/
+---
+
+Ces principes se concentrent sur des aspects importants tels que l'organisation du code, la séparation des responsabilités et la minimisation des dépendances. Ils constituent le cadre d'un code clair, lisible et efficace, permettant aux équipes de collaborer plus efficacement.
+
+Les grands principes architecturaux
+1. Séparation des préoccupations
+Ce principe stipule que les logiciels doivent être divisé en sections distinctesChaque section traite d'un problème spécifique et défini. Cette approche accroît la modularité et facilite la compréhension, la maintenance et la modification du système. Prenons l'exemple de l'architecture Modèle-Vue-Contrôleur (MVC), où les données (Modèle), la présentation (Vue) et la logique (Contrôleur) sont strictement séparées.
+
+2. Accouplement lâche
+Le couplage lâche signifie que les composants d'un système sont aussi indépendants que possible. Une modification d'un composant a alors un impact minimal sur les autres. Cela améliore la flexibilité et la réutilisabilité. L'utilisation d'un API (interface de programmation d'application) pour permettre la communication entre différents services.
+
+3. Haute cohésion
+Ce principe s'oppose au couplage faible et se concentre sur la structure interne d'un composant. Une forte cohésion signifie que les éléments d'un module sont logiquement et étroitement liés, travaillant ensemble pour atteindre un objectif unique et bien défini. Par conséquent, une classe qui n'exécute que des tâches directement liées à sa fonctionnalité présente une forte cohésion.
+
+4. Ne vous répétez pas (DRY)
+Le principe DRY stipule que toute connaissance ou logique d'un système ne doit apparaître qu'une seule fois. Cela évite les redondances et facilite l'implémentation des modifications. Si le même code est présent à plusieurs endroits, il faut modifier toutes les versions lors d'une modification, ce qui est source d'erreurs. Écrire une fonction ou un service contenant la logique partagée est une bonne mise en œuvre de ce principe.
+
+5. Principe ouvert/fermé
+Selon ce principe, une entité logicielle (comme une classe ou un module) doit être ouverte aux extensions, mais fermée aux modifications. Cela signifie que nous pouvons étendre les fonctionnalités d'un module sans modifier le code existant. Nous y parvenons souvent grâce à l'utilisation d'interfaces et de classes abstraites.
+
+6. Principe de responsabilité unique (PRS)
+Le principe SRP stipule qu'un module ou une classe ne doit avoir qu'une seule raison d'être modifié. Autrement dit, chaque composant ne doit effectuer qu'une seule tâche. Cela facilite la compréhension et la maintenance du code.
+
+7. Évolutivité
+Le logiciel doit être conçu de telle manière qu'il croissance de l'utilisation peuvent être prises en compte. Cela peut se faire de deux manières :
+
+Évolutivité verticale : ajout de puissance de calcul supplémentaire (CPU, mémoire) à un seul serveur.
+Évolutivité horizontale : ajout de serveurs supplémentaires au système.
+8. Maintenabilité
+Ce principe repose sur la conception de logiciels faciles à maintenir. Cela inclut des aspects tels qu'un code lisible, une documentation claire, une structure logique et l'utilisation de normes. Une bonne maintenabilité réduit les coûts et les efforts liés aux modifications futures. corrections de bugs.
