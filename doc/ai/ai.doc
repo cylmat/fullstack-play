@@ -5,7 +5,11 @@ IMAGES
 
 https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/
 https://hub.docker.com/mcp
-https://mcpservers.org/fr/
+https://mcpservers.org/fr
+
+Vibe coding
+- Lovable
+- v0.dev
 
 Tips
 ----
@@ -25,3 +29,10 @@ The most widely used MCP servers today cluster around a few core categories:
  and productivity / SaaS APIs (Google Drive, Slack, etc.). 
  
 
+Vibe coding
+-----------
+Le concept a été popularisé début 2025 par Andrej Karpathy, chercheur en IA et cofondateur d'OpenAI.
+- Principe : L'utilisateur formule des intentions, des descriptions de besoins ou des corrections à l'aide de prompts, 
+tandis qu'un grand modèle de langage (LLM) ou un agent génère, teste et ajuste l'application de manière autonome.
+- Rôle de l'humain : L'humain agit comme un directeur artistique ou un chef de projet, 
+guidant l'itération sans avoir besoin de maîtriser la syntaxe informatique traditionnelle.
