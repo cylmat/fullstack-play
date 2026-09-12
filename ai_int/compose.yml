@@ -25,16 +25,3 @@ services:
             - .:/var/www/application
         profiles:
           - ai
-
-    node:
-        container_name: fs-ai-node
-        image: node:latest
-        restart: always
-        profiles:
-          - ai
-
-    mcp-filesystem:
-        image: mcp/filesystem:latest
-        restart: always
-        profiles:
-          - ai

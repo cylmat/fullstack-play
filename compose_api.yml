@@ -1,7 +1,7 @@
 
 networks:
     default:
-        name: fs-network
+        name: fs-api-network
         driver: bridge
 
 services:
@@ -19,11 +19,10 @@ services:
             MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
             REDIS_DSN: 'redis://redis:6379/1'
         ports:
-            - 8111:81   # slim server
+            - 8121:81   # api server
         command: sleep infinity
         volumes:
-            - ./apps/symfony:/var/www/application
-            - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
+            - ./api:/var/www/application
         profiles:
-          - slim
+          - api
 

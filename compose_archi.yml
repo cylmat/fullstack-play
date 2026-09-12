@@ -1,0 +1,42 @@
+
+networks:
+    default:
+        name: fs-archi-network
+        driver: bridge
+
+services:
+
+    #######
+    # PHP #
+    #######
+
+    archi:
+        container_name: fs-archi
+        image: fs-php:latest
+        restart: always
+        user: 1000:1000
+        ports:
+            - 8131:81  
+        command: sleep infinity
+        volumes:
+            - ./archi:/var/www/application
+        profiles:
+          - archi
+
+    # kube https://kind.sigs.k8s.io/
+    # actually: v1.37
+    # kind:
+    #     container_name: fs-archi-kind
+    #     image: kindest/node:latest
+    #     restart: always
+    #     user: 1000:1000
+    #     environment:
+    #         MYSQL_DSN: ''
+    #         REDIS_DSN: ''
+    #     command: sleep infinity
+    #     profiles:
+    #       - archi
+
+    # cicd:
+    #     container_name: fs-archi-cicd
+    #     image: ubuntu
