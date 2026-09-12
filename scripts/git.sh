@@ -24,7 +24,6 @@ if [ "$1" == "push" ]; then
     docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
         -v .:/var/www/application -v .docker/data/linux:/data fs-linux \
         sh -c "$CMD"
-    echo "$CMD"
 fi
 
 
