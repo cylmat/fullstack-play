@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "$1" == "git" ]; then
+    # all arguments except first one
+    ./scripts/git.sh "${@:2}"
+fi
