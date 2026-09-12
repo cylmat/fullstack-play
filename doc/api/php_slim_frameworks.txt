@@ -1,0 +1,94 @@
+Slim frameworks
+===
+
+https://cakephp.org
+https://codeigniter.com
+https://flightphp.com
+https://fatfreeframework.com
+https://getlaminas.org/ + Mezzio
+https://leafphp.dev
+https://phalcon.io
+https://slimframework.com
+https://yiiframework.com
+
+
+
+
+@https://dev.to/n0nag0n/2026-best-php-micro-frameworks-slim-flight-fat-free-and-more-3gmf
+
+Frameworks
+----------
+
+SLIM
+https://www.slimframework.com
+
+Slim has been a staple in the PHP micro world for years, and in 2026, it continues to shine for its reliability and community support.
+It's minimalist at its core, focusing on routing and HTTP handling while letting you bolt on whatever else you need.
+
+```
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Factory\AppFactory;
+
+require __DIR__ . '/vendor/autoload.php';
+$app = AppFactory::create();
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name!");
+    return $response;
+});
+$app->run();
+```
+
+FLIGHT PHP
+https://docs.flightphp.com
+
+Lightning-fast routing, built-in middleware, dependency injection, route groups, and aliases.
+Fully unit-tested, with support for everything from simple scripts to complex APIs.
+
+```
+require 'vendor/autoload.php';
+Flight::route('GET /hello/@name', function($name) {
+    echo "Hello, $name! Welcome to Flight—the fastest way to fly in PHP.";
+});
+Flight::start();
+```
+
+FFF
+https://fatfreeframework.com
+
+Built-in ORM, templating, caching, and plugins for things like Markdown, geodata, and more. 
+No Composer required if you don't want it—just unzip and go.
+
+```
+require 'vendor/autoload.php';
+$f3 = \Base::instance();
+$f3->route('GET /hello/@name', function($f3, $args) {
+    echo 'Hello, ' . $args['name'] . '! F3 keeps it light and modular.';
+});
+$f3->run();
+```
+
+Phalcon
+https://phalcon.io/en-us
+
+Extremely fast routing, built-in response handling, collections for grouped routes, dependency injection, 
+and full access to Phalcon's powerful components (like ORM, security, etc.) when needed.
+
+```
+use Phalcon\Mvc\Micro;
+
+$app = new Micro();
+// Define a simple route
+$app->get('/hello/{name}', function ($name) use ($app) {
+    $app->response->setJsonContent([
+        'message' => "Hello, $name! Powered by Phalcon Micro – the speed demon of PHP."
+    ]);
+    return $app->response;
+});
+$app->handle();
+```
+
+CakePHP
+https://cakephp.org/
+

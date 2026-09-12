@@ -16,19 +16,20 @@ ENV UID=1001
 ENV GID=1001
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Build-essential: gcc, g++, make, libc6-dev, dpkg-dev...
 RUN apt update && apt install -y curl git vim wget zip
-RUN apt install -y busybox
-
-RUN apt-get install -y procps
+RUN apt install -y build-essential procps
 RUN apt install -y man-db manpages git-man
 
 ### UTILS ###
 
-# install tools for common linux tutorial: jq, etc..
-RUN apt install -y \
-    jq
+RUN apt install -y busybox jq
 
-### DATA
+### NIX ###
+
+RUN apt install -y nix
+
+### DATA ###
 
 COPY ./linux/data /var/www/data
 

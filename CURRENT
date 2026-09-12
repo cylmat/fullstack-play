@@ -40,8 +40,7 @@ finish Redis "Seven Databases in Seven Weeks" (Luc Perkins)
 css chatty (box..)
 php patterns
 php apcu
-
-
+psr7/15
 
 
 
@@ -81,6 +80,10 @@ React
 Database
 --------
 - RabbitMq
+
+Misc
+----
+https://api-platform.com/
 
 ----------------------------------------
 

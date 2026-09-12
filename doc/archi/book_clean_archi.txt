@@ -1,0 +1,51 @@
+Clean Architecture 
+Object-oriented design (OOD) principles by Robert C. Martin
+
+Ref
+- https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design
+- https://medium.com/@mammimia/clean-architecture-part-iv-component-principles-89d3cb58c195
+
+Component Cohesion
+------------------
+
+It is an important decision to determine which classes belong to which component. 
+When deciding, guidance from a good software engineering principle is needed. 
+Three component coupling principles are available:
+
+● REP: The Reuse/Relase Equivalance Principle
+REP is a principle that allows us to see the obvious, though a little late. 
+People want to reuse a component that they cannot or will not use 
+unless they are followed by a process release or a given release number.
+
+● CCP: The Common Closure Principle
+SRP is adapted for components. Unlike SRP, it considers that a component should not have multiple reasons to change.
+That is, SRP says that if different functions need to change for different reasons,
+they should be divided into different classes, 
+whereas CCP says that if different classes need to change for different reasons,
+they must be divided into different components.
+
+● CRP: The Common Reuse Principle
+CRP is another principle used to determine a class or component will belong to which component. 
+It argues that classes that are reusable and which will cooperate 
+with each other in the reuse phase must be in the same component.
+
+Component Coupling
+------------------
+
+There are three principles regarding the relationships between components:
+
+● ADP: Acyclic Dependencies Principle
+Above is a specific component structure of an application. 
+There is no cycle in this graph structure which is a directional graph. 
+Therefore, it is called directed acyclic graph.
+
+● SDP: Stable Dependencies Principle
+It becomes difficult to change a software component when many other components depend on it. 
+In order to change any property of this component, it is necessary to do so in accordance with all dependent components. 
+Therefore, components that have a large number of dependent components are considered very stable.
+
+● SAP: Stable Abstractions Principle
+Stable Abstraction Principle (SAP) provides a relationship between stability and abstractness. 
+On the one hand, it says that the stable component should be abstact, 
+so it doesn’t prevent it from being extended, on the other hand, 
+it says that the unstable component must be concrete and unstable, and also that concrete code should be easily modified.

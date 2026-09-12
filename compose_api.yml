@@ -1,0 +1,29 @@
+
+networks:
+    default:
+        name: fs-network
+        driver: bridge
+
+services:
+
+    #######
+    # PHP #
+    #######
+
+    slim:
+        container_name: fs-slim
+        image: fs-php:latest
+        restart: always
+        user: 1000:1000
+        environment:
+            MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
+            REDIS_DSN: 'redis://redis:6379/1'
+        ports:
+            - 8111:81   # slim server
+        command: sleep infinity
+        volumes:
+            - ./apps/symfony:/var/www/application
+            - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
+        profiles:
+          - slim
+
