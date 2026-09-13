@@ -1,0 +1,344 @@
+Exemple de projet d'architecture
+================================
+
+1. Application de gestion de commandes (type mini e-commerce B2B)
+
+Pourquoi c’est bien :  
+
+    Domaines clairs : clients, produits, commandes, factures.
+    Beaucoup de cas d’usage pour séparer lecture/écriture (CQRS).
+    Tu peux structurer proprement les composants (domain, application, infrastructure, UI).
+
+Fonctionnalités de base :
+
+    Créer / modifier / annuler une commande.
+    Ajouter / supprimer des lignes de commande.
+    Changer le statut d’une commande (Brouillon, Validée, Expédiée, Annulée).
+    Voir la liste des commandes avec filtres (par client, par statut, par date).
+    Voir le détail d’une commande.
+    Optionnel : générer une facture à partir d’une commande validée.
+
+En termes d’architecture :
+
+    CQRS :
+        Commandes : CreateOrder, AddOrderLine, ValidateOrder, CancelOrder, etc.
+        Queries : GetOrderById, GetOrdersByCustomer, GetOrdersByStatus, etc.
+    SOLID :
+        OrderService ou OrderCommandHandler qui respecte SRP (une responsabilité claire).
+        Interfaces pour les repositories (IOrderRepository, ICustomerRepository).
+        Application de l’Open/Closed dans les règles métiers (politiques de pricing, validation).
+    Découpage en couches :
+        Domain : entités, value objects, services métiers, règles de validation.
+        Application : command handlers, query handlers, DTOs.
+        Infrastructure : persistance (ORM ou pseudo-DB), bus de messages (si tu veux pousser CQRS/Event sourcing), adapters.
+        Interface : API REST ou simple UI web.
+
+2. Gestion de tâches et de projets (type Trello simplifié)
+
+Pourquoi c’est bien :  
+
+    Modèle simple mais extensible : projets, tâches, utilisateurs, tags, colonnes.
+    Très bon support pour observer l’impact de CQRS sur la lecture (liste de tâches, tableaux, filtres).
+
+Fonctionnalités de base :
+
+    Créer un projet, y ajouter des tâches.
+    Déplacer une tâche entre colonnes (À faire, En cours, Terminé).
+    Assigner des tâches à des utilisateurs.
+    Vue liste et vue tableau.
+    Filtrer les tâches par projet, statut, priorité, assignee.
+
+Architecture / patterns que tu peux travailler :
+
+    CQRS :
+        Commandes pour créer/mise à jour des tâches, assigner, changer de colonne.
+        Queries pour les vues : GetBoardForProject, GetTasksByUser, GetPendingTasks.
+    SOLID :
+        Chaque type de commande traité par un handler dédié.
+        Les règles de déplacement de tâches (par ex. impossible de passer à "Terminé" sans date de fin) dans des services métiers bien isolés.
+    Composants :
+        Composant Project Management.
+        Composant User Management.
+        Composant Task Analytics (statistiques, reporting).
+
+3. Système de réservation (salles, ressources, rendez-vous)
+
+Pourquoi c’est bien :  
+
+    Cas typique pour concurrence, validations métier, et agrégats.
+    T’initie aux problématiques de cohérence (deux personnes qui réservent la même salle).
+
+Fonctionnalités de base :
+
+    Créer des ressources (salles, véhicules, etc.).
+    Réserver une ressource pour un créneau (date début / fin).
+    Annuler une réservation.
+    Voir toutes les réservations par ressource ou par date.
+    Optionnel : règles métier type “une salle ne peut pas être réservée plus de X heures par jour”.
+
+Architecture :
+
+    CQRS :
+        Commandes : BookResource, CancelBooking, CreateResource.
+        Queries : GetBookingsForResource, GetBookingsForDateRange.
+    Domain-driven design léger :
+        Agrégat Resource avec une liste de réservations, validation des collisions.
+    SOLID :
+        Services dédiés pour la validation de disponibilité.
+        Interfaces permettant de changer facilement de mode de persistance (in-memory, DB).
+
+4. Comment choisir le bon exemple pour toi
+
+Pose-toi quelques questions pour choisir :
+
+    Tu veux surtout travailler CQRS ?
+        Prends une appli avec beaucoup de vues de lecture différentes et des règles métier de modification (gestion de commandes ou gestion de tâches).
+    Tu veux surtout travailler SOLID / composants ?
+        Choisis un domaine avec plusieurs sous-domaines naturels :
+            Par ex. “mini e-commerce B2B” : produit, client, commande, facture, inventaire.
+    Tu veux te frotter un peu au DDD / agrégats ?
+        La réservation de ressources est excellente pour ça.
+
+
+
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+
+ application de gestion de commandes B2B (mini e-commerce), parce que :
+
+    Le domaine est simple mais riche (clients, produits, commandes, factures).
+    Tu as beaucoup de commands (écriture) et queries (lecture).
+    Tu peux bien structurer ton code sans dépendre d’un gros framework.
+
+Je te propose de partir là-dessus et de te donner un plan concret.
+1. Fonctionnalités à implémenter
+
+Minimum viable product :
+
+    Clients
+        Créer / éditer un client.
+        Voir la liste des clients.
+        Voir la fiche détaillée d’un client (commandes, total dépensé).
+
+    Produits
+        Créer / éditer un produit (nom, prix, TVA, stock).
+        Lister les produits, filtrer par catégorie.
+
+    Commandes
+        Créer une commande pour un client.
+        Ajouter / supprimer des lignes (produit, quantité, remise).
+        Changer le statut : Brouillon → Validée → Expédiée → Facturée / Annulée.
+        Voir la liste des commandes (par client, par statut, par date).
+        Voir le détail d’une commande (montant HT, TVA, TTC, statut).
+
+    Optionnel
+        Générer une “facture” PDF ou HTML.
+        Gérer le stock (décrémenter lors de la validation).
+
+Ces cas d’usage te donnent beaucoup de matière pour CQRS.
+2. CQRS : quelles commands et quelles queries ?
+
+Tu peux structurer ton application autour de Handlers.
+Commands (écriture)
+
+    CreateCustomerCommand
+
+    UpdateCustomerCommand
+
+    CreateProductCommand
+
+    UpdateProductCommand
+
+    CreateOrderCommand
+
+    AddOrderLineCommand
+
+    RemoveOrderLineCommand
+
+    ChangeOrderStatusCommand (avec validation des transitions de statut)
+
+    GenerateInvoiceCommand (optionnel)
+
+Chaque command a un CommandHandler qui :
+
+    Valide les données.
+    Charge/modifie les entités du domaine.
+    Persiste les changements.
+
+Exemple d’interface :
+
+interface CommandHandler {
+    public function handle($command): void;
+}
+
+Et un handler concret :
+
+class CreateOrderHandler implements CommandHandler {
+    private OrderRepository $orders;
+    private CustomerRepository $customers;
+
+    public function __construct(OrderRepository $orders, CustomerRepository $customers) {
+        $this->orders = $orders;
+        $this->customers = $customers;
+    }
+
+    public function handle(CreateOrderCommand $command): void {
+        $customer = $this->customers->getById($command->customerId());
+        $order = Order::create($customer, $command->date());
+
+        $this->orders->save($order);
+    }
+}
+
+Queries (lecture)
+
+    GetCustomerByIdQuery
+    GetCustomersListQuery
+    GetProductByIdQuery
+    GetProductsListQuery
+    GetOrderByIdQuery
+    GetOrdersByCustomerQuery
+    GetOrdersByStatusQuery
+    GetOrdersByPeriodQuery
+
+Avec des QueryHandlers :
+
+interface QueryHandler {
+    public function handle($query);
+}
+
+Les QueryHandlers retournent des DTOs ou des tableaux, pas des entités métiers (pour bien séparer lectures optimisées de ton modèle métier).
+3. SOLID : comment structurer ton code PHP
+Single Responsibility (SRP)
+
+    Une classe Order s’occupe de la cohérence métier de la commande (ajout de lignes, calcul du total, règle sur les statuts).
+    Les CommandHandlers orchestrent l’appel aux entités / services, mais ne contiennent pas toute la logique métier.
+    Un PriceCalculator (ou TaxCalculator) peut être une classe dédiée.
+
+Open/Closed (OCP)
+
+    Les règles de pricing peuvent être encapsulées dans une interface :
+
+interface PricingPolicy {
+    public function computeLineTotal(OrderLine $line): Money;
+}
+
+Tu pourras ajouter plus tard une nouvelle politique sans modifier les handlers.
+Liskov, Interface Segregation, Dependency Inversion
+
+    Utilise des interfaces de repository :
+
+interface OrderRepository {
+    public function getById(int $id): ?Order;
+    public function save(Order $order): void;
+    public function findByCustomer(int $customerId): array;
+}
+
+    Implémentations :
+        PdoOrderRepository (PHP vanilla avec PDO).
+        InMemoryOrderRepository pour les tests.
+
+Tu injectes l’interface dans les handlers (Dependency Injection).
+4. Structure de dossiers en PHP vanilla ou petit framework
+
+Exemple de structure sans gros framework, compatible avec PHP vanilla ou un micro-framework (Slim, Lumen, Flight, etc.) :
+
+src/
+  Domain/
+    Customer/
+      Customer.php
+      CustomerRepository.php
+    Product/
+      Product.php
+      ProductRepository.php
+    Order/
+      Order.php
+      OrderLine.php
+      OrderStatus.php
+      OrderRepository.php
+      PricingPolicy.php
+  Application/
+    Command/
+      CreateCustomerCommand.php
+      CreateOrderCommand.php
+      AddOrderLineCommand.php
+      ...
+    CommandHandler/
+      CreateCustomerHandler.php
+      CreateOrderHandler.php
+      AddOrderLineHandler.php
+      ...
+    Query/
+      GetCustomerByIdQuery.php
+      GetOrdersByCustomerQuery.php
+      ...
+    QueryHandler/
+      GetCustomerByIdHandler.php
+      GetOrdersByCustomerHandler.php
+      ...
+  Infrastructure/
+    Persistence/
+      PdoCustomerRepository.php
+      PdoProductRepository.php
+      PdoOrderRepository.php
+    Http/
+      Router.php
+      Controllers/
+        CustomerController.php
+        ProductController.php
+        OrderController.php
+public/
+  index.php
+config/
+  dependencies.php
+tests/
+  ...
+
+Dans public/index.php, tu routes vers des controllers qui :
+
+    transforment la requête HTTP en Command ou Query,
+    passent ça au bon handler,
+    renvoient une réponse (JSON ou HTML).
+
+5. Si tu veux un tout petit framework
+
+Avec un micro-framework type Slim :
+
+    Tu utilises Slim uniquement pour :
+        le routage HTTP,
+        l’injection de dépendances (container).
+    Toute ta logique CQRS, SOLID, Domain reste dans src/.
+
+Exemple de route dans index.php (Slim) :
+
+$app->post('/orders', function ($request, $response) use ($container) {
+    $data = $request->getParsedBody();
+    $command = new CreateOrderCommand($data['customer_id'], new \DateTime());
+
+    $handler = $container->get(CreateOrderHandler::class);
+    $handler->handle($command);
+
+    return $response->withStatus(201);
+});
+
+6. Pour t’entraîner étape par étape
+
+Je te propose une progression :
+
+    Étape 1  
+        Implémente le domaine minimal : Customer, Product, Order, OrderLine.
+        Repositories en mémoire (InMemory*Repository).
+
+    Étape 2  
+        Ajoute les CommandHandlers + QueryHandlers.
+        Expose-les via des scripts PHP simples (sans framework) ou une mini API.
+
+    Étape 3  
+        Passe sur PDO + MySQL dans Infrastructure/Persistence.
+        Garde les interfaces identiques.
+
+    Étape 4  
+        Ajoute un micro-framework pour le routage.
+        Commence à structurer une UI (HTML simple ou front séparé).
