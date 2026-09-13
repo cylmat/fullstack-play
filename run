@@ -3,4 +3,8 @@
 if [ "$1" == "git" ]; then
     # all arguments except first one
     ./scripts/git.sh "${@:2}"
+    exit 0
 fi
+
+echo "Error: Run '$1' not found!"
+exit 1
