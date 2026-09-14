@@ -141,3 +141,7 @@ Exemple de base vectorielle, tu as deux approches courantes :
 
 - PostgreSQL + pgvector : le plus simple si tu veux garder SQL + vecteurs dans la même base.1 5 11
 - MySQL 9+ avec support natif VECTOR : possible aussi, mais l’écosystème est généralement moins mature que PostgreSQL pour les usages RAG/semantic search.13
+
+
+ref:
+- https://ai-sdk.dev/

@@ -40,7 +40,7 @@ services:
     ########
 
     node:
-        image: node:24
+        image: node:latest
         container_name: fs-node
         restart: always
         user: 1000:1000

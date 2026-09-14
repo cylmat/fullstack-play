@@ -10,31 +10,39 @@ services:
     # AI #
     #######
 
-    ai:
-        container_name: fs-ai
-        image: fs-php:latest
-        restart: always
-        user: 1000:1000
-        environment:
-            API_DSN: ''
-        ports:
-            - 8111:81   # ai server
-        command: sleep infinity
-        volumes:
-            - ./ai:/var/www/application
-        profiles:
-          - ai
+    # ai:
+    #     container_name: fs-ai
+    #     image: fs-php:latest
+    #     restart: always
+    #     user: 1000:1000
+    #     environment:
+    #         API_DSN: ''
+    #     ports:
+    #         - 8111:81   # ai server
+    #     command: sleep infinity
+    #     volumes:
+    #         - ./ai:/var/www/application
+    #     profiles:
+    #         - ai
     
-    node:
+    ai-node:
         container_name: fs-ai-node
         image: node:latest
         restart: always
+        volumes:
+            - ./ai:/var/www/application
+        ports:
+            - 5111:5173 # ai-node dev server
+        command: sleep infinity
         profiles:
-          - ai
+            - ai
 
     mcp-filesystem:
         container_name: fs-ai-mcpfilesystem
         image: mcp/filesystem:latest
         restart: always
+        volumes:
+            - ./ai/data:/data
+        command: sleep infinity
         profiles:
-          - ai
+            - ai

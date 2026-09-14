@@ -1,0 +1,50 @@
+JS
+===
+
+**Preact**
+
+https://preactjs.com
+```
+npm create vite@latest my-preact-app
+npm init preact
+```
+
+**React**
+
+https://react.dev
+https://react.dev/learn/build-a-react-app-from-scratch
+```
+npm create vite@latest my-app -- --template react-ts
+npm install --save-dev parcel
+
+npx create-react-router@latest
+```
+
+**Solid.js**
+
+https://www.solidjs.com
+```
+npx degit solidjs/templates/js my-app
+```
+
+---
+
+**Next.js**
+
+https://nextjs.org
+```
+npx create-next-app@latest
+```
+
+**Vite.js**
+
+(try) https://stackblitz.com/edit/vitejs-vite-m8zqtcdm
+
+https://vite.dev
+```
+npm create vite@latest
+yarn create vite
+pnpm create vite
+bun create vite
+deno init --npm vite
+```
