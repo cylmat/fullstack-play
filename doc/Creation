@@ -6,6 +6,7 @@ JS
 https://preactjs.com
 ```
 npm create vite@latest my-preact-app
+npm create preact@latest
 npm init preact
 ```
 
