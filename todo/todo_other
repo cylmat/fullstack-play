@@ -43,6 +43,7 @@ Slim.js
 Solid.js
 Frintjs
 Emberjs
+Lit.dev
 
 Bulma
 Mini.css
@@ -52,6 +53,6 @@ Tailwind
 Pure css
 Flexbox
 
-Deploy
+**Deploy**
 ------
-https://vercel.com/
+https://vercel.com
