@@ -1,0 +1,270 @@
+Pour du **PHP vanilla ou un petit framework**, le plus adapté pour travailler CQRS + SOLID est une **application de gestion de commandes B2B (mini e-commerce)**, parce que :
+
+- le domaine est simple mais riche (clients, produits, commandes, factures) ;
+- tu as beaucoup de **commands** (écriture) et de **queries** (lecture) ;
+- tu peux bien structurer ton code sans dépendre d'un gros framework.
+
+Je te propose de partir là-dessus et de te donner un plan concret.
+
+---
+
+## 1. Fonctionnalités à implémenter
+
+### Minimum viable product
+
+- **Clients**
+  - créer ou éditer un client ;
+  - voir la liste des clients ;
+  - voir la fiche détaillée d'un client (commandes, total dépensé).
+- **Produits**
+  - créer ou éditer un produit (nom, prix, TVA, stock) ;
+  - lister les produits et filtrer par catégorie.
+- **Commandes**
+  - créer une commande pour un client ;
+  - ajouter ou supprimer des lignes (produit, quantité, remise) ;
+  - changer le statut : `Brouillon` -> `Validée` -> `Expédiée` -> `Facturée` ou `Annulée` ;
+  - voir la liste des commandes (par client, statut ou date) ;
+  - voir le détail d'une commande (montant HT, TVA, TTC, statut).
+- **Optionnel**
+  - générer une facture PDF ou HTML ;
+  - gérer le stock (décrémenter lors de la validation).
+
+Ces cas d'usage te donnent **beaucoup de matière pour CQRS**.
+
+---
+
+## 2. CQRS : quelles commands et quelles queries ?
+
+Tu peux structurer ton application autour de **handlers**.
+
+### Commands (écriture)
+
+- `CreateCustomerCommand`
+- `UpdateCustomerCommand`
+- `CreateProductCommand`
+- `UpdateProductCommand`
+- `CreateOrderCommand`
+- `AddOrderLineCommand`
+- `RemoveOrderLineCommand`
+- `ChangeOrderStatusCommand` (avec validation des transitions de statut)
+- `GenerateInvoiceCommand` (optionnel)
+
+Chaque command possède un **CommandHandler** qui :
+
+- valide les données ;
+- charge ou modifie les entités du domaine ;
+- persiste les changements.
+
+Exemple d'interface :
+
+```php
+interface CommandHandler
+{
+    public function handle($command): void;
+}
+```
+
+Exemple de handler concret :
+
+```php
+class CreateOrderHandler implements CommandHandler
+{
+    private OrderRepository $orders;
+    private CustomerRepository $customers;
+
+    public function __construct(
+        OrderRepository $orders,
+        CustomerRepository $customers
+    ) {
+        $this->orders = $orders;
+        $this->customers = $customers;
+    }
+
+    public function handle(CreateOrderCommand $command): void
+    {
+        $customer = $this->customers->getById($command->customerId());
+        $order = Order::create($customer, $command->date());
+
+        $this->orders->save($order);
+    }
+}
+```
+
+### Queries (lecture)
+
+- `GetCustomerByIdQuery`
+- `GetCustomersListQuery`
+- `GetProductByIdQuery`
+- `GetProductsListQuery`
+- `GetOrderByIdQuery`
+- `GetOrdersByCustomerQuery`
+- `GetOrdersByStatusQuery`
+- `GetOrdersByPeriodQuery`
+
+Avec des **QueryHandlers** :
+
+```php
+interface QueryHandler
+{
+    public function handle($query);
+}
+```
+
+Les QueryHandlers retournent des **DTOs** ou des tableaux, pas des entités métiers. Cela permet de bien séparer les lectures optimisées du modèle métier.
+
+---
+
+## 3. SOLID : comment structurer ton code PHP
+
+### Single Responsibility (SRP)
+
+- Une classe `Order` s'occupe de la **cohérence métier** de la commande (ajout de lignes, calcul du total et règles sur les statuts).
+- Les CommandHandlers orchestrent les appels aux entités et services, mais ne contiennent pas toute la logique métier.
+- Un `PriceCalculator` ou `TaxCalculator` peut être une classe dédiée.
+
+### Open/Closed (OCP)
+
+Les règles de pricing peuvent être encapsulées dans une interface :
+
+```php
+interface PricingPolicy
+{
+    public function computeLineTotal(OrderLine $line): Money;
+}
+```
+
+Tu pourras ajouter plus tard une nouvelle politique sans modifier les handlers.
+
+### Liskov, Interface Segregation et Dependency Inversion
+
+Utilise des **interfaces de repository** :
+
+```php
+interface OrderRepository
+{
+    public function getById(int $id): ?Order;
+
+    public function save(Order $order): void;
+
+    public function findByCustomer(int $customerId): array;
+}
+```
+
+Implémentations possibles :
+
+- `PdoOrderRepository` (PHP vanilla avec PDO) ;
+- `InMemoryOrderRepository` pour les tests.
+
+Tu injectes l'interface dans les handlers (**Dependency Injection**).
+
+---
+
+## 4. Structure de dossiers en PHP vanilla ou petit framework
+
+Exemple de structure **sans gros framework**, compatible avec PHP vanilla ou un micro-framework (Slim, Lumen, Flight, etc.) :
+
+```text
+src/
+  Domain/
+    Customer/
+      Customer.php
+      CustomerRepository.php
+    Product/
+      Product.php
+      ProductRepository.php
+    Order/
+      Order.php
+      OrderLine.php
+      OrderStatus.php
+      OrderRepository.php
+      PricingPolicy.php
+  Application/
+    Command/
+      CreateCustomerCommand.php
+      CreateOrderCommand.php
+      AddOrderLineCommand.php
+      ...
+    CommandHandler/
+      CreateCustomerHandler.php
+      CreateOrderHandler.php
+      AddOrderLineHandler.php
+      ...
+    Query/
+      GetCustomerByIdQuery.php
+      GetOrdersByCustomerQuery.php
+      ...
+    QueryHandler/
+      GetCustomerByIdHandler.php
+      GetOrdersByCustomerHandler.php
+      ...
+  Infrastructure/
+    Persistence/
+      PdoCustomerRepository.php
+      PdoProductRepository.php
+      PdoOrderRepository.php
+    Http/
+      Router.php
+      Controllers/
+        CustomerController.php
+        ProductController.php
+        OrderController.php
+public/
+  index.php
+config/
+  dependencies.php
+tests/
+  ...
+```
+
+Dans `public/index.php`, tu routes vers des **controllers** qui :
+
+- transforment la requête HTTP en `Command` ou `Query` ;
+- passent cette commande ou cette requête au bon handler ;
+- renvoient une réponse (JSON ou HTML).
+
+---
+
+## 5. Si tu veux un tout petit framework
+
+Avec un micro-framework comme **Slim** :
+
+- tu utilises Slim uniquement pour :
+  - le routage HTTP ;
+  - l'injection de dépendances (container) ;
+- toute ta logique CQRS, SOLID et Domain reste dans `src/`.
+
+Exemple de route dans `index.php` (Slim) :
+
+```php
+$app->post('/orders', function ($request, $response) use ($container) {
+    $data = $request->getParsedBody();
+    $command = new CreateOrderCommand(
+        $data['customer_id'],
+        new \DateTime()
+    );
+
+    $handler = $container->get(CreateOrderHandler::class);
+    $handler->handle($command);
+
+    return $response->withStatus(201);
+});
+```
+
+---
+
+## 6. Pour t'entraîner étape par étape
+
+Je te propose une progression :
+
+1. **Étape 1**
+   - implémenter le domaine minimal : `Customer`, `Product`, `Order`, `OrderLine` ;
+   - créer les repositories en mémoire (`InMemory*Repository`).
+2. **Étape 2**
+   - ajouter les **CommandHandlers** et **QueryHandlers** ;
+   - les exposer via des scripts PHP simples, sans framework, ou une mini API.
+3. **Étape 3**
+   - passer sur **PDO + MySQL** dans `Infrastructure/Persistence` ;
+   - conserver les mêmes interfaces.
+4. **Étape 4**
+   - ajouter un micro-framework pour le routage ;
+   - commencer à structurer une UI (HTML simple ou frontend séparé).
