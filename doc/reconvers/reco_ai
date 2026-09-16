@@ -1,0 +1,71 @@
+ grands comptes + e-commerce + industrie constitue justement une barrière à l'entrée : compréhension métier, architecture, contraintes SI, sécurité, intégration, legacy, gouvernance, interlocuteurs non techniques…
+
+
+1. Architecte / intégrateur de systèmes IA 
+aides une entreprise à transformer concrètement son SI avec l'IA :
+
+    agents connectés au SI ;
+    RAG / recherche documentaire ;
+    automatisation de processus ;
+    copilotes internes ;
+    intégration LLM + ERP/CRM/PIM/MES ;
+    évaluation et monitoring des systèmes IA ;
+    sécurité et gouvernance.
+
+2. Expert "AI engineering" / AI platform
+
+ construit l'infrastructure permettant aux équipes de l'entreprise d'utiliser l'IA sérieusement :
+
+    modèles → API → agents → données → sécurité → observabilité → évaluation → déploiement.
+
+
+3. Cybersécurité orientée IA
+
+L'arrivée des agents IA crée énormément de problèmes nouveaux :
+
+    prompt injection ;
+    exfiltration de données ;
+    permissions des agents ;
+    sécurité des outils appelés par les LLM ;
+    supply chain des modèles ;
+    contrôle des accès ;
+    red teaming d'agents ;
+    conformité.
+
+
+4. Consultant transformation / automatisation par l'IA
+
+
+    « Regarde votre processus de gestion des retours et je détermine ce qui peut être automatisé par IA, ce qui doit rester déterministe, puis je mets le système en production. »
+
+
+5. Product manager / product builder spécialisé IA
+
+
+comprendre le problème → concevoir le produit → prototyper avec l'IA → mesurer → industrialiser.
+
+6. Spécialiser dans un secteur plutôt que dans une technologie
+
+Par exemple :
+
+    IA pour l'industrie ;
+    IA pour la supply chain ;
+    IA pour le e-commerce ;
+    IA pour la qualité ;
+    IA pour les achats ;
+    IA pour la maintenance ;
+    IA pour les opérations.
+
+
+    « Je sais automatiser les processus industriels avec l'IA. »
+
+
+
+Développeur senior → expert technique IA → expert d'un problème métier → architecte/consultant/entrepreneur.
+
+
+« petite structure très spécialisée en AI automation pour grands comptes »
+
+Exemple :
+
+    « J'aide les industriels à automatiser leurs processus documentaires et opérations internes avec des agents IA, en les intégrant à leur SI existant. »

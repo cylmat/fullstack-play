@@ -3,5 +3,39 @@
 TOOLS
 -----
 
+**client mcp**
+
 https://github.com/aaif-goose/goose
 https://claude.com/fr/download
+
+**Front:**
+Webmcp
+Mcp-b
+
+**Back:**
+Openai agent
+Sdk mcp
+
+npm install @modelcontextprotocol/sdk
+
+
+https://github.com/punkpeye/awesome-mcp-clients
+
+https://modelcontextprotocol.io/docs/2026-07-28/develop/build-client
+
+Public:
+https://mcpmarket.com/server
+
+https://guides.data.gouv.fr/intelligence-artificielle/le-serveur-mcp-de-data.gouv.fr
+
+Servers:
+https://modelcontextprotocol.io/docs/2026-07-28/develop/build-server
+
+https://mcpservers.org/fr/
+
+https://github.com/punkpeye/awesome-mcp-servers
+
+https://www.datacamp.com/fr/blog/top-mcp-servers-and-clients?dc_referrer=https%3A%2F%2Fwww.google.com%2F
+
+Exemple:
+https://www.datacamp.com/fr/tutorial/mcp-model-context-protocol
