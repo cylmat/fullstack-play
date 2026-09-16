@@ -6,12 +6,12 @@
 
 if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
     echo ""
-    echo 'Listing available "Run Script" git commands:'
+    echo 'Listing available "Run Script" GIT commands:'
     echo "push"
     exit 0
 fi
 
-
+echo "$1"
 if [ "$1" == "push" ]; then
     MSG=${2:-"Update by make"}
     CMD="
@@ -28,7 +28,7 @@ if [ "$1" == "push" ]; then
     exit 0
 fi
 
-echo "Error: Run Git '$1' not found!"
+echo "Error: Run GIT '$1' not found!"
 exit 1
 
 # getopts "m:" opt

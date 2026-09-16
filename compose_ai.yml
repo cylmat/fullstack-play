@@ -9,11 +9,11 @@ services:
     #######
     # AI #
     #######
-    
+
     ai-node:
-        container_name: fs-ai-node
         image: node:latest
-        restart: always   
+        container_name: fs-ai-node
+        restart: always
     #     user: 1000:1000
     #     environment:
     #         API_DSN: ''
@@ -26,12 +26,61 @@ services:
         profiles:
             - ai
 
+    # https://hub.docker.com/categories/machine-learning-and-ai
+    # https://hub.docker.com/r/mcp/filesystem
     mcp-filesystem:
-        container_name: fs-ai-mcpfilesystem
         image: mcp/filesystem:latest
+        container_name: fs-ai-mcpfilesystem
         restart: always
         volumes:
             - ./ai/data:/data
-        command: sleep infinity
+        command: ["/data"]
+        stdin_open: true
+        tty: true
         profiles:
             - ai
+
+# USAGE:
+
+# docker run -i --rm \
+#   --mount type=bind,src=/path/on/host,dst=/projects/workspace \
+#   mcp/filesystem \
+#   /projects
+
+# {
+#   "mcpServers": {
+#     "filesystem": {
+#       "command": "docker",
+#       "args": [
+#         "run",
+#         "-i",
+#         "--rm",
+#         "-v",
+#         "/local-directory:/local-directory",
+#         "mcp/filesystem",
+#         "/local-directory"
+#       ]
+#     }
+#   }
+# }
+
+# or for Claude Desktop (it run docker itself)
+
+# {
+#   "mcpServers": {
+#     "filesystem": {
+#       "command": "docker",
+#       "args": [
+#         "run",
+#         "-i",
+#         "--rm",
+#         "--mount",
+#         "type=bind,src=/Users/you/code,dst=/projects/code",
+#         "--mount",
+#         "type=bind,src=/Users/you/notes,dst=/projects/notes",
+#         "mcp/filesystem:latest",
+#         "/projects"
+#       ]
+#     }
+#   }
+# }
