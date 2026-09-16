@@ -11,7 +11,6 @@ if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
     exit 0
 fi
 
-echo "$1"
 if [ "$1" == "push" ]; then
     MSG=${2:-"Update by make"}
     CMD="
