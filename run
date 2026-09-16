@@ -4,7 +4,7 @@ if [[
     "$1" == "ai" ||
     "$1" == "git"
 ]]; then
-    # all args except first
+    # all args except first ${parameter:offset:length}
     ./scripts/"$1".sh ${@:2}
     exit 0
 fi

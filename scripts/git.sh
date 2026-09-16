@@ -11,10 +11,12 @@ if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
     exit 0
 fi
 
-echo $2
-
 if [ "$1" == "push" ]; then
-    MSG=${2:-"Update by make"}
+    MSG="Update by make"
+    if [ $# -ge 2 ]; then
+        MSG="${@:2}"
+    fi
+
     CMD="
         git config user.name \"\$GIT_USER\" &&
         git config user.email \"\$GIT_EMAIL\" &&
