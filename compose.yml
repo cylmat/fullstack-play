@@ -117,12 +117,3 @@ services:
     #     labels:
     #         - "traefik.http.routers.front.rule=Host(`front`)"
 
-######################
-# Other useful boxes #
-# https://devilbox.org
-# https://easyphp.org
-# https://laradock.io
-# https://laragon.org
-# https://github.com/laraedit/laraedit-docker
-# https://hub.docker.com/r/mattrayner/lamp
-######################

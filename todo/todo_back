@@ -1,0 +1,92 @@
+
+Php
+===
+
+Php
+---
+
+- Php 8 features
+- Weakobject
+- SPL
+- Fiber
+
+
+Symfony
+-------
+
+- Symfony 8 features
+- Doctrine ORM advanced (relations, DQL, QueryBuilder, Lazy/Eager Loading, Lifecycle Callbacks, Migrations, Fixtures)
+- Forms/Validation/CSRF
+- Middleware/Event Dispatcher
+- HTTP Cache
+- Voter/Authorization
+- Symfony UX Turbo + Stimulus
+- Webhook ?
+- Runtime Component (https://symfony.com/doc/current/components/runtime.html)
+- Passwordless Auth, WebAuthn
+- ux-live-component (https://symfony.com/bundles/ux-live-component/current/index.html)
+
+
+
+
+Database
+--------
+
+- RabbitMq
+
+*** SERVER ***
+
+runtime: PHP-PM, ReactPHP, Swoole, FrankenPHP
+
+Websocket
+---
+https://fsck.sh/en/blog/async-php-fibers-reactphp-swoole/
+https://socket.io/
+http://socketo.me/docs/
+https://amphp.org/websocket-client
+https://www.gekkode.com/developpement/creer-un-serveur-websocket-en-php/
+https://developer.mozilla.org/fr/docs/Web/API/WebSockets_API
+https://www.axopen.com/blog/2022/02/server-sent-events/
+https://www.cloudflare.com/fr-fr/learning/performance/what-is-http3/
+https://codesandbox.io/p/sandbox/socket-io-minimal-example-k3h2l
+https://nodejs.org/learn/getting-started/websocket
+
+
+
+
+*** PSR ***
+
+Ddd implementation
+PSR implementation
+
+
+*** Archi ***
+CQRS
+Event sourcing
+
+https://getprooph.org : CQRS and Event Sourcing php
+
+
+*** Data ***
+https://bullmq.io/
+
+
+
+*** SECURITY ***
+
+Oauth 2
+JWT
+
+
+            *************
+            *** TUTOS ***
+            *************
+
+
+
+**Symfony**
+- https://symfonycasts.com/tracks/rest
+- https://symfony.com/doc/current/doctrine.html
+- https://symfony.com/bundles/NelmioApiDocBundle/current/index.html
+- https://symfony.com/bundles/WebpackEncoreBundle/current/index.html
+

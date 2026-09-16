@@ -1,0 +1,112 @@
+
+**js**
+
+mixins
+https://fr.javascript.info/mixins
+
+other
+https://react.dev/reference/react/cache
+https://react.dev/reference/react/lazy
+https://react.dev/reference/react/Suspense
+https://react.dev/reference/react-dom/createPortal
+
+
+*** ARCHI ***
+
+Reactor pattern
+
+
+Js
+---
+- https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules
+- https://storybook.js.org
+
+React
+-----
+- useMemo, useCallback, useRef, useContext
+
+
+
+*** BACKEND ***
+
+Express.js
+Koa.js
+Nest.js
+Sails.js
+Fastify
+
+
+*** Frmeworks ***
+
+Svelte
+Preact
+Single-spa
+Module federation
+
+Slim.js
+Solid.js
+Frintjs
+Emberjs
+Lit.dev
+
+Bulma
+Mini.css
+W3css
+Foundation
+Tailwind
+Pure css
+Flexbox
+
+
+*** Budnler ***
+
+https://bun.com/
+vitejs
+- https://nextjs.org
+- https://vitejs.fr
+
+
+            *************
+            *** TUTOS ***
+            *************
+
+
+https://www.tutorialspoint.com/web_development_tutorials.htm
+
+**Js**
+- https://w3schools.com/js/default.asp
+- https://www.tutorialspoint.com/es6/index.htm
+- https://www.tutorialspoint.com/javascript/index.htm
+- https://www.javascripttutorial.net/es6
+
+**Start**
+- https://p5js.org/tutorials
+- https://www.youtube.com/@thejavakidd6549/videos
+- https://codeguppy.com/blog/javascript-projects-for-beginners/index.html
+
+**Ts**
+- https://w3schools.com/typescript/index.php
+- https://www.typescripttutorial.net
+- https://www.typescriptlang.org/docs
+
+**React**
+- https://react.dev/reference/react
+- https://react.dev/reference/react-dom
+- https://react-redux.js.org
+- https://redux.js.org
+
+*
+- https://w3schools.com/react/default.asp
+- https://tutorialspoint.com/reactjs/index.htm
+- https://grafikart.fr/formations/react
+
+
+
+
+
+************
+*** PLay ***
+************
+
+
+(try) https://stackblitz.com/edit/vitejs-vite-m8zqtcdm

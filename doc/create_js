@@ -1,4 +1,4 @@
-JS
+Create JS
 ===
 
 **Preact**
@@ -38,8 +38,6 @@ npx create-next-app@latest
 ```
 
 **Vite.js**
-
-(try) https://stackblitz.com/edit/vitejs-vite-m8zqtcdm
 
 https://vite.dev
 ```
