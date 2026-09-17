@@ -11,10 +11,13 @@ services:
     #######
 
     ai-node:
-        image: node:latest
+        # image: node:latest
         container_name: fs-ai-node
+        build:
+            context: .
+            dockerfile: .docker/node/node.Dockerfile
         restart: always
-    #     user: 1000:1000
+        user: 1000:1000
     #     environment:
     #         API_DSN: ''
         volumes:

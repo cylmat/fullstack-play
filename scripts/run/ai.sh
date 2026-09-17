@@ -4,10 +4,20 @@
 
 # Usage: ./scripts/git.sh push <commit message>
 
-if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
+if [[
+    "$1" == "ls" ||
+    "$1" == "" ||
+    "$1" == "help"
+]]; then
     echo ""
     echo 'Listing available "Run Script" AI commands:'
     echo "up"
+    echo "build"
+    echo "build-image"
+    echo "bash"
+    echo "bash-root"
+    echo "start"
+    echo "stop"
     echo "down"
     exit 0
 fi
@@ -18,10 +28,41 @@ if [ "$1" == "up" ]; then
     exit 0
 fi
 
+if [ "$1" == "build-image" ]; then
+	docker build -f ".docker/node/node.Dockerfile" -t fs-ai-node:latest --pull .docker
+    exit 0
+fi
+
+if [ "$1" == "bash" ]; then
+	docker exec -it fs-ai-node bash
+    exit 0
+fi
+
+if [ "$1" == "bash-root" ]; then
+	docker exec -it -u root fs-ai-node bash
+    exit 0
+fi
+
+if [ "$1" == "start" ]; then
+	@echo 'Should run "npm install"'
+	docker exec -it fs-ai-node pkill node || true
+	docker exec -it -u 1000 fs-ai-node npm run dev
+	@echo "Node JS app is available at http://localhost:5111"
+    exit 0
+fi
+
+if [ "$1" == "stop" ]; then
+	docker exec -it fs-ai-node pkill node || true
+	docker exec -it fs-ai-node pkill npm || true
+    exit 0
+fi
+
 if [ "$1" == "down" ]; then
 	docker compose -f "compose_ai.yml" --profile ai up --build -d
     exit 0
 fi
+
+
 
 echo "Error: Run AI '$1' not found!"
 exit 1
