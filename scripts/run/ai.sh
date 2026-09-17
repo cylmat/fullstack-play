@@ -53,7 +53,8 @@ if [ "$1" == "stop" ]; then
 fi
 
 if [ "$1" == "down" ]; then
-	docker compose -f "compose_ai.yml" --profile ai up --build -d
+	docker compose -f "compose_ai.yml" down
+    docker compose -f "compose_ai.yml" rm
     exit 0
 fi
 
