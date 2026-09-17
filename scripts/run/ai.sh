@@ -10,8 +10,7 @@ if [[
     echo 'Listing available "Run Script" AI commands:'
     echo "up"
     echo "build-image"
-    echo "bash"
-    echo "bash-root"
+    echo "bash(-root)"
     echo "start"
     echo "stop"
     echo "down"
