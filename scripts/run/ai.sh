@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# GIT HELPER SCRIPT #
-
-# Usage: ./scripts/git.sh push <commit message>
 
 if [[
     "$1" == "ls" ||
