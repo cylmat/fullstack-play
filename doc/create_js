@@ -28,7 +28,21 @@ https://www.solidjs.com
 npx degit solidjs/templates/js my-app
 ```
 
----
+
+
+--- SERVER ---
+
+**Express.js**
+
+https://expressjs.com/en/5x/starter/installing
+```
+npm express
+npm install -save-dev typescript @types/express @types/node
+```
+
+
+
+--- BUILDER ---
 
 **Next.js**
 

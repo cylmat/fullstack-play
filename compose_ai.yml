@@ -23,26 +23,8 @@ services:
         volumes:
             - ./ai:/var/www/application
         ports:
-            - 5111:5173 # ai-node dev server
-        working_dir: /var/www/application
-        command: sleep infinity
-        profiles:
-            - ai
-
-    ai-back:
-        # image: node:latest
-        container_name: fs-ai-node
-        build:
-            context: .
-            dockerfile: .docker/node/node.Dockerfile
-        restart: always
-        user: 1000:1000
-    #     environment:
-    #         API_DSN: ''
-        volumes:
-            - ./ai:/var/www/application
-        ports:
-            - 5112:5173 # ai-node dev server
+            - 5111:5173
+            - 5112:3000
         working_dir: /var/www/application
         command: sleep infinity
         profiles:
