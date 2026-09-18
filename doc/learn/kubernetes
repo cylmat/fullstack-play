@@ -1,0 +1,190 @@
+Tu as déjà les bases Docker et les commandes `kubectl get/describe`, donc tu peux aller vite sur les fondamentaux Kubernetes. Voici un **plan d’apprentissage pragmatique**, organisé en petites étapes, que tu peux suivre en quelques jours ou semaines avec ton cluster local (kind ou minikube).
+
+# Plan d’apprentissage Kubernetes
+
+## 1. Comprendre ce que Kubernetes ajoute par rapport à Docker
+
+**Objectif :** voir Kubernetes comme un “cerveau” au-dessus de tes conteneurs.
+
+### À clarifier
+
+- La différence **Docker vs Kubernetes** :
+	- Docker : tu gères des conteneurs *un par un* sur une machine.
+	- Kubernetes : tu décris un état voulu, et le cluster gère des conteneurs sur *plusieurs machines* (scheduling, redémarrage automatique, scaling, mise à jour progressive).
+- Les notions de base :
+	- **Cluster**, **nœud (node)**, **control plane**, **worker node**.
+	- **Pod** : plus petit objet déployable, contenant un ou plusieurs conteneurs.
+	- **Deployment** : gère la réplication et les mises à jour des Pods.
+	- **Service** : adresse réseau stable devant une série de Pods.
+
+### Exercice rapide
+
+1. Lancer un petit cluster local (kind ou minikube).
+2. Exécuter `kubectl get nodes` et `kubectl get pods -A` pour voir ce qui tourne “tout seul”.
+3. Se demander : “Quels éléments je gère moi-même avec Docker, et que Kubernetes gère automatiquement ici ?”
+
+---
+## 2. Pods et Deployments : le cœur du quotidien
+
+Tu sais déjà faire `kubectl get pods`, donc l’objectif est de **comprendre ce qu’il y a derrière**.
+
+### À apprendre
+
+- **Pod**
+	- Le décrire en YAML (`spec.containers`, `image`, `ports`, `env`).
+	- Comprendre qu’un Pod est éphémère : s’il tombe, il n’est pas forcément recréé sans contrôleur derrière.
+- **Deployment**
+	- Gère un groupe de Pods via un ReplicaSet.
+	- Permet le scaling (`kubectl scale`), les rolling updates et les rollbacks.
+
+### Exercices
+
+1. Écrire un **Pod** simple en YAML avec ton image Docker, par exemple un petit serveur HTTP.
+2. Lister et décrire le Pod :
+	 - `kubectl apply -f pod.yaml`
+	 - `kubectl get pod`
+	 - `kubectl describe pod <nom>`
+3. Transformer ce Pod en **Deployment** avec `replicas: 3`, puis :
+	 - exécuter `kubectl scale deployment <nom> --replicas=5` ;
+	 - mettre à jour l’image avec `kubectl set image`, ou modifier le YAML puis exécuter `apply`.
+
+**Compétence visée :** être capable de dire “je veux 3 instances de cette app” et laisser Kubernetes les maintenir.
+---
+## 3. Services et réseau : accéder aux Pods
+
+**Objectif :** comprendre comment **exposer** tes conteneurs.
+
+### Concepts à voir
+
+- **Service ClusterIP** : accessible seulement dans le cluster.
+- **Service NodePort** : port ouvert sur les nœuds, utile en local.
+- **LoadBalancer** : surtout utilisé dans le cloud.
+- *Optionnel au départ* : **Ingress**, pour le reverse proxy et les règles HTTP.
+
+### Exercices
+
+1. Créer un Deployment de ton application, par exemple une API HTTP.
+2. Ajouter un Service `ClusterIP` et tester avec `kubectl port-forward`.
+3. Ajouter ensuite un `NodePort` pour tester l’accès direct depuis ta machine :
+	- exécuter `kubectl get svc` ;
+	- ouvrir `http://localhost:<nodePort>`.
+
+**Compétence visée :** savoir **relier un Pod à une adresse** utilisable par un client.
+---
+## 4. Configurations et secrets : ne plus tout mettre dans l’image
+
+Tu sais gérer les volumes Docker ; passe maintenant à la configuration côté Kubernetes.
+
+### À apprendre
+
+- **ConfigMap** : configuration non sensible (fichiers, variables d’environnement).
+- **Secret** : informations sensibles (mot de passe, token, clé API).
+- Injection dans un Pod :
+	- via `env` ;
+	- via `volumeMounts`.
+
+### Exercices
+
+1. Créer une ConfigMap contenant une variable comme `APP_ENV=dev`.
+2. Vérifier dans ton conteneur que la variable est présente avec `env`.
+3. Créer un Secret, par exemple un mot de passe de base de données.
+4. Injecter ce Secret dans ton Pod comme variable d’environnement ou fichier monté.
+
+**Compétence visée :** ne plus reconstruire ton image pour modifier une simple configuration.
+---
+## 5. Volumes et données persistantes
+
+Tu connais déjà les volumes Docker, ce qui constitue un bon point de repère.
+
+### Concepts à voir
+
+- Volumes simples (`emptyDir`, `hostPath`) pour comprendre le mécanisme.
+- La triade **PV / PVC / StorageClass** :
+	- **PersistentVolume (PV)** : ressource de stockage réelle.
+	- **PersistentVolumeClaim (PVC)** : demande de stockage utilisée par un Pod.
+	- **StorageClass** : définit comment créer automatiquement les PV, notamment dans le cloud.
+
+### Exercices
+
+1. Créer un Pod avec un volume `emptyDir` et vérifier que plusieurs conteneurs du Pod partagent le même répertoire.
+2. Sur minikube, créer un PVC et l’attacher à un Pod qui écrit un fichier.
+3. Supprimer le Pod puis le recréer afin de vérifier que les données sont toujours présentes.
+
+**Compétence visée :** comprendre la différence entre un conteneur éphémère et des données persistantes gérées par Kubernetes.
+---
+## 6. Namespaces, labels et sélection : organiser et cibler les ressources
+
+Une fois que tu manipules plusieurs objets, il faut **organiser et cibler** les ressources.
+
+### À maîtriser
+
+- **Namespaces**
+	- Séparer dev, test et prod.
+	- Limiter la portée des ressources.
+- **Labels** : petites étiquettes sur les ressources (`app=web`, `tier=backend`).
+- **Selectors** : utilisés par les Services, Deployments, NetworkPolicies, etc. pour cibler un groupe de Pods.
+
+### Exercices
+
+1. Créer un namespace `dev`.
+2. Déployer ton application uniquement dans ce namespace avec `-n dev`.
+3. Ajouter des labels sur tes Deployments et Pods, puis observer avec `kubectl get pods -l app=mon-appli`.
+
+**Compétence visée :** savoir **filtrer**, **organiser** et **raisonner dans un environnement multi-projets**.
+---
+## 7. Probes, ressources et auto-réparation
+
+Kubernetes est fait pour la production, donc il faut aborder ces notions tôt.
+
+### À apprendre
+
+- **Liveness, readiness et startup probes** : comment Kubernetes sait si ton conteneur est en bonne santé et prêt à recevoir du trafic.
+- **Requests et limits CPU/mémoire** :
+	- ce que le scheduler utilise pour placer les Pods ;
+	- comment éviter qu’un conteneur prenne toute la machine.
+
+### Exercices
+
+1. Ajouter une **readinessProbe** à ton Deployment, par exemple sur un endpoint `/health`.
+2. Observer que, tant que la probe n’est pas valide, le Pod n’est pas utilisé par le Service.
+3. Ajouter `resources.requests` et `resources.limits` sur ton conteneur.
+4. Confirmer avec `kubectl describe pod` que Kubernetes a bien appliqué ces contraintes.
+
+**Compétence visée :** comprendre comment Kubernetes détecte et isole les conteneurs en erreur, et comment il gère les ressources.
+---
+## 8. Commandes `kubectl` du quotidien
+
+Tu connais `get` et `describe`. Ajoute ce petit ensemble de commandes essentielles :
+
+- `kubectl logs`, avec `-f` pour suivre les logs en direct.
+- `kubectl exec -it <pod> -- /bin/sh` ou `/bin/bash` pour entrer dans un conteneur.
+- `kubectl port-forward`, très utile en développement.
+- `kubectl delete` et `kubectl apply -f` pour tester en boucle.
+- `kubectl get all` pour voir rapidement ce qui tourne dans un namespace.
+
+**Objectif :** être aussi à l’aise avec `kubectl` que tu l’es avec `docker ps`, `docker logs` et `docker exec`.
+
+## 9. Ordre de priorité pour aller vite
+
+Pour une version “fast track” des fondamentaux :
+
+1. **Pods et Deployments**
+2. **Services** (`ClusterIP`, `NodePort`)
+3. **ConfigMaps et Secrets**
+4. **Volumes** (PV/PVC basiques)
+5. **Namespaces, labels et selectors**
+6. **Probes et ressources**
+
+Avec seulement ces notions, tu peux déjà :
+
+- déployer une application ;
+- la scaler ;
+- l’exposer ;
+- gérer sa configuration et ses secrets ;
+- stocker des données ;
+- comprendre pourquoi elle tombe ou redémarre.
+
+Pour continuer, deux pistes sont possibles :
+
+- suivre un **planning sur 7 jours** avec 1 à 2 exercices concrets par jour ;
+- partir d’une de tes applications Docker existantes et apprendre **à la migrer pas à pas dans Kubernetes**, en appliquant chaque étape du plan.

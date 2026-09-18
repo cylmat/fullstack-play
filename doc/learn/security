@@ -1,0 +1,222 @@
+Voici un **plan d’apprentissage structuré** pour consolider tes connaissances en sécurité, OAuth, JWT, protocoles et tokens, des fondamentaux jusqu’à l’intégration dans une stack **Symfony + React**.
+
+## 1. Bases de la sécurité web
+
+*Indispensable avant OAuth/JWT.*
+
+**Objectif :** comprendre pourquoi on a besoin de tokens et d’OAuth, ainsi que ce que l’on cherche à protéger.
+
+1. **Modèle HTTP et sessions**
+	- Différence entre **stateless** (HTTP) et **stateful** (sessions côté serveur).
+	- Cookies, `Set-Cookie`, `SameSite`, `HttpOnly`, `Secure`.
+	- Notion de **session** : identifiant stocké dans un cookie et état conservé côté serveur.
+2. **Principales vulnérabilités**
+	- **XSS** (Cross-Site Scripting) : injection de scripts dans le navigateur.
+	- **CSRF** (Cross-Site Request Forgery) : utilisation de la session d’un utilisateur à son insu.
+	- **Injection** (SQL, NoSQL) : validation et échappement des données.
+	- **Bruteforce** et protection des endpoints sensibles (login, reset password).
+3. **Bonnes pratiques générales**
+	- Hash de mot de passe (bcrypt, Argon2), politique de mot de passe.
+	- Validation des inputs (backend et frontend).
+	- Logging et audit (traçabilité des actions sensibles).
+
+> **Livrable concret**
+>
+> - Construire une mini-application Symfony avec login par session et protection CSRF.
+> - Ajouter quelques fausses failles XSS/CSRF pour comprendre comment les exploiter et les corriger.
+---
+## 2. Authentification, autorisation et modèles d’authentification
+
+**Objectif :** être clair sur les concepts avant de toucher à OAuth/JWT.
+
+1. **Authentification**
+	- Vérifier *qui* est l’utilisateur (login/mot de passe, token, certificat).
+	- **Facteurs** d’authentification : mot de passe, SMS, application, clé FIDO.
+2. **Autorisation**
+	- Vérifier *ce que* l’utilisateur a le droit de faire (rôles, permissions).
+	- Modèles : RBAC (Role-Based Access Control), ABAC (Attribute-Based).
+3. **Différents types d’authentification pour le web**
+	- Session-based auth (cookie et identifiant de session).
+	- Token-based auth (Bearer token dans un header).
+	- API keys, JWT et OAuth token.
+
+> **Livrable concret**
+>
+> - Implémenter les rôles et permissions dans Symfony (`ROLE_USER`, `ROLE_ADMIN`).
+> - Côté React, cacher ou afficher des composants selon les permissions.
+---
+## 3. Tokens et JWT : comprendre en profondeur
+**Objectif :** maîtriser ce qu’est un **JWT**, ainsi que ses forces et ses faiblesses.
+1. **Tokens en général**
+	- **Access token** : court terme, utilisé pour accéder aux ressources.
+	- **Refresh token** : long terme, utilisé pour renouveler les access tokens.
+	- Token opaque ou token auto-contenu (comme un JWT).
+2. **Structure d’un JWT**
+	- Format : `header.payload.signature` en Base64URL.
+	- **Header** : algorithme (HS256, RS256), type.
+	- **Payload** : claims standards (`sub`, `iss`, `exp`, `iat`, `aud`) et claims applicatifs.
+	- **Signature** : clé secrète ou paire de clés (symétrique/asymétrique).
+3. **Bonnes pratiques JWT**
+	- Toujours mettre `exp` (expiration) et éventuellement `iat`, `nbf`.
+	- Ne **jamais** stocker de données sensibles dans le payload : il est lisible.
+	- Rotation de tokens, blacklist/whitelist.
+	- Gestion du logout avec JWT : invalidation côté serveur et liste des tokens révoqués.
+4. **Sécurité et erreurs courantes**
+	- Mauvaise gestion de l’algorithme (par exemple, accepter `none`).
+	- Réutilisation de la même clé pour plusieurs services.
+	- JWT trop long avec trop d’informations.
+
+> **Livrable concret**
+>
+> - Écrire une petite bibliothèque ou un service Symfony qui génère, signe et vérifie des JWT.
+> - Créer un endpoint `/login` qui renvoie un `access_token` et un `refresh_token` en JWT.
+## 4. OAuth 2.0 : les fondamentaux
+
+**Objectif :** comprendre le **protocole OAuth 2.0**, ses acteurs et ses flows.
+
+1. **Acteurs**
+	- **Resource Owner** : l’utilisateur.
+	- **Client** : l’application qui demande l’accès (ton React).
+	- **Authorization Server** : l’outil qui gère les permissions et génère les tokens.
+	- **Resource Server** : l’API qui protège les ressources (ton API Symfony).
+2. **Types de flows (Authorization Grants)**
+	- **Authorization Code** avec PKCE dans les SPAs, le plus utilisé côté web moderne.
+	- Client Credentials pour les applications serveur à serveur.
+	- Device Code pour les TV et objets connectés.
+	- Password Grant, désormais legacy et à éviter.
+3. **Scopes, consentement et tokens**
+	- **Scopes** : `openid`, `profile`, `email` et scopes personnalisés.
+	- Access Token et Refresh Token.
+	- Notion de **consent screen** (écran d’autorisation).
+4. **Erreurs et sécurité**
+	- Attaques de redirection (`redirect_uri` mal sécurisé).
+	- Utilisation de **PKCE** pour les applications publiques comme une React SPA.
+
+> **Livrable concret**
+>
+> - Dessiner un diagramme de séquence du flow Authorization Code avec PKCE entre React, l’Authorization Server et l’API Symfony.
+> - Documenter chaque étape du flow et les paramètres (`code_verifier`, `code_challenge`, `state`).
+
+## 5. OpenID Connect (OIDC) : ajouter l’identité sur OAuth
+
+**Objectif :** comprendre comment gérer l’**identité utilisateur** avec OAuth via OIDC.
+
+1. **OpenID Connect**
+	- Extension d’OAuth 2 pour l’authentification.
+	- Utilisation d’un **ID Token**, souvent un JWT, pour représenter l’identité de l’utilisateur.
+	- Claims OIDC : `sub`, `name`, `preferred_username`, `email`.
+2. **Différence entre Access Token et ID Token**
+	- Access Token : pour accéder aux APIs.
+	- ID Token : pour prouver l’identité au client, par exemple à ton application React.
+
+> **Livrable concret**
+>
+> - Intégrer un provider OIDC (Keycloak, Auth0, Okta…) dans une application React avec API Symfony.
+> - Récupérer l’ID token côté React, extraire les informations utilisateur et vérifier les claims côté backend.
+
+## 6. Intégration concrète avec Symfony
+
+**Objectif :** savoir implémenter un serveur sécurisé (API REST) compatible avec JWT/OAuth.
+
+1. **Security dans Symfony**
+	- `security.yaml` : firewalls, access control et user providers.
+	- Guard/authenticators, selon la version de Symfony.
+	- Gestion des rôles et voters.
+2. **API Token / JWT dans Symfony**
+	- Utiliser un bundle JWT (`lexik/jwt-authentication-bundle`) ou un équivalent.
+	- Créer un endpoint de login qui renvoie un JWT.
+	- Protéger les routes avec `is_granted()` ou par rôles.
+3. **Intégration avec un Authorization Server externe**
+	- Accepter des tokens venant d’un serveur OAuth (Keycloak, Auth0, etc.).
+	- Valider la signature des JWT avec une clé publique.
+	- Mapper les claims (`roles`, `scope`) vers les rôles Symfony.
+
+> **Livrable concret**
+>
+> Construire une API Symfony REST qui :
+>
+> - propose `/auth/login` avec retour JWT ;
+> - protège `/api/*` avec ce JWT ;
+> - gère le refresh token et sa rotation.
+
+## 7. Intégration concrète avec React
+
+**Objectif :** savoir gérer les tokens côté client sans créer de failles.
+
+1. **Stockage des tokens**
+	- Comparer `localStorage`, `sessionStorage`, les cookies et le stockage en mémoire.
+	- Risques XSS avec `localStorage`.
+	- Cookie sécurisé (`HttpOnly`, `SameSite=strict`) versus Bearer token dans un header.
+2. **Gestion du cycle de vie des tokens**
+	- Login : récupérer le token via OAuth ou un endpoint backend.
+	- Stockage et mise à jour de l’état d’authentification (Redux, Zustand, Context).
+	- Renouvellement automatique via refresh token (intercepteur Axios/fetch).
+	- Logout : suppression des tokens et appel au backend pour invalider la session.
+3. **UI et routes protégées**
+	- PrivateRoute / ProtectedRoute.
+	- Redirection automatique vers login si le token est expiré ou invalide.
+	- Affichage conditionnel selon les rôles et les scopes.
+
+> **Livrable concret**
+>
+> Construire une SPA React qui consomme l’API Symfony sécurisée avec :
+>
+> - un formulaire de login ;
+> - une gestion automatique des tokens (interceptors) ;
+> - un routing avec protection des URLs.
+
+## 8. Protocoles et aspects avancés
+
+**Objectif :** aller un cran plus loin pour avoir une vision « senior ».
+
+1. **HTTPS / TLS**
+	- Certificats, chaîne de confiance et attaque de l’homme du milieu.
+	- HSTS, `Strict-Transport-Security`.
+2. **CORS**
+	- Headers `Origin`, `Access-Control-Allow-Origin`, etc.
+	- CORS preflight (`OPTIONS`).
+	- Impact de CORS sur les appels React vers Symfony.
+3. **OAuth 2.1 et tendances modernes**
+	- Flow Authorization Code avec PKCE généralisé.
+	- Abandon progressif de certains flows, notamment Implicit Grant.
+4. **Sécurité à l’échelle**
+	- Rate limiting (throttling).
+	- Monitoring des actions suspectes.
+	- Logging structuré (IP, utilisateur, endpoint, scope).
+
+> **Livrable concret**
+>
+> - Mettre ton API derrière HTTPS en développement et en production.
+> - Configurer correctement CORS dans Symfony pour ton application React.
+
+## 9. Plan pratique de progression
+
+*Suggestion sur 6 à 8 semaines.*
+
+1. **Semaines 1 et 2**
+	- Bases de la sécurité web (XSS, CSRF, sessions, cookies).
+	- Mise en place d’un petit projet Symfony avec login basé sur une session.
+2. **Semaine 3**
+	- Tokens et JWT en profondeur.
+	- Implémentation d’une authentification JWT simple dans Symfony.
+3. **Semaine 4**
+	- Concepts OAuth 2.0 (acteurs, flows, scopes).
+	- Diagrammes et compréhension du flow Authorization Code avec PKCE.
+4. **Semaine 5**
+	- OpenID Connect (ID Token, identité).
+	- Intégration avec un provider (Keycloak/Auth0) dans un projet de test.
+5. **Semaine 6**
+	- Intégration complète Symfony (validation des tokens, rôles).
+	- Intégration React (stockage, refresh, routes protégées).
+6. **Semaines 7 et 8**
+	- Aspects avancés (HTTPS/TLS, CORS, OAuth 2.1, rate limiting).
+	- Audit du projet, ajout de logs et durcissement de la sécurité.
+
+## 10. Pour aller plus loin
+
+### Idées de mini-projets
+
+- **Mini-projet 1 :** système de login avec JWT, refresh token, remember-me et logout sécurisé.
+- **Mini-projet 2 :** intégration OAuth avec GitHub ou Google pour le login (social login) dans React avec un backend Symfony.
+- **Mini-projet 3 :** dashboard admin avec gestion fine des rôles et permissions, ainsi qu’un audit log des actions sensibles.
+
