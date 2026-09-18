@@ -9,7 +9,7 @@
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
 		"build:server": "",
 		"preview": "vite preview",
-		"stop": "pkill node"
+		"stop": "pkill node & pkill npm"
 	},
 	"dependencies": {
 		"express": "^5.2.1",

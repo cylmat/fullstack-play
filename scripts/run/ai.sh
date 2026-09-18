@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 if [[
     "$1" == "ls" ||
     "$1" == "" ||
@@ -46,7 +45,8 @@ if [ "$1" == "install" ]; then
 fi
 
 if [ "$1" == "start" ]; then
-	docker exec -it fs-ai-node pkill node || true
+    bash $0 stop
+
 	echo "Node JS client is available at http://localhost:5111"
     echo "Node JS server is available at http://localhost:5112"
 	docker exec -it -u 1000 fs-ai-node npm run dev

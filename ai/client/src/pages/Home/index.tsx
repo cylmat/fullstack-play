@@ -6,9 +6,13 @@ import './style.css';
 
 export function Home() {
 
-	useEffect(() => {
-		let data = AppService.getExampleData()
+	const getData = async () => {
+		let data = await AppService.getExampleData()
 		console.log(data)
+	}
+
+	useEffect(() => {
+		getData()
 	}, [])
 
 	return (
