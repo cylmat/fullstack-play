@@ -10,7 +10,9 @@ if [[
     echo 'Listing available "Run Script" AI commands:'
     echo "up"
     echo "build-image"
-    echo "bash(-root)"
+    echo "bash"
+    echo "bash-root"
+    echo "install"
     echo "start"
     echo "stop"
     echo "down"
@@ -38,11 +40,16 @@ if [ "$1" == "bash-root" ]; then
     exit 0
 fi
 
+if [ "$1" == "install" ]; then
+	docker exec -it -u 1000 fs-ai-node npm install
+    exit 0
+fi
+
 if [ "$1" == "start" ]; then
-	@echo 'Should run "npm install"'
 	docker exec -it fs-ai-node pkill node || true
+	echo "Node JS client is available at http://localhost:5111"
+    echo "Node JS server is available at http://localhost:5112"
 	docker exec -it -u 1000 fs-ai-node npm run dev
-	@echo "Node JS app is available at http://localhost:5111"
     exit 0
 fi
 

@@ -3,11 +3,11 @@
 	"type": "module",
 	"scripts": {
 		"dev": "npm run dev:client & npm run dev:server",
-		"dev:client": "vite --host 0.0.0.0",
+		"dev:client": "vite --host 0.0.0.0 client",
 		"dev:server": "node server/app.ts",
 		"build": "npm run build:client && npm run build:server",
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
-		"build:server": "tsc",
+		"build:server": "",
 		"preview": "vite preview",
 		"stop": "pkill node"
 	},
