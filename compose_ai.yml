@@ -44,7 +44,16 @@ services:
         profiles:
             - ai
 
-# USAGE:
+# ###
+# USAGE
+#
+# configure Claude Desktop:
+# <User button> -> Settings -> Developer -> Change configuration
+#
+# it open C:\Users\<user>\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json
+# 
+# TOTALLY CLOSE CLAUDE DESKTOP + ICON IN SYSTEM TRAY !
+# ###
 
 # docker run -i --rm \
 #   --mount type=bind,src=/path/on/host,dst=/projects/workspace \
@@ -54,8 +63,9 @@ services:
 # {
 #   "mcpServers": {
 #     "filesystem": {
-#       "command": "docker",
+#       "command": "wsl",
 #       "args": [
+#         "docker",
 #         "run",
 #         "-i",
 #         "--rm",
@@ -73,8 +83,9 @@ services:
 # {
 #   "mcpServers": {
 #     "filesystem": {
-#       "command": "docker",
+#       "command": "wsl",
 #       "args": [
+#         "docker",
 #         "run",
 #         "-i",
 #         "--rm",
