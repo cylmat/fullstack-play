@@ -2,8 +2,8 @@ import { useEffect } from 'preact/hooks';
 import preactLogo from '../../assets/preact.svg';
 import Resource from '../../components/Resource';
 import { AppService } from '../../services/AppService';
-import './style.css';
 import { ChatBloc } from '../../components/Chat/Chat';
+import './style.css';
 
 export function Home() {
 

@@ -3,6 +3,7 @@ import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'prea
 import { Header } from './components/Header.js';
 import { Home } from './pages/Home/index.js';
 import { NotFound } from './pages/_404.js';
+import './global.scss';
 import './style.css';
 
 export function App() {
