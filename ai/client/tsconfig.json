@@ -4,12 +4,14 @@
 		"module": "ESNext",
 		"moduleResolution": "bundler",
 		"noEmit": true,
+
+		//
 		"allowJs": true,
 		"checkJs": true,
 
 		/* Preact Config */
-		"jsx": "react-jsx",
-		"jsxImportSource": "preact",
+		"jsx": "react-jsx", // Use the new JSX transform with preact-jsx-runtime
+		"jsxImportSource": "preact", // options are: "preact", "react", "react-native"
 		"skipLibCheck": true,
 		"paths": {
 			"react": ["./node_modules/preact/compat/"],

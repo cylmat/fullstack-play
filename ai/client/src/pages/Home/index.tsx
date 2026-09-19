@@ -3,6 +3,7 @@ import preactLogo from '../../assets/preact.svg';
 import Resource from '../../components/Resource';
 import { AppService } from '../../services/AppService';
 import './style.css';
+import { ChatBloc } from '../../components/Chat/Chat';
 
 export function Home() {
 
@@ -38,6 +39,9 @@ export function Home() {
 					href="https://vitejs.dev"
 				/>
 			</section>
+
+			<ChatBloc />
 		</div>
+
 	);
 }

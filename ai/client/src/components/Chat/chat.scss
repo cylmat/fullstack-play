@@ -1,0 +1,110 @@
+
+// Flex definition: The flex property is a shorthand for flex-grow, flex-shrink, and flex-basis combined.
+// Flex: 1 means that the element will grow to fill the available space within its parent container,
+// while also allowing it to shrink if necessary.
+// The textarea will take up all the remaining space in the chat-input-write container,
+// ensuring that it expands and contracts as needed based on the container's size.
+
+.ChatBloc {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    // background-color: #333;
+    background-color: red;
+
+    // Global //
+
+    .menu-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        width: 50px;
+        height: 50px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    // Containers //
+
+    .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chat-container {
+        padding: 1em;
+        padding-bottom: 0;
+        width: 300px;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .chat-window-container {
+            display: flex;
+            flex-direction: column-reverse;
+            flex-grow: 1;
+            align-items: end;
+            justify-content: flex-start;
+            padding: 0.5em;
+            background-color: #fff;
+            border: 1px solid #ccc;
+
+            .item {
+                padding: 0.1em 0em;
+            }
+        }
+
+        .chat-input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em 0.5em;
+            background-color: green;
+            // align-items: stretch;
+            // gap: 0.5rem;
+
+            .chat-input-write {
+                display: flex;
+                flex-grow: 0.7;
+                background-color: yellow;
+
+                textarea {
+                    flex: 1;
+                    // width: 100%;
+                    // resize: vertical;
+                    //  min-height: 2.5rem;
+                }
+            }
+
+            .chat-input-send {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 0.2;
+                height: 100%;
+                background-color: red;
+                // align-items: stretch;
+
+                .chat-input-send-button {
+                    display: flex;
+                    flex: 1;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .button-container {
+            justify-content: end;
+        }
+    }
+
+    // Override //
+
+    /* Set AFTER to override display */
+    .is-hidden {
+        display: none;
+    }
+}
