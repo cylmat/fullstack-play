@@ -12,11 +12,13 @@
 		"stop": "pkill node & pkill npm"
 	},
 	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.30.0",
 		"express": "^5.2.1",
 		"lodash": "^4.18.1",
 		"preact": "^10.29.8",
 		"preact-iso": "^2.12.2",
-		"preact-render-to-string": "^6.7.0"
+		"preact-render-to-string": "^6.7.0",
+		"zod": "^4.6.5"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.10.6",

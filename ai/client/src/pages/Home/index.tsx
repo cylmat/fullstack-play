@@ -1,19 +1,14 @@
 import { useEffect } from 'preact/hooks';
+import { AppService } from '../../services/AppService';
 import preactLogo from '../../assets/preact.svg';
 import Resource from '../../components/Resource';
-import { AppService } from '../../services/AppService';
 import { ChatBloc } from '../../components/Chat/Chat';
 import './style.css';
 
 export function Home() {
 
-	const getData = async () => {
-		let data = await AppService.getExampleData()
-		console.log(data)
-	}
-
 	useEffect(() => {
-		getData()
+		AppService.getMcpDataWIP()
 	}, [])
 
 	return (

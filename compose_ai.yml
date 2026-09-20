@@ -30,72 +30,28 @@ services:
         profiles:
             - ai
 
-    # https://hub.docker.com/categories/machine-learning-and-ai
-    # https://hub.docker.com/r/mcp/filesystem
+    # @doc https://github.com/njbrake/filesystem-mcp-server
     mcp-filesystem:
-        image: mcp/filesystem:latest
+        image: ghcr.io/njbrake/filesystem-mcp-server:main
         container_name: fs-ai-mcpfilesystem
         restart: always
+        ports: [8123:8123]
         volumes:
             - ./ai/data:/data
-        command: ["/data"]
-        stdin_open: true
-        tty: true
         profiles:
             - ai
 
-###
-USAGE
 
-configure Claude Desktop:
-<User button> -> Settings -> Developer -> Change configuration
+    # https://hub.docker.com/categories/machine-learning-and-ai
+    # https://hub.docker.com/r/mcp/filesystem
 
-it open C:\Users\<user>\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json
+    # NO NEED:
+    # Direclty spawned by Claude Desktop
 
-TOTALLY CLOSE CLAUDE DESKTOP + ICON IN SYSTEM TRAY !
-###
-
-docker run -i --rm \
-  --mount type=bind,src=/path/on/host,dst=/projects/workspace \
-  mcp/filesystem \
-  /projects
-
-{
-  "mcpServers": {
-    "filesystem": {
-      "command": "wsl",
-      "args": [
-        "docker",
-        "run",
-        "-i",
-        "--rm",
-        "-v",
-        "~/servers/fullstack-play/ai/data:/data",
-        "mcp/filesystem",
-        "/data"
-      ]
-    }
-  }
-}
-
-or for Claude Desktop (it run docker itself)
-
-{
-  "mcpServers": {
-    "filesystem": {
-      "command": "wsl",
-      "args": [
-        "docker",
-        "run",
-        "-i",
-        "--rm",
-        "--mount",
-        "type=bind,src=/Users/you/code,dst=/projects/code",
-        "--mount",
-        "type=bind,src=/Users/you/notes,dst=/projects/notes",
-        "mcp/filesystem:latest",
-        "/projects"
-      ]
-    }
-  }
-}
+    # mcp-filesystem:
+    #     image: mcp/filesystem:latest
+    #     volumes:
+    #         - ./ai/data:/data
+    #     command: ["/data"]
+    #     stdin_open: true
+    #     tty: true
