@@ -44,27 +44,8 @@ docker run -i --rm \
 
 For Claude Desktop, which runs Docker itself:
 
-```json
-{
-  "mcpServers": {
-    "filesystem": {
-      "command": "wsl",
-      "args": [
-        "docker",
-        "run",
-        "-i",
-        "--rm",
-        "-v",
-        "~/servers/fullstack-play/ai/data:/data",
-        "mcp/filesystem",
-        "/data"
-      ]
-    }
-  }
-}
-```
-
-Alternatively, use multiple bind mounts:
+Use multiple bind mounts (--mount is like -v but safer):
+Type: bind, volume, tmpsf
 
 ```json
 {
@@ -77,11 +58,9 @@ Alternatively, use multiple bind mounts:
         "-i",
         "--rm",
         "--mount",
-        "type=bind,src=/Users/you/code,dst=/projects/code",
-        "--mount",
-        "type=bind,src=/Users/you/notes,dst=/projects/notes",
+        "type=bind,src=~/servers/fullstack-play/ai/data,dst=/data",
         "mcp/filesystem:latest",
-        "/projects"
+        "/data"
       ]
     }
   }
