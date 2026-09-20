@@ -44,8 +44,9 @@ docker run -i --rm \
 
 For Claude Desktop, which runs Docker itself:
 
-Use multiple bind mounts (--mount is like -v but safer):
+Use multiple bind mounts (--mount is like -v but safer, but can't use "~"):
 Type: bind, volume, tmpsf
+ex: --mount type=bind,src=/servers/fullstack-play/ai/data,dst=/data
 
 ```json
 {
@@ -57,8 +58,8 @@ Type: bind, volume, tmpsf
         "run",
         "-i",
         "--rm",
-        "--mount",
-        "type=bind,src=~/servers/fullstack-play/ai/data,dst=/data",
+        "-v",
+        "~/servers/fullstack-play/ai/data:/data",
         "mcp/filesystem:latest",
         "/data"
       ]
