@@ -44,58 +44,58 @@ services:
         profiles:
             - ai
 
-# ###
-# USAGE
-#
-# configure Claude Desktop:
-# <User button> -> Settings -> Developer -> Change configuration
-#
-# it open C:\Users\<user>\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json
-# 
-# TOTALLY CLOSE CLAUDE DESKTOP + ICON IN SYSTEM TRAY !
-# ###
+###
+USAGE
 
-# docker run -i --rm \
-#   --mount type=bind,src=/path/on/host,dst=/projects/workspace \
-#   mcp/filesystem \
-#   /projects
+configure Claude Desktop:
+<User button> -> Settings -> Developer -> Change configuration
 
-# {
-#   "mcpServers": {
-#     "filesystem": {
-#       "command": "wsl",
-#       "args": [
-#         "docker",
-#         "run",
-#         "-i",
-#         "--rm",
-#         "-v",
-#         "~/servers/fullstack-play/ai/data:/data",
-#         "mcp/filesystem",
-#         "/data"
-#       ]
-#     }
-#   }
-# }
+it open C:\Users\<user>\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json
 
-# or for Claude Desktop (it run docker itself)
+TOTALLY CLOSE CLAUDE DESKTOP + ICON IN SYSTEM TRAY !
+###
 
-# {
-#   "mcpServers": {
-#     "filesystem": {
-#       "command": "wsl",
-#       "args": [
-#         "docker",
-#         "run",
-#         "-i",
-#         "--rm",
-#         "--mount",
-#         "type=bind,src=/Users/you/code,dst=/projects/code",
-#         "--mount",
-#         "type=bind,src=/Users/you/notes,dst=/projects/notes",
-#         "mcp/filesystem:latest",
-#         "/projects"
-#       ]
-#     }
-#   }
-# }
+docker run -i --rm \
+  --mount type=bind,src=/path/on/host,dst=/projects/workspace \
+  mcp/filesystem \
+  /projects
+
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "wsl",
+      "args": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "~/servers/fullstack-play/ai/data:/data",
+        "mcp/filesystem",
+        "/data"
+      ]
+    }
+  }
+}
+
+or for Claude Desktop (it run docker itself)
+
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "wsl",
+      "args": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "--mount",
+        "type=bind,src=/Users/you/code,dst=/projects/code",
+        "--mount",
+        "type=bind,src=/Users/you/notes,dst=/projects/notes",
+        "mcp/filesystem:latest",
+        "/projects"
+      ]
+    }
+  }
+}
