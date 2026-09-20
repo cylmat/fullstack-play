@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "npm run dev:client & npm run dev:server",
 		"dev:client": "vite --host 0.0.0.0 client",
-		"dev:server": "node server/app.ts --watch",
+		"dev:server": "node server/app.ts",
 		"build": "npm run build:client && npm run build:server",
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
 		"build:server": "",
@@ -12,7 +12,10 @@
 		"stop": "pkill node & pkill npm"
 	},
 	"dependencies": {
+		"@anthropic-ai/sdk": "^0.127.0",
 		"@modelcontextprotocol/sdk": "^1.30.0",
+		"cors": "^2.8.6",
+		"dotenv": "^18.0.1",
 		"express": "^5.2.1",
 		"lodash": "^4.18.1",
 		"preact": "^10.29.8",

@@ -1,0 +1,329 @@
+https://mr-alien.medium.com/folder-structure-for-nodejs-expressjs-project-56be9ec35548
+
+
+Preferer "service" à "manager"
+->Le terme manager peut être pertinent pour gérer une ressource technique
+
+Databases: Sequelize, Prisma, MongoDB..
+
+Utiliser
+    - service pour la logique métier ;
+    - repository pour les accès à la base de données ;
+    - controller pour HTTP ;
+    - manager pour la gestion technique ou complexe d’une ressource ;
+    - provider pour une intégration externe, par exemple EmailProvider ou StorageProvider
+
+
+
+Workflow
+--------
+
+```
+Requête HTTP
+    ↓
+Route
+    ↓
+Middleware d’authentification / validation
+    ↓
+Contrôleur
+    ↓
+Service métier
+    ↓
+Repository
+    ↓
+Base de données
+```
+
+
+Architecture
+------------
+
+mon-api/
+├── src/
+│   ├── app.js
+│   ├── server.js
+│   │
+│   ├── config/
+│   │   └── env.js
+│   │
+│   ├── routes/
+│   │   ├── index.js
+│   │   └── user.routes.js
+│   │
+│   ├── controllers/
+│   │   └── user.controller.js
+│   │
+│   ├── services/
+│   │   └── user.service.js
+│   │
+│   ├── repositories/
+│   │   └── user.repository.js
+│   │
+│   ├── models/
+│   │   └── user.model.js
+│   │
+│   ├── middlewares/
+│   │   ├── auth.middleware.js
+│   │   ├── error.middleware.js
+│   │   └── validate.middleware.js
+│   │
+│   ├── validators/
+│   │   └── user.validator.js
+│   │
+│   └── utils/
+│       └── async-handler.js
+│
+├── tests/
+├── .env
+├── package.json
+└── README.md
+
+
+Exemples
+--------
+
+```
+// src/app.js
+const express = require('express');
+const routes = require('./routes');
+const errorMiddleware = require('./middlewares/error.middleware');
+
+const app = express();
+
+app.use(express.json());
+
+app.use('/api/users', routes.userRoutes);
+
+app.use((req, res) => {
+  res.status(404).json({
+    message: 'Route introuvable'
+  });
+});
+
+app.use(errorMiddleware);
+
+module.exports = app;
+```
+
+```
+// src/server.js
+require('dotenv').config();
+
+const app = require('./app');
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
+});
+```
+
+```
+// src/middlewares/error.middleware.js
+module.exports = (err, req, res, next) => {
+  console.error(err);
+
+  const statusCode = err.statusCode || 500;
+
+  res.status(statusCode).json({
+    message:
+      statusCode === 500
+        ? 'Erreur interne du serveur'
+        : err.message
+  });
+};
+```
+
+npm install express-validator
+```
+// src/validators/user.validator.js
+const { body, validationResult } = require('express-validator');
+
+exports.validateCreateUser = [
+  body('email')
+    .isEmail()
+    .withMessage('Email invalide'),
+
+  body('name')
+    .trim()
+    .notEmpty()
+    .withMessage('Le nom est obligatoire'),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+
+    next();
+  }
+];
+
+// src/utils/async-handler.js
+module.exports = (handler) => {
+  return (req, res, next) => {
+    Promise.resolve(handler(req, res, next)).catch(next);
+  };
+};
+
+// Usage
+const asyncHandler = require('../utils/async-handler');
+const userController = require('../controllers/user.controller');
+router.get(
+  '/',
+  asyncHandler(userController.getUsers)
+);
+```
+
+```
+// src/routes/index.js
+const userRoutes = require('./user.routes');
+
+module.exports = {
+  userRoutes
+};
+```
+
+```
+// src/routes/user.routes.js
+const express = require('express');
+const router = express.Router();
+
+const userController = require('../controllers/user.controller');
+const { validateCreateUser } = require('../validators/user.validator');
+
+router.get('/', userController.getUsers);
+router.get('/:id', userController.getUserById);
+router.post('/', validateCreateUser, userController.createUser);
+router.delete('/:id', userController.deleteUser);
+
+module.exports = router;
+```
+
+```
+// src/controllers/user.controller.js
+const userService = require('../services/user.service');
+
+exports.createUser = async (req, res, next) => {
+  try {
+    const user = await userService.createUser(req.body);
+
+    res.status(201).json({
+      data: user
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+```
+
+```
+// user.service.js
+exports.createUser = async (data) => {
+  const existingUser = await userRepository.findByEmail(data.email);
+
+  if (existingUser) {
+    const error = new Error('Cet email est déjà utilisé');
+    error.statusCode = 409;
+    throw error;
+  }
+
+  return userRepository.create(data);
+};
+
+exports.findUserById = async (id) => {
+  // logique métier
+};
+```
+
+```
+// cache.manager.js
+class CacheManager {
+  constructor(redisClient) {
+    this.redisClient = redisClient;
+  }
+
+  async get(key) {
+    return this.redisClient.get(key);
+  }
+
+  async set(key, value, expiration) {
+    return this.redisClient.set(key, value, {
+      EX: expiration
+    });
+  }
+}
+
+module.exports = CacheManager;
+```
+
+```
+// src/models/user.model.js
+class User {
+  constructor({ id = null, email, name, createdAt = new Date() }) {
+    if (!email) {
+      throw new Error("L'email est obligatoire");
+    }
+
+    this.id = id;
+    this.email = email;
+    this.name = name;
+    this.createdAt = createdAt;
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      email: this.email,
+      name: this.name,
+      createdAt: this.createdAt
+    };
+  }
+}
+
+module.exports = User;
+```
+
+```
+// src/repositories/user.repository.js
+const User = require('../models/user.model');
+
+exports.findAll = () => {
+  return User.findAll();
+};
+
+exports.findById = (id) => {
+  return User.findByPk(id);
+};
+```
+
+
+Bonnes pratiques
+----------------
+
+Bonnes pratiques essentielles
+
+    Utiliser express.Router() plutôt que de multiplier les routes dans app.js.
+    Garder les contrôleurs courts.
+    Mettre la logique métier dans les services.
+    Centraliser les accès à la base dans des repositories.
+    Valider les paramètres, le body et les query strings.
+    Utiliser un middleware d’erreurs global.
+    Ne jamais stocker les secrets directement dans le code.
+    Utiliser .env pour la configuration.
+    Ajouter des préfixes d’API comme /api/v1.
+    Retourner des codes HTTP cohérents :
+        200 : succès ;
+        201 : ressource créée ;
+        204 : succès sans contenu ;
+        400 : requête invalide ;
+        401 : non authentifié ;
+        403 : accès interdit ;
+        404 : ressource introuvable ;
+        409 : conflit ;
+        500 : erreur serveur.
+    Ne pas exposer les détails d’erreurs internes en production.
+    Ajouter des tests sur les routes principales.
