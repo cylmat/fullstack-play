@@ -70,9 +70,9 @@ services:
 #         "-i",
 #         "--rm",
 #         "-v",
-#         "/local-directory:/local-directory",
+#         "~/servers/fullstack-play/ai/data:/data",
 #         "mcp/filesystem",
-#         "/local-directory"
+#         "/data"
 #       ]
 #     }
 #   }
