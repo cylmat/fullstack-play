@@ -1,9 +1,11 @@
 import express, { type Express, type Request, type Response, type NextFunction } from 'express'
 import routes from './routes/index.ts';
+import dotenv from 'dotenv'
 
   // @doc url for req.on('data'): https://nodejs.org/api/http.html#http_class_http_incomingmessage
   // @doc url for 'data' node event: https://nodejs.org/api/events.html#event-data
 
+dotenv.config({ path: ['.env.local', '.env'] })
 const app: Express = express()
 
 app.use(express.json()) // Mandatory for parsing application/json
@@ -23,6 +25,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     return
   }
 
+  
   next()
 })
 

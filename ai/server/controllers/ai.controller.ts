@@ -1,6 +1,7 @@
 import { type Request, type Response } from 'express';
 import { fetchFromMCP } from '../utils/fetchFromMCP.ts';
 import { parseSSEData } from '../utils/parseSSEdata.ts';
+import anthropicService from '../services/anth.service.ts';
 
 export const aiController = {
 
@@ -38,6 +39,22 @@ export const aiController = {
 
     // res.header('Content-Type', 'application/json');
     // res.json({ message: replyMessage });
+  },
+
+  postAnth:  (req: Request, res: Response) => {
+     anthropicService()
+      .then((data) => {
+          res
+              .status(200)
+              .send('Hello from AI "Anth" controller !');
+      })
+      .catch((error) => {
+        console.log(error)
+        res
+              .status(500)
+              .send('Error from AI "Anth" controller !');
+      })
+    
   },
 
   getMCP: (req: Request, res: Response) => {
