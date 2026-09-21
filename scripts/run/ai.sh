@@ -65,6 +65,11 @@ if [ "$1" == "start-server" ]; then
     exit 0
 fi
 
+if [ "$1" == "test" ]; then
+	docker exec -it -u 1000 fs-ai-node npm run test:server
+    exit 0
+fi
+
 if [ "$1" == "stop" ]; then
 	docker exec -it fs-ai-node pkill node || true
 	docker exec -it fs-ai-node pkill npm || true

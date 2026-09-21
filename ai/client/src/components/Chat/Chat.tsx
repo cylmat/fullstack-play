@@ -25,7 +25,7 @@ export const ChatBloc = () => {
         setChatMessages((prevMessages) => [...prevMessages, { message: newMessageText, from: 'user' }])
         setChatInput('')
 
-        let response = await AppService.sendMessage(newMessageText)
+        let response: string = await AppService.sendMessage(newMessageText)
         setChatMessages((prevMessages) => [...prevMessages, { message: response, from: 'bot' }])
     }
 

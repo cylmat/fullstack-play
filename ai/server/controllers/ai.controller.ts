@@ -1,68 +1,55 @@
 import { type Request, type Response } from 'express';
-import { fetchFromMCP } from '../utils/fetchFromMCP.ts';
-import { parseSSEData } from '../utils/parseSSEdata.ts';
 import anthropicService from '../services/anth.service.ts';
 
 export const aiController = {
 
-  postChat: (req: Request, res: Response) => { //, err: Error, next: NextFunction) => {
-   
-    try {
-        // const user = 
-        res
-            .status(200)
-            .send('Hello from AI controller!');
-        
-    } catch (error) {
-        // Handle the error appropriately
-        res
-            .status(500)
-            .json({ error: (error as Error).message });
+  postChat: async (req: Request, res: Response) => { //, err: Error, next: NextFunction) => {
+
+    const { message } = req.body as { message: string };
+    if (typeof message !== 'string') {
+      return res.status(400).json({
+        error: 'Le champ "message" doit être une chaîne de caractères.',
+      });
     }
 
-    
-    // if (err) {
-        //   res.status(500).json({ error: err.message });
-        // }
-    
-    // console.log(req.body)
-    // const { message } = req.body as { message: string };
+   
 
-    // if (typeof message !== 'string') {
-    //   return res.status(400).json({
-    //     error: 'Le champ "message" doit être une chaîne de caractères.',
-    //   });
-    // }
-
-    // console.log("Received message:", message)
-    // const replyMessage = `Hello buddy: ${message}!`;
-
-    // res.header('Content-Type', 'application/json');
-    // res.json({ message: replyMessage });
-  },
-
-  postAnth:  (req: Request, res: Response) => {
-     anthropicService()
-      .then((data) => {
-          res
-              .status(200)
-              .send('Hello from AI "Anth" controller !');
-      })
-      .catch((error) => {
-        console.log(error)
+    try {
+        const datas: string[] = await anthropicService(message)
+        //  console.log('controller', datas)
         res
-              .status(500)
-              .send('Error from AI "Anth" controller !');
-      })
-    
+            .status(200)
+            .header('Content-Type', 'application/json')
+            .json({ data: datas });
+    } catch (error) {
+        res
+            .status(500)
+            .header('Content-Type', 'application/json')
+            .json({ error: (error as Error).message });
+    }
   },
+
+  // postAnth:  (req: Request, res: Response) => {
+  //    anthropicService('test prompt')
+  //     .then((data) => {
+  //         res
+  //             .status(200)
+  //             .send('Hello from AI "Anth" controller !');
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //       res
+  //             .status(500)
+  //             .send('Error from AI "Anth" controller !');
+  //             // .json({ error: (error as Error).message });
+  //     })
+    
+  // },
 
   getMCP: (req: Request, res: Response) => {
-   // res.send('{"message": "Hello MCP!"}');
-
    res
-            .status(200)
-            .send('Hello from AI "MCP" controller !');
+        .status(200)
+        .send('Hello from AI "MCP" controller !');
 
 //   let result = fetchFromMCP("http://fs-ai-mcpfilesystem:8123/mcp", {
 //       "jsonrpc": "2.0",

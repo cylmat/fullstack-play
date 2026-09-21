@@ -9,7 +9,9 @@
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
 		"build:server": "",
 		"preview": "vite preview",
-		"stop": "pkill node & pkill npm"
+		"stop": "pkill node & pkill npm",
+		"test:server": "jest",
+		"test": "npm run test:server"
 	},
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.127.0",
@@ -24,12 +26,16 @@
 		"zod": "^4.6.5"
 	},
 	"devDependencies": {
+		"@babel/core": "^8.0.6",
+		"@babel/preset-env": "^8.0.6",
+		"@babel/preset-typescript": "^8.0.1",
 		"@preact/preset-vite": "^2.10.6",
 		"@types/express": "^5.0.6",
 		"@types/lodash": "^4.17.25",
 		"@types/node": "^22.20.3",
 		"eslint": "^9.39.5",
 		"eslint-config-preact": "^2.0.0",
+		"jest": "^30.5.2",
 		"preact-jsx-runtime": "^1.2.0",
 		"sass-embedded": "^1.104.1",
 		"typescript": "^7.0.2",

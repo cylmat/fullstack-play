@@ -6,8 +6,8 @@ import { FetchClient } from "../core/FetchClient";
 export class AppService {
     public static async sendMessage(message: string): Promise<string> {
         try {
-            let response = await FetchClient.post<{ message: string }>('http://localhost:5112/chat', { message })
-            return response.message
+            let response = await FetchClient.post<{ data: string[] }>('http://localhost:5112/chat', { message })
+            return response.data[0]
         } catch (error) {
             console.log(error)
             throw error

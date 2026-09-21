@@ -8,7 +8,7 @@ export default aiRoute
 
   .post('/chat', (req: Request, res: Response) => {
     // aiController.postChat(req, res)
-    aiController.postAnth(req, res)
+    aiController.postChat(req, res)
   })
   .get('/mcp', (req: Request, res: Response) => {
     aiController.getMCP(req, res)

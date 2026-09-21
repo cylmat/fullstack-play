@@ -1,0 +1,34 @@
+https://syslog.dti.crosemont.quebec/index.php/node/560
+https://medium.com/geekculture/testing-express-js-with-jest-8c6855945f03
+
+TESTS
+
+`npm install --save-dev mocha chai chai-http supertest`
+or
+`npm i --save-dev jest`
+
+
+
+For ERROR
+```
+  Must use import to load ES Module: /var/www/application/server_test/app.test.js
+
+    The file contains ESM syntax (import/export) that could not be executed as CommonJS. Either:
+      - Configure a transform (e.g. babel-jest) that compiles this file to CommonJS (see https://jestjs.io/docs/code-transformation)
+      - If the file is in "node_modules", allow it to be transformed by adjusting "transformIgnorePatterns" (see https://jestjs.io/docs/configuration#transformignorepatterns-arraystring)
+      - Use Node v24.9+ where Jest supports require(esm) natively (see https://jestjs.io/docs/ecmascript-modules#require-of-esm)
+```
+
+`npm i --save-dev @babel/core @babel/preset-env @babel/preset-typescript`
+
+```
+"@babel/core": "^8.0.6",
+"@babel/preset-env": "^8.0.6",
+"@babel/preset-typescript": "^8.0.1",
+```
+
+// @babel/preset-env
+allows to use the latest JavaScript without needing to micromanage which syntax transforms and polyfills are needed by your target environment(s).
+
+// @babel/preset-typescript
+supprime juste les types TypeScript,

@@ -1,21 +1,17 @@
-import Anthropic from '@anthropic-ai/sdk';
+
+import anthropicClient from '../clients/anth.client.ts';
 
 
-export default async function anthropicService() {
+export default async function anthropicService(prompt: string): Promise<string[]> {
 
-    console.log(process.env);
+    const contents = await anthropicClient(prompt);
 
-    // const client = new Anthropic({
-    //     apiKey: process.env['ANTHROPIC_API_KEY'], // This is the default and can be omitted
-    // });
+    let texts: string[] = []
+    for (const block of contents) {
+        if (block.type === 'text') {
+            texts.push(block.text);
+        }
+    }
 
-    // const message = await client.messages.create({
-    //     max_tokens: 1024,
-    //     messages: [{ role: 'user', content: 'Hello, Claude' }],
-    //     model: 'claude-opus-4-6',
-    // });
-
-    return Promise.resolve('ok')
-
-    // console.log(message.content);
+    return Promise.resolve(texts)
 }
