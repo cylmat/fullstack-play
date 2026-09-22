@@ -1,6 +1,10 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { type ContentBlock } from '@anthropic-ai/sdk/resources';
 
+/**
+ * @doc https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript
+ */
+
 export default async function anthropicClient(
     prompt: string
 ): Promise<ContentBlock[]> {
@@ -12,7 +16,7 @@ export default async function anthropicClient(
 
     const promptSended = 'Please answer with 50 characters max.' + `${prompt}`;
 
-    // claude-opus-4-6 ++
+    // claude-opus-4-6 $$
     // claude-sonnet-4-5 bon compromis
     // claude-haiku-4-5 less expensive
     const response = await client.messages.create({

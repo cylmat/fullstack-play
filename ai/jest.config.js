@@ -1,12 +1,33 @@
 /** @type {import('jest').Config} */
 
-export default {
+const commonConfig = {
   transform: {
-    // Babel-jest is already installed with jest-config
-    '^.+\\.[jt]sx?$': ['babel-jest', { configFile: './babel.config.jest.cjs' }],
+    '^.+\\.[jt]sx?$': [
+      'babel-jest',
+      { configFile: './babel.config.jest.cjs' },
+    ],
   },
   extensionsToTreatAsEsm: ['.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   testEnvironment: 'node',
-  roots: ['<rootDir>/server_test'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
+
+export default {
+  projects: [
+    {
+      ...commonConfig,
+      displayName: "server:integration",
+      testMatch: ["<rootDir>/server_tests/integration/**.test.js"],
+    },
+    {
+      ...commonConfig,
+      displayName: "server:functional",
+      testMatch: ["<rootDir>/server_tests/functional/**.test.js"],
+    },
+  ],
+  extensionsToTreatAsEsm: ['.ts'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  testEnvironment: 'node',
+  roots: ['<rootDir>'],
+}

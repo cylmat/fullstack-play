@@ -7,7 +7,7 @@ export class AppService {
     public static async sendMessage(message: string): Promise<string> {
         try {
             let response = await FetchClient.post<{ data: string[] }>(
-                'http://localhost:5112/chat',
+                process.env.API_BACKEND_URL + '/chat',
                 { message }
             )
             return response.data[0]
@@ -20,7 +20,7 @@ export class AppService {
     public static async getMcpDataWIP() {
         try {
             let response = await FetchClient.get<any>(
-                'http://localhost:5112/mcp'
+                process.env.API_BACKEND_URL + '/mcp'
             )
             return response
         } catch (err) {
@@ -30,7 +30,7 @@ export class AppService {
 
     public static async getExampleData() {
         try {
-            let response = await FetchClient.get<any>('http://localhost:5112/')
+            let response = await FetchClient.get<any>(process.env.API_BACKEND_URL + '/')
             return response
         } catch (err) {
             console.log(err)

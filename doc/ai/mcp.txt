@@ -117,3 +117,26 @@ One or two of Google Drive/Workspace, Notion, Stripe, Shopify, HubSpot/Salesforc
 
 By building small projects where an agent uses this mix of servers end‑to‑end
  (read files, query DB, call SaaS APIs, post to Slack, open Jira tickets), you’ll be working with the same MCP building blocks that are most prevalent in real‑world deployments.
+
+
+JSON-RCP
+---
+ 
+// {
+//   "jsonrpc": "2.0",
+//   "method": "tools/list",
+//   "params": {},
+//   "id": 2
+// }
+
+// {
+//   "jsonrpc": "2.0",
+//   "method": "tools/call",
+//   "params": {
+//     "name": "list_directory",
+//     "arguments": {
+//       "path": "/claude"
+//     }
+//   },
+//   "id": 3
+// }

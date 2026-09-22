@@ -1,4 +1,4 @@
-import anthropicService from '../server/services/anth.service.ts'; // import: syntax ESM
+import anthropicService from '../../server/services/anth.service.ts'; // import: syntax ESM
 
 jest.mock('@anthropic-ai/sdk', () => {
     // mock client.messages.create({ ... })
