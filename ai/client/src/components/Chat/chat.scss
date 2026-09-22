@@ -1,4 +1,3 @@
-
 // Flex definition: The flex property is a shorthand for flex-grow, flex-shrink, and flex-basis combined.
 // Flex: 1 means that the element will grow to fill the available space within its parent container,
 // while also allowing it to shrink if necessary.
@@ -14,7 +13,8 @@
 
     // Global //
 
-    &, * {
+    &,
+    * {
         // box-sizing: border-box;
         border-radius: 0.5rem;
     }

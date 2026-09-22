@@ -1,4 +1,4 @@
-import { FetchClient } from "../core/FetchClient";
+import { FetchClient } from '../core/FetchClient'
 
 /**
  * @sample https://dummyjson.com/users
@@ -6,7 +6,10 @@ import { FetchClient } from "../core/FetchClient";
 export class AppService {
     public static async sendMessage(message: string): Promise<string> {
         try {
-            let response = await FetchClient.post<{ data: string[] }>('http://localhost:5112/chat', { message })
+            let response = await FetchClient.post<{ data: string[] }>(
+                'http://localhost:5112/chat',
+                { message }
+            )
             return response.data[0]
         } catch (error) {
             console.log(error)
@@ -16,7 +19,9 @@ export class AppService {
 
     public static async getMcpDataWIP() {
         try {
-            let response = await FetchClient.get<any>('http://localhost:5112/mcp')
+            let response = await FetchClient.get<any>(
+                'http://localhost:5112/mcp'
+            )
             return response
         } catch (err) {
             console.log(err)

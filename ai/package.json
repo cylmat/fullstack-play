@@ -8,13 +8,24 @@
 		"build": "npm run build:client && npm run build:server",
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
 		"build:server": "",
+		"prettier": "npm run prettier:client & npm rnu prettier:server",
+		"prettier:client": "prettier client",
+		"prettier:server": "prettier server",
+		"fix": "npm run fix:client & npm run fix:server",
+		"fix:client": "prettier --write client",
+		"fix:server": "prettier --write server",
 		"preview": "vite preview",
 		"stop": "pkill node & pkill npm",
 		"test:server": "jest",
 		"test": "npm run test:server"
 	},
+	"eslintConfig": {
+		"extends": "preact"
+	},
+	"prettier": "./client/prettier.config.js",
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.127.0",
+		"@babel/preset-typescript": "^7.29.7",
 		"@modelcontextprotocol/sdk": "^1.30.0",
 		"cors": "^2.8.6",
 		"dotenv": "^18.0.1",
@@ -26,9 +37,8 @@
 		"zod": "^4.6.5"
 	},
 	"devDependencies": {
-		"@babel/core": "^8.0.6",
-		"@babel/preset-env": "^8.0.6",
-		"@babel/preset-typescript": "^8.0.1",
+		"@babel/core": "^7.29.7",
+		"@babel/preset-env": "^7.29.7",
 		"@preact/preset-vite": "^2.10.6",
 		"@types/express": "^5.0.6",
 		"@types/lodash": "^4.17.25",
@@ -37,16 +47,14 @@
 		"eslint-config-preact": "^2.0.0",
 		"jest": "^30.5.2",
 		"preact-jsx-runtime": "^1.2.0",
+		"prettier": "^3.9.8",
 		"sass-embedded": "^1.104.1",
 		"typescript": "^7.0.2",
 		"vite": "^8.3.0",
 		"yarn": "^1.22.22"
 	},
-	"eslintConfig": {
-		"extends": "preact"
-	},
 	"workspaces": [
-		"apps/client",
-		"apps/server"
+		"client",
+		"server"
 	]
 }
