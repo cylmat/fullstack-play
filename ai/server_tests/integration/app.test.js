@@ -1,5 +1,6 @@
 import anthropicService from '../../server/services/anth.service.ts'; // import: syntax ESM
 
+
 jest.mock('@anthropic-ai/sdk', () => {
     // mock client.messages.create({ ... })
     let mockedCreateResponse = jest.fn().mockResolvedValue({
@@ -10,7 +11,7 @@ jest.mock('@anthropic-ai/sdk', () => {
             }
         ]
     });
-        
+
     return jest.fn().mockImplementation(() => ({
         messages: {
             sample: jest.fn().mockResolvedValue({}),

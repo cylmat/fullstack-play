@@ -1,13 +1,17 @@
-import { Query, query } from "@anthropic-ai/claude-agent-sdk";
+import { Query } from "@anthropic-ai/claude-agent-sdk";
+import { query } from './anth.agent.wrapper'
 
 /**
  * @doc https://code.claude.com/docs/en/agent-sdk/typescript
  */
 
 export default async function anthropicAgent(): Promise<any> {
+
     const response: Query = query({
         'prompt': 'prompt'
     });
+
+    return 't'
 
     let result = '';
 

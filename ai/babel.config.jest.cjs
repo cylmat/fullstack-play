@@ -6,14 +6,21 @@ module.exports = api => {
   return {
     presets: [
       // remove typescript annotations
-      '@babel/preset-typescript',
+      [
+        '@babel/preset-typescript'
+      ],
+
+      // @doc https://babeljs.io/docs/babel-preset-env
       // Compile le code pour la version actuelle de Node.js qui exécute les tests.
-      [ 
+      [
         '@babel/preset-env',
-        { 
+        {
           targets: isTest ? { node: 'current' } : undefined,
-          // modules: false, // Do not transform ES modules to CommonJS in test environment
-          // use when importing ES modules in the test environment (@anthropic-ai/claude-agent-sdk)
+          // Enable transformation of ES module syntax to another module type.
+          // modules: "amd" | "umd" | "systemjs" | "commonjs" | "cjs" | "auto" | false, defaults to "auto"
+          // modules: 'auto': detect and convert ESM modules to CommonJS for Jest
+          // Setting this to false will preserve ES modules.
+          modules: isTest ? 'auto' : false,
         },
       ],
     ],
