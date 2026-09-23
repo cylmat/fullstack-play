@@ -17,6 +17,7 @@
 		"preview": "vite preview",
 		"stop": "pkill node & pkill npm",
 		"test": "jest",
+		"test:server": "npm run test -- --selectProjects server",
 		"test:server:inte": "npm run test -- --selectProjects server:integration",
 		"test:server:func": "npm run test -- --selectProjects server:functional"
 	},

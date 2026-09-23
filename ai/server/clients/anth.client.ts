@@ -8,8 +8,6 @@ import { type ContentBlock } from '@anthropic-ai/sdk/resources';
 export default async function anthropicClient(
     prompt: string
 ): Promise<ContentBlock[]> {
-    // console.log(process.env);
-
     const client = new Anthropic({
         apiKey: process.env['ANTHROPIC_API_KEY'] // This is the default and can be omitted
     });
@@ -25,17 +23,8 @@ export default async function anthropicClient(
         model: 'claude-haiku-4-5'
     });
 
-    const contents: ContentBlock[] = response.content;
-
-    // let texts: string[] = []
-    // for (const block of content) {
-    //     if (block.type === 'text') {
-    //         texts.push(block.text);
-    //     }
-    // }
-
     // ContentBlock is like { type: string; text: string }
-    // const content: ContentBlock[] = response.content;
+    const contents: ContentBlock[] = response.content;
 
     return Promise.resolve(contents);
 }

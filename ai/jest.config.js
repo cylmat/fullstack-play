@@ -23,6 +23,12 @@ const commonConfig = {
 
 export default {
   projects: [
+     {
+      ...commonConfig,
+      displayName: "server",
+      setupFilesAfterEnv: ["<rootDir>/server_tests/init.js"],
+      testMatch: ["<rootDir>/server_tests/**/**.test.js"],
+    },
     {
       ...commonConfig,
       displayName: "server:integration",
