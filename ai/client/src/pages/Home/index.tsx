@@ -7,7 +7,7 @@ import './style.css'
 
 export function Home() {
     useEffect(() => {
-        AppService.getMcpDataWIP()
+        // AppService.getMcpDataWIP()
     }, [])
 
     return (
