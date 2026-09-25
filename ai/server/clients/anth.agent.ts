@@ -40,6 +40,10 @@ export default async function anthropicAgent(prompt: string): Promise<any> {
     // INFO: Can get options too from a .mcp.json file at project root
     //
     let mcpOptions: Options = {
+        env: {
+            ...process.env,
+            // ANTHROPIC_BASE_URL: "https://gateway.example.com"
+        },
         mcpServers: {
             filesystem: {
                 type: "http", // or streamable-http
