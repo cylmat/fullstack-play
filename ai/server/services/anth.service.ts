@@ -12,7 +12,10 @@ export default async function anthropicService(
     useType = useType ?? 'agent';
 
     if (useType === 'client') {
+        console.log('anthropicService | client calling with prompt: ', prompt);
         const clientContents = await anthropicClient(prompt);
+        console.log('anthropicService | client response ok');
+
         let texts: string[] = [];
         for (const block of clientContents) {
             if (block.type === 'text') {
@@ -23,7 +26,9 @@ export default async function anthropicService(
     }
 
     if (useType === 'agent') {
+        console.log('anthropicService | agent calling with prompt: ', prompt);
         const agentContents = await anthropicAgent(prompt);
+        console.log('anthropicService | agent response ok');
 
         let texts: string[] = [];
         for (const block of agentContents.result?.messages ?? []) {

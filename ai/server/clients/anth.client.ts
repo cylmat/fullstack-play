@@ -8,6 +8,8 @@ import { type ContentBlock } from '@anthropic-ai/sdk/resources';
 export default async function anthropicClient(
     prompt: string
 ): Promise<ContentBlock[]> {
+    console.log('anthropicClient apiKey provided ?', !!process.env['ANTHROPIC_API_KEY'])
+    console.log('anthropicClient | prompting... ', prompt);
     const client = new Anthropic({
         apiKey: process.env['ANTHROPIC_API_KEY'] // This is the default and can be omitted
     });

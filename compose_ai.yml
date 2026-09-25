@@ -16,7 +16,6 @@ services:
         build:
             context: .
             dockerfile: .docker/node/node.Dockerfile
-        restart: always
         user: 1000:1000
     #     environment:
     #         API_DSN: ''
@@ -31,10 +30,9 @@ services:
             - ai
 
     # @doc https://github.com/njbrake/filesystem-mcp-server
-    mcp-filesystem:
+    local-mcp-filesystem:
         image: ghcr.io/njbrake/filesystem-mcp-server:main
         container_name: fs-ai-mcpfilesystem
-        restart: always
         ports: [8123:8123]
         volumes:
             - ./ai/data:/data
