@@ -6,6 +6,7 @@
 ### Archi
 
 - [medium - ddd](https://medium.com/@psfpro/implementing-ddd-in-php-dfae8f3790c2)
+- [medium - cqrs](https://medium.com/@faroukymedia/levent-sourcing-et-csqrs-fondamentales-event-driven-architecture-part-3-c697385b0474)
 
 ### Css
 
