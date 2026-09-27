@@ -36,11 +36,12 @@ https://babeljs.io/docs)
 
 ### Secure
 
-- [gfg.org - oauth expressjs](https://www.geeksforgeeks.org/node-js/implementing-an-oauth-server-with-nodejs-and-express/)
+- [gfg - oauth expressjs](https://www.geeksforgeeks.org/node-js/implementing-an-oauth-server-with-nodejs-and-express/)
+- [permify - oauth expressjs](https://permify.co/post/oauth-20-implementation-nodejs-expressjs/)
 - [owasp - webgoat](https://owasp.org/projects/webgoat)
 
 ### Web
 
-- [moz.org - web auth api](https://developer.mozilla.org/fr/docs/Web/API/Web_Authentication_API)
+- [moz - web auth api](https://developer.mozilla.org/fr/docs/Web/API/Web_Authentication_API)
 
 
