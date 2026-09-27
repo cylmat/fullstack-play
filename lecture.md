@@ -39,5 +39,6 @@
 ### Web
 
 - [moz - web auth api](https://developer.mozilla.org/fr/docs/Web/API/Web_Authentication_API)
+- [alsa - web workers](https://www.alsacreations.com/article/lire/1902-Les-Web-Workers-en-action.html)
 
 
