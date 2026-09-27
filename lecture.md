@@ -18,10 +18,12 @@
 
 - [jstuto - prototype](https://www.javascripttutorial.net/javascript-prototype/)
 - [medium - reactor pattern](https://medium.com/m/global-identity-2?redirectUrl=https%3A%2F%2Fjavascript.plainenglish.io%2Fthe-reactor-pattern-in-node-js-behind-the-magic-of-asynchronous-i-o-bf88d4368ac3)
+- [codeur - node frame](https://www.codeur.com/blog/nodejs-framework/)
 ---
 - [babel](
 https://babeljs.io/docs)
 - [vite](https://vite.dev/guide/)
+- [nestjs](https://nestjs.com/)
 
 ### MCP
 
