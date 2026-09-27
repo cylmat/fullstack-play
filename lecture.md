@@ -12,6 +12,7 @@
 ### Js
 
 - [jstuto - prototype](https://www.javascripttutorial.net/javascript-prototype/)
+- [medium - reactor pattern](https://medium.com/m/global-identity-2?redirectUrl=https%3A%2F%2Fjavascript.plainenglish.io%2Fthe-reactor-pattern-in-node-js-behind-the-magic-of-asynchronous-i-o-bf88d4368ac3)
 ---
 - [babel](
 https://babeljs.io/docs)
@@ -20,6 +21,7 @@ https://babeljs.io/docs)
 ### MCP
 
 - [mcp - start](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro)
+- [medium - build mcp server](https://heeki.medium.com/building-an-mcp-server-as-an-api-developer-cfc162d06a83)
 
 ### Secure
 
