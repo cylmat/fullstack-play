@@ -2,6 +2,10 @@
 
 - [docker - dynamodb local](https://hub.docker.com/r/amazon/dynamodb-local)
 
+### Css
+
+- [csstricks - flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
 ### Js
 
 - [jstuto - prototype](https://www.javascripttutorial.net/javascript-prototype/)
