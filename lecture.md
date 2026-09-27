@@ -5,6 +5,8 @@
 ### Css
 
 - [csstricks - flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [moz - flex basics](https://developer.mozilla.org/fr/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts)
+- [moz - flex layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout)
 
 ### Js
 
