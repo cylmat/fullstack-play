@@ -3,6 +3,10 @@
 - [docker - dynamodb local](https://hub.docker.com/r/amazon/dynamodb-local)
 - [lambda local](https://docs.localstack.cloud/aws/services/lambda/)
 
+### Archi
+
+- [medium - ddd](https://medium.com/@psfpro/implementing-ddd-in-php-dfae8f3790c2)
+
 ### Css
 
 - [csstricks - flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
