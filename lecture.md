@@ -1,6 +1,10 @@
 ### Amz
 
-[dynamodb local](https://hub.docker.com/r/amazon/dynamodb-local)
+- [docker - dynamodb local](https://hub.docker.com/r/amazon/dynamodb-local)
+
+### Js
+
+- [jstuto - prototype](https://www.javascripttutorial.net/javascript-prototype/)
 
 ### MCP
 
