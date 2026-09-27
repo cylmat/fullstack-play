@@ -19,6 +19,8 @@ https://babeljs.io/docs)
 
 ### MCP
 
+- [mcp - start](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro)
+
 ### Secure
 
 - [gfg.org - oauth expressjs](https://www.geeksforgeeks.org/node-js/implementing-an-oauth-server-with-nodejs-and-express/)
