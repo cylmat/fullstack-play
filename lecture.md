@@ -28,6 +28,10 @@ https://babeljs.io/docs)
 - [mcp - start](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro)
 - [medium - build mcp server](https://heeki.medium.com/building-an-mcp-server-as-an-api-developer-cfc162d06a83)
 
+### php
+
+- [devto - websocket php](https://dev.to/robertobutti/websocket-with-php-4k2c)
+
 ### Secure
 
 - [gfg.org - oauth expressjs](https://www.geeksforgeeks.org/node-js/implementing-an-oauth-server-with-nodejs-and-express/)
