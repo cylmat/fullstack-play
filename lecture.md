@@ -1,6 +1,7 @@
 ### Amz
 
 - [docker - dynamodb local](https://hub.docker.com/r/amazon/dynamodb-local)
+- [lambda local](https://docs.localstack.cloud/aws/services/lambda/)
 
 ### Css
 
@@ -11,6 +12,10 @@
 ### Js
 
 - [jstuto - prototype](https://www.javascripttutorial.net/javascript-prototype/)
+---
+- [babel](
+https://babeljs.io/docs)
+- [vite](https://vite.dev/guide/)
 
 ### MCP
 
