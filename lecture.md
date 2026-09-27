@@ -1,3 +1,7 @@
+### Amz
+
+[dynamodb local](https://hub.docker.com/r/amazon/dynamodb-local)
+
 ### MCP
 
 ### Secure
