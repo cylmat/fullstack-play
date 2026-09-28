@@ -37,6 +37,11 @@
 - [devto - oauth expresdjs](https://dev.to/sameer_saleem/the-ultimate-guide-to-oauth-with-expressjs-2025-edition-5137)
 - [owasp - webgoat](https://owasp.org/projects/webgoat)
 
+JWT
+
+- [laconsole - expressjs jwt](https://laconsole.dev/formations/express/securiser-api-rest-jwt)
+- [medium - node jwt](https://medium.com/@sbesnier1901/s%C3%A9curiser-une-api-avec-node-js-et-jwt-15e14d9df109)
+
 ### Web
 
 - [moz - web auth api](https://developer.mozilla.org/fr/docs/Web/API/Web_Authentication_API)
