@@ -6,7 +6,11 @@ https://github.com/chjj/tiny
 - css : grid flex
 
 
+## AI
 
+- Anthropic sdk
+- JWT Token
+- Node/Expressjs
 
 ## FRONT
 
@@ -21,7 +25,6 @@ https://www.tutorialspoint.com/typescript/typescript_numbers.htm
 
 - Symfony
 https://symfony.com/doc/current/security.html
-
 
 
 ## OTHER
