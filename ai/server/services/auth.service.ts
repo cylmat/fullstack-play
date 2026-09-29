@@ -18,12 +18,12 @@ export default class authService {
         return signature;
     }
 
-    public static verifyToken(token: string) {
+    public static verifyToken(token: string): object|false {
         try {
-            return jwt.verify(token, 'has a van secret');
+            return jwt.verify(token, 'has a van secret') as object;
         } catch (err) {
-            console.error('Invalid token', err);
-            return null;
+            console.error('Invalid token');
+            return false;
         }
     }
 }

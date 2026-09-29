@@ -9,13 +9,12 @@ export default secureRoute
         console.log(signature)
         return res.json({ jwt: signature });
     })
-    .get('/verify', (req: Request, res: Response) => {
-        let token = req.body.token as string;
-        let verified = authService.verifyToken(token);
-        if (!verified) {
-            return res.status(401).json({ error: 'Invalid token provided' });
-        }
-        return res.json({ verified });
+    .post('/api/test-token', (req: Request, res: Response) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('TEST', 'test-header');
+        res.statusCode = 201;
+
+        return res.json({ message: 'Test token endpoint [OK]' });
     })
 
 // var privateKey = fs.readFileSync('private.key');
