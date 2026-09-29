@@ -28,22 +28,29 @@
 	"dependencies": {
 		"@anthropic-ai/claude-agent-sdk": "^0.3.280",
 		"@anthropic-ai/sdk": "^0.127.0",
-		"@babel/preset-typescript": "^7.29.7",
 		"@modelcontextprotocol/sdk": "^1.30.0",
 		"cors": "^2.8.6",
 		"dotenv": "^18.0.1",
 		"express": "^5.2.1",
+		"jsonwebtoken": "^9.0.3",
 		"lodash": "^4.18.1",
 		"preact": "^10.29.8",
 		"preact-iso": "^2.12.2",
 		"preact-render-to-string": "^6.7.0",
 		"zod": "^4.6.5"
 	},
+	"//": [
+		{
+			"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
+		}
+	],
 	"devDependencies": {
 		"@babel/core": "^7.29.7",
 		"@babel/preset-env": "^7.29.7",
+		"@babel/preset-typescript": "^7.29.7",
 		"@preact/preset-vite": "^2.10.6",
 		"@types/express": "^5.0.6",
+		"@types/jsonwebtoken": "^9.0.10",
 		"@types/lodash": "^4.17.25",
 		"@types/node": "^22.20.3",
 		"eslint": "^9.39.5",

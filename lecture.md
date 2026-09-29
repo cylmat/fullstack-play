@@ -40,7 +40,6 @@
 JWT
 
 - [laconsole - expressjs jwt](https://laconsole.dev/formations/express/securiser-api-rest-jwt)
-- [medium - node jwt](https://medium.com/@sbesnier1901/s%C3%A9curiser-une-api-avec-node-js-et-jwt-15e14d9df109)
 
 ### Web
 
@@ -51,3 +50,15 @@ JWT
 
 [Ref](https://github.com/cylmat/fullstack-play/blob/main/ref.md)
 
+
+
+
+
+
+
+
+
+
+[DONE]
+
+- [medium - node jwt](https://medium.com/@sbesnier1901/s%C3%A9curiser-une-api-avec-node-js-et-jwt-15e14d9df109)
