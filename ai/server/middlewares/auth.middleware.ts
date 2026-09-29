@@ -30,5 +30,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         return;
     }
 
+    console.log('Token verified successfully');
+
     next()
 }

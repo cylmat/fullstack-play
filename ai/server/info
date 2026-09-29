@@ -1,0 +1,8 @@
+
+auth/               # JWT login, register, token generation/validation logic
+db/                 # MongoDB connection and database setup
+dto/                # Data Transfer Objects (DTOs) - Type definitions for API request/response payloads
+middleware/         # Express middleware (auth guards, rate limiting, etc.)
+repo/               # Database repositories (UserRepo, etc.)
+schema/             # Mongoose schemas and models
+users/              # User profile management controllers/services

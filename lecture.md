@@ -60,4 +60,6 @@ JWT
 
 
 [DONE]
+JWT
+- [medium - jwt private keys](https://muyiwa-dev.medium.com/jwt-authentication-using-private-and-public-keys-25c1de8fb933)
 - [medium - node jwt](https://medium.com/@sbesnier1901/s%C3%A9curiser-une-api-avec-node-js-et-jwt-15e14d9df109)

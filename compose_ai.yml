@@ -21,6 +21,7 @@ services:
     #         API_DSN: ''
         volumes:
             - ./ai:/var/www/application
+            - ./.docker/config/keys:/var/www/application/config/keys
         ports:
             - 5111:5173
             - 5112:3000

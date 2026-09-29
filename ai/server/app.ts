@@ -17,6 +17,8 @@ const app: Express = express();
 app.use(express.json()); // Mandatory for parsing application/json
 app.use(express.urlencoded({ extended: true })); // use it for: parsing application/x-www-form-urlencoded
 
+// @doc https://expressjs.com/fr/resources/middleware/
+
 app.use(authMiddleware)
 app.use(corsMiddleware);
 app.use(routes);

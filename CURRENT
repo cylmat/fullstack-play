@@ -1,3 +1,13 @@
+- ai :
+login button on/off
+https://github.com/chjj/tiny
+     - database save conversation
+     - persist jwt
+- css : grid flex
+
+
+
+
 ## FRONT
 
 - React
@@ -20,17 +30,9 @@ https://symfony.com/doc/current/security.html
 https://refactoring.guru/design-patterns
 
 
------------------------------------------
------------------------------------------
------------------------------------------
-
-- ai :
-login button on/off
-jwt chat form
-database save conversation
-- css : grid flex
 
 ----------------------------
+
 
 Docker architecture
 docker mcp server
