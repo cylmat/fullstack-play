@@ -6,6 +6,11 @@ JS
 MCP
 - [mcp - archtecture](https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture)
 
+https://smile.eu/fr/publications-et-evenements/qu-est-ce-que-le-model-context-protocol-mcp
+https://github.com/modelcontextprotocol/typescript-sdk
+https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/get-started/first-server.md
+https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/get-started/first-client.md
+
 
 
 
