@@ -1,0 +1,837 @@
+Voici un **plan d’apprentissage progressif** pour un développeur senior Symfony/React qui souhaite devenir expert en développement web, notamment sur **HTTP, CORS, sécurité, performance, architecture et infrastructure**.
+
+# 1. Objectif global
+
+Passer de :
+
+> « Je sais développer des fonctionnalités avec Symfony et React »
+
+à :
+
+> « Je comprends ce qui se passe de bout en bout entre le navigateur, le réseau, le serveur, l’application, la base de données et l’infrastructure. »
+
+Tu dois être capable d’expliquer et de diagnostiquer :
+
+```text
+Navigateur
+   ↓ DNS
+   ↓ TCP / TLS
+   ↓ HTTP
+Reverse proxy / CDN
+   ↓
+Symfony / API
+   ↓
+Base de données / cache / files d’attente
+```
+
+---
+
+# 2. Phase 1 — Fondamentaux du Web
+
+Durée recommandée : **3 à 4 semaines**
+
+## HTTP en profondeur
+
+À maîtriser :
+
+- HTTP/1.1, HTTP/2 et HTTP/3
+- Méthodes :
+  - `GET`
+  - `POST`
+  - `PUT`
+  - `PATCH`
+  - `DELETE`
+  - `OPTIONS`
+  - `HEAD`
+- Codes HTTP :
+  - `2xx`
+  - `3xx`
+  - `4xx`
+  - `5xx`
+- Headers :
+  - `Content-Type`
+  - `Accept`
+  - `Authorization`
+  - `Cache-Control`
+  - `ETag`
+  - `Last-Modified`
+  - `Location`
+  - `Origin`
+  - `Referer`
+  - `Cookie`
+  - `Set-Cookie`
+- Content negotiation
+- Idempotence
+- Safe methods
+- Redirections
+- Compression
+- Chunked transfer
+- Streaming
+- Timeouts
+- Keep-alive
+
+### Exercices
+
+Avec `curl`, reproduis différents scénarios :
+
+```bash
+curl -i https://example.com
+curl -I https://example.com
+curl -X OPTIONS -i https://api.example.com
+curl -H "Accept: application/json" https://api.example.com/users
+curl -H "Authorization: Bearer token" https://api.example.com/profile
+```
+
+Analyse ensuite les échanges avec l’onglet **Network** de Chrome DevTools.
+
+## DNS, TCP et TLS
+
+Comprendre :
+
+- Résolution DNS
+- Enregistrements `A`, `AAAA`, `CNAME`, `TXT`, `MX`
+- TCP handshake
+- TLS handshake
+- Certificats
+- SNI
+- HTTP over TLS
+- Différence entre domaine, origine et URL
+- Latence réseau
+- IPv4 et IPv6
+
+Commandes utiles :
+
+```bash
+dig example.com
+nslookup example.com
+openssl s_client -connect example.com:443
+traceroute example.com
+```
+
+## Ressources recommandées
+
+- MDN Web Docs
+- RFC HTTP de l’IETF
+- *HTTP: The Definitive Guide*
+- *High Performance Browser Networking*
+
+---
+
+# 3. Phase 2 — Navigateur, origine et CORS
+
+Durée recommandée : **2 à 3 semaines**
+
+## Modèle de sécurité du navigateur
+
+Comprendre précisément :
+
+- Same-Origin Policy
+- Origine :
+  - protocole
+  - domaine
+  - port
+- Différence entre :
+  - origine
+  - site
+  - domaine
+  - sous-domaine
+- Cookies first-party et third-party
+- `localStorage`
+- `sessionStorage`
+- IndexedDB
+- Web Workers
+- Service Workers
+
+Exemple :
+
+```text
+https://app.example.com
+https://api.example.com
+```
+
+Ces deux URLs ont des sous-domaines différents : elles sont donc d’origines différentes.
+
+## CORS
+
+Comprendre les requêtes :
+
+### Requête simple
+
+Une requête simple peut être envoyée directement avec un header `Origin` :
+
+```http
+GET /users HTTP/1.1
+Origin: https://app.example.com
+```
+
+Le serveur doit répondre notamment :
+
+```http
+Access-Control-Allow-Origin: https://app.example.com
+```
+
+### Requête preflight
+
+Pour certaines requêtes, le navigateur envoie d’abord :
+
+```http
+OPTIONS /users HTTP/1.1
+Origin: https://app.example.com
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: Authorization, Content-Type
+```
+
+Le serveur répond :
+
+```http
+Access-Control-Allow-Origin: https://app.example.com
+Access-Control-Allow-Methods: GET, POST, OPTIONS
+Access-Control-Allow-Headers: Authorization, Content-Type
+```
+
+### Points importants
+
+- CORS est une protection du navigateur, pas du serveur contre tous les clients.
+- `curl` ne bloque pas les requêtes CORS.
+- `Access-Control-Allow-Origin: *` est incompatible avec les credentials.
+- Pour les cookies :
+
+```http
+Access-Control-Allow-Credentials: true
+```
+
+Et côté JavaScript :
+
+```javascript
+fetch(url, {
+  credentials: "include"
+});
+```
+
+- Le serveur doit également retourner :
+
+```http
+Vary: Origin
+```
+
+dans certains cas liés au cache.
+
+## Autres mécanismes à étudier
+
+- CSRF
+- XSS
+- CSP
+- Clickjacking
+- `SameSite`
+- `Secure`
+- `HttpOnly`
+- COOP
+- COEP
+- CORP
+- Permissions Policy
+
+### Exercices
+
+Créer trois applications :
+
+```text
+frontend.localhost
+api.localhost
+admin.localhost
+```
+
+Puis tester :
+
+- requête simple
+- requête avec `Authorization`
+- requête `POST` JSON
+- requête avec cookies
+- préflight refusé
+- origine inconnue
+- credentials avec wildcard
+
+---
+
+# 4. Phase 3 — APIs et architecture backend
+
+Durée recommandée : **4 semaines**
+
+## Concevoir des APIs solides
+
+Approfondir :
+
+- REST
+- RPC
+- GraphQL
+- Webhooks
+- Server-Sent Events
+- WebSockets
+- OpenAPI
+- Versionnement d’API
+- Pagination
+- Filtres
+- Tri
+- Recherche
+- Gestion des erreurs
+- Idempotency keys
+- Rate limiting
+
+Exemple d’erreur cohérente :
+
+```json
+{
+  "type": "https://api.example.com/errors/validation",
+  "title": "Validation failed",
+  "status": 422,
+  "detail": "Some fields are invalid",
+  "errors": {
+    "email": [
+      "This value is not a valid email."
+    ]
+  }
+}
+```
+
+## Symfony à approfondir
+
+Même avec une bonne expérience, maîtrise particulièrement :
+
+- Kernel et cycle de requête
+- Event Dispatcher
+- HttpKernel
+- Middleware et décorateurs
+- Dependency Injection
+- Compilation du container
+- Messenger
+- Serializer
+- Validator
+- Security
+- Cache
+- HttpClient
+- RateLimiter
+- Profiler
+- Doctrine Unit of Work
+- Transactions
+- Locks
+- Console
+- Workers
+
+À savoir expliquer :
+
+```text
+Request
+  → Kernel
+  → Routing
+  → Controller
+  → Argument resolver
+  → Service
+  → Doctrine
+  → Response
+  → Kernel events
+```
+
+## Architecture
+
+Étudier :
+
+- Architecture hexagonale
+- Clean Architecture
+- DDD
+- CQRS
+- Event-driven architecture
+- Modular monolith
+- Microservices
+- Saga
+- Outbox pattern
+- Anti-corruption layer
+
+Le but n’est pas d’utiliser tous ces concepts, mais de savoir **quand ils sont justifiés**.
+
+---
+
+# 5. Phase 4 — React et architecture frontend
+
+Durée recommandée : **3 semaines**
+
+## Comprendre le navigateur
+
+Approfondir :
+
+- Event loop
+- Microtasks et macrotasks
+- Promises
+- Rendering pipeline
+- Reflow et repaint
+- DOM
+- Shadow DOM
+- Hydratation
+- Lazy loading
+- Code splitting
+- Cache navigateur
+
+## React
+
+Maîtriser :
+
+- Reconciliation
+- Rendering
+- Hooks
+- Context
+- Suspense
+- Error boundaries
+- Server Components selon l’écosystème utilisé
+- Gestion des formulaires
+- Gestion des erreurs
+- Cache côté client
+- Optimistic UI
+- Accessibilité
+
+Étudier également une stratégie claire pour :
+
+- authentification
+- expiration du token
+- renouvellement du token
+- erreurs réseau
+- retry
+- cache
+- invalidation des données
+- loading states
+- offline mode
+
+## Performance frontend
+
+Mesurer avec :
+
+- Lighthouse
+- Chrome Performance
+- Web Vitals
+- Bundle analyzer
+
+Indicateurs importants :
+
+- LCP
+- INP
+- CLS
+- TTFB
+- taille JavaScript
+- nombre de requêtes
+- temps de rendu
+
+---
+
+# 6. Phase 5 — Sécurité applicative
+
+Durée recommandée : **4 semaines**
+
+## À connaître impérativement
+
+- OWASP Top 10
+- Injection SQL
+- XSS
+- CSRF
+- SSRF
+- Broken Access Control
+- Session fixation
+- Brute force
+- Credential stuffing
+- Mass assignment
+- Désérialisation dangereuse
+- Fuite d’informations
+- Mauvaise configuration
+- Dépendances vulnérables
+
+## Authentification et autorisation
+
+Différencier :
+
+- authentification : qui es-tu ?
+- autorisation : as-tu le droit ?
+- contrôle d’accès objet
+- contrôle d’accès fonctionnel
+- RBAC
+- ABAC
+- OAuth 2.0
+- OpenID Connect
+- JWT
+- sessions serveur
+- rotation et révocation des tokens
+
+Ne considère pas automatiquement JWT comme supérieur aux sessions classiques. Le choix dépend du contexte.
+
+## Pratique
+
+Mettre en place :
+
+- CSP
+- HSTS
+- cookies sécurisés
+- limitation de tentatives
+- validation serveur
+- logs de sécurité
+- rotation des secrets
+- analyse de dépendances
+- tests d’autorisation
+
+Outils :
+
+```bash
+composer audit
+npm audit
+```
+
+Etudier également OWASP ZAP ou Burp Suite.
+
+---
+
+# 7. Phase 6 — Bases de données et performance backend
+
+Durée recommandée : **3 à 4 semaines**
+
+## SQL
+
+Approfondir :
+
+- Index
+- Plans d’exécution
+- Jointures
+- Transactions
+- Isolation
+- Verrous
+- Deadlocks
+- MVCC
+- Normalisation
+- Dénormalisation
+- Pagination efficace
+- Read replicas
+
+Commandes et outils :
+
+```sql
+EXPLAIN ANALYZE
+```
+
+Avec Symfony/Doctrine, savoir détecter :
+
+- N+1 queries
+- hydratation excessive
+- mauvais mapping
+- transactions trop longues
+- absence d’index
+- chargement inutile d’associations
+
+## Cache
+
+Comprendre plusieurs niveaux :
+
+```text
+CDN
+→ Reverse proxy
+→ Cache HTTP
+→ Cache applicatif
+→ Redis
+→ Cache base de données
+```
+
+Concepts :
+
+- TTL
+- invalidation
+- cache stampede
+- stale-while-revalidate
+- cache-aside
+- write-through
+- verrouillage distribué
+
+---
+
+# 8. Phase 7 — Infrastructure et déploiement
+
+Durée recommandée : **4 semaines**
+
+## Linux et réseau
+
+Maîtriser :
+
+- processus
+- signaux
+- permissions
+- fichiers de logs
+- mémoire
+- CPU
+- sockets
+- ports
+- firewall
+- systemd
+- processus PHP-FPM
+
+Commandes :
+
+```bash
+ps aux
+top
+htop
+lsof -i
+ss -lntp
+df -h
+free -m
+journalctl
+```
+
+## Reverse proxy et serveurs
+
+Comprendre :
+
+- Nginx
+- Apache
+- PHP-FPM
+- Traefik
+- load balancing
+- TLS termination
+- compression
+- headers
+- health checks
+- timeouts
+- buffering
+
+## Docker et CI/CD
+
+Maîtriser :
+
+- images
+- layers
+- volumes
+- réseaux
+- secrets
+- multi-stage builds
+- Docker Compose
+- pipelines CI
+- migrations
+- rollback
+- blue/green deployment
+- canary deployment
+
+## Cloud
+
+Choisir au moins un fournisseur et comprendre :
+
+- DNS
+- réseau privé
+- load balancer
+- stockage objet
+- bases managées
+- cache
+- logs
+- monitoring
+- IAM
+- secrets
+- autoscaling
+
+---
+
+# 9. Phase 8 — Observabilité et fiabilité
+
+Durée recommandée : **3 semaines**
+
+## Les trois piliers
+
+### Logs
+
+- logs structurés JSON
+- correlation ID
+- niveaux de logs
+- suppression des données sensibles
+- centralisation
+
+### Metrics
+
+- latence
+- taux d’erreur
+- throughput
+- saturation
+- CPU
+- mémoire
+- taille des files
+- nombre de requêtes SQL
+
+### Traces
+
+Comprendre :
+
+```text
+Frontend
+ → API Gateway
+ → Symfony
+ → Service
+ → Database
+```
+
+Chaque requête doit pouvoir être suivie de bout en bout.
+
+Outils à découvrir :
+
+- OpenTelemetry
+- Prometheus
+- Grafana
+- Jaeger
+- Sentry
+- ELK ou OpenSearch
+
+## SLO et fiabilité
+
+Apprendre à définir :
+
+- SLI
+- SLO
+- SLA
+- error budget
+- MTTR
+- RTO
+- RPO
+
+---
+
+# 10. Phase 9 — Tests et qualité
+
+À renforcer :
+
+- tests unitaires
+- tests d’intégration
+- tests fonctionnels
+- tests contractuels
+- tests end-to-end
+- tests de charge
+- tests de sécurité
+- mutation testing
+
+Stack possible :
+
+- PHPUnit
+- Symfony BrowserKit
+- Zenstruck Foundry
+- Playwright
+- Cypress
+- k6
+- PHPStan
+- Psalm
+- ESLint
+- TypeScript
+
+Les tests les plus importants doivent couvrir :
+
+- autorisations
+- validation
+- concurrence
+- idempotence
+- erreurs réseau
+- expiration des sessions
+- comportement en charge
+
+---
+
+# 11. Projet fil rouge recommandé
+
+Construis une plateforme complète, par exemple :
+
+> Application de gestion de commandes avec frontend React et API Symfony.
+
+Fonctionnalités :
+
+- authentification
+- rôles et permissions
+- API REST documentée OpenAPI
+- CORS configuré correctement
+- paiement simulé
+- webhooks
+- notifications
+- upload de fichiers
+- recherche
+- pagination
+- cache Redis
+- traitement asynchrone avec Messenger
+- logs structurés
+- métriques
+- tests E2E
+- Docker
+- CI/CD
+- déploiement HTTPS
+- monitoring
+- simulation de panne
+
+Tu dois pouvoir répondre à des questions comme :
+
+- Pourquoi le navigateur envoie-t-il une requête `OPTIONS` ?
+- Pourquoi `curl` fonctionne alors que `fetch` échoue ?
+- Pourquoi un cookie n’est-il pas envoyé ?
+- Pourquoi l’API est-elle lente uniquement en production ?
+- Pourquoi une requête provoque-t-elle un deadlock ?
+- Pourquoi le cache retourne-t-il une ancienne réponse ?
+- Où mesurer le temps perdu : réseau, PHP, Doctrine ou base de données ?
+- Comment empêcher un utilisateur de consulter la commande d’un autre ?
+- Que se passe-t-il lorsqu’un worker tombe pendant une transaction ?
+
+---
+
+# 12. Organisation hebdomadaire
+
+Un rythme réaliste :
+
+## Chaque semaine
+
+- 2 heures de théorie
+- 3 heures de lecture de documentation ou RFC
+- 4 heures de pratique
+- 1 heure de débogage volontaire
+- 1 heure de rédaction ou restitution
+
+## Méthode efficace
+
+Pour chaque sujet :
+
+1. Comprendre le concept.
+2. L’implémenter sans framework.
+3. L’implémenter avec Symfony ou React.
+4. Observer le comportement avec des outils réseau.
+5. Provoquer une erreur.
+6. Mesurer les performances.
+7. Documenter ce que tu as appris.
+
+---
+
+# 13. Ordre prioritaire conseillé
+
+Si tu veux optimiser ton temps, suis cet ordre :
+
+1. HTTP et cycle de requête
+2. DNS, TCP, TLS
+3. Navigateur et CORS
+4. Sécurité Web
+5. APIs et authentification
+6. Performance et cache
+7. SQL et Doctrine
+8. Linux, Nginx et Docker
+9. Observabilité
+10. Architecture distribuée
+11. Cloud
+12. Protocoles avancés : WebSockets, HTTP/3, WebTransport
+
+---
+
+# 14. Critère pour considérer que tu es expert
+
+Tu n’es pas expert uniquement parce que tu connais beaucoup de frameworks.
+
+Tu t’approches de l’expertise lorsque tu sais :
+
+- expliquer les mécanismes internes ;
+- diagnostiquer un problème sans tâtonner ;
+- choisir une solution adaptée au contexte ;
+- anticiper les problèmes de sécurité ;
+- mesurer avant d’optimiser ;
+- concevoir pour la panne ;
+- simplifier une architecture trop complexe ;
+- transmettre clairement tes connaissances ;
+- comprendre les compromis techniques et métier.
+
+Le meilleur parcours pour toi serait donc un programme de **6 à 12 mois**, basé sur un projet réel et accompagné d’exercices de diagnostic : erreurs CORS, lenteurs HTTP, problèmes de cache, pannes réseau, erreurs d’autorisation et incidents de production.
+
+
