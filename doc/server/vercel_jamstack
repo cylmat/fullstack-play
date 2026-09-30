@@ -1,0 +1,22 @@
+publish with ai
+
+https://www.netlify.com/pricing/
+https://vercel.com/pricing
+https://render.com/pricing
+https://railway.com/pricing
+
+
+ 
+JAMSTACK
+La Jamstack est une architecture de développement web moderne qui sépare l'interface utilisateur de la logique métier et des données pour rendre les sites plus rapides, sécurisés et faciles à faire évoluer. [1] ()
+Les 3 piliers (l'acronyme)J (JavaScript) : Il gère toute la dynamique et l'interactivité côté client.A (APIs) : Les fonctionnalités du serveur et les données sont appelées via des API (généralement en HTTPS).M (Markup / Balisage) : Les pages HTML sont préconstruites à l'avance (souvent via un générateur de site statique). 
+
+USE CASE
+Top Alternatives by Use Case
+- For Static & JAMstack Sites:
+Cloudflare Pages offers fast global distribution, integrated edge functions, and a generous free tier with great pricing.
+- For Full-Stack Apps & APIs: Render balances simplicity and backend flexibility, supporting web services, cron jobs, and PostgreSQL databases.
+Railway offers smooth Git-based deployments with predictable usage-based pricing.
+- For Self-Hosted Control: Coolify gives you a Vercel-like dashboard that you can install on your own virtual private server (VPS) to avoid unexpected cloud platform bills. 
+
+
