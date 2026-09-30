@@ -7,7 +7,6 @@ help list:
 Available commands: \n\
   Common \n\
 - docker-build: Build php Docker images \n\
-- git-push:     Push all changes to git \n\
 - linux-bash:   Open a bash shell in the Linux container \n\
 - ports:        List all ports used by containers \n\
   All \n\
@@ -52,12 +51,12 @@ docker-build-server:
 	docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php-server:latest ".docker"
 
 # Usage $ make git-push MSG="my message"
-MSG ?= Update by make
-git-push:
-	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
-		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
-		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
-		git add . || true && git commit -m "$(MSG)" && git pull --rebase && git push'
+# MSG ?= Update by make
+# git-push:
+# 	docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
+# 		-v .:/var/www/application -v ./.docker/data/linux:/data fs-linux sh -c '\
+# 		git config user.name "$$GIT_USER" && git config user.email "$$GIT_EMAIL" && \
+# 		git add . || true && git commit -m "$(MSG)" && git pull --rebase && git push'
 
 linux-build:
 	docker build -f ".docker/linux/linux.Dockerfile" --pull -t fs-linux:latest .docker

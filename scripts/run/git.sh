@@ -7,7 +7,26 @@
 if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
     echo ""
     echo 'Listing available "Run Script" GIT commands:'
+    echo "commit"
     echo "push"
+    exit 0
+fi
+
+if [ "$1" == "commit" ]; then
+    MSG="Update by make"
+    if [ $# -ge 2 ]; then
+        MSG="${@:2}"
+    fi
+
+    CMD="
+        git config user.name \"\$GIT_USER\" &&
+        git config user.email \"\$GIT_EMAIL\" &&
+        git add . || true &&
+        git commit -m \"$MSG\"
+    "
+    docker run --rm -u 1000:1000 --env-file .docker/linux/.env.local \
+        -v .:/var/www/application -v .docker/data/linux:/data fs-linux \
+        sh -c "$CMD"
     exit 0
 fi
 
