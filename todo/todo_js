@@ -36,7 +36,7 @@ Sails.js
 Fastify
 
 
-*** Frmeworks ***
+*** Frameworks ***
 
 Svelte
 Preact
@@ -49,8 +49,10 @@ Frintjs
 Emberjs
 Lit.dev
 
+https://backbonejs.org/
 
-*** Budnler ***
+
+*** Bundler ***
 
 https://bun.com/
 vitejs
@@ -109,3 +111,4 @@ https://www.tutorialspoint.com/web_development_tutorials.htm
 
 
 (try) https://stackblitz.com/edit/vitejs-vite-m8zqtcdm
+
