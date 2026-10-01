@@ -42,6 +42,7 @@
 	},
 	"//": [
 		{
+			"client": "preact",
 			"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
 		}
 	],
