@@ -1,0 +1,21 @@
+Micro JS in enterprises (micro‑frontends and lightweight frameworks)
+
+## spa
+
+- Mithril.js
+- https://module-federation.io/
+- https://single-spa.js.org/
+
+
+## Lightweight JS frameworks
+
+- Svelte: bundle size and runtime performance are primary constraints
+- solid.js:  small bundles and high performance
+- Preact: often mentioned as an ultra‑light alternative to React
+
+## css
+
+- Bulma
+- Foundation
+- Tailwind CSS
+- Bootstrap
