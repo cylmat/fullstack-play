@@ -66,6 +66,7 @@ if [ "$1" == "start-server" ]; then
 fi
 
 if [ "$1" == "test" ]; then
+    echo "run all tests : functional, integration, unit"
 	docker exec -it -u 1000 fs-ai-node npm run test:server
     exit 0
 fi

@@ -29,17 +29,25 @@ export default {
       setupFilesAfterEnv: ["<rootDir>/server_tests/init.js"],
       testMatch: ["<rootDir>/server_tests/**/**.test.js"],
     },
-    {
-      ...commonConfig,
-      displayName: "server:integration",
-      setupFilesAfterEnv: ["<rootDir>/server_tests/init.js"],
-      testMatch: ["<rootDir>/server_tests/integration/**.test.js"],
-    },
-    {
+    { // Functional browser "application" with playwright (php KernelTestCase)
+      //(ex: allow users to add items to their cart, user+click+storage..)
       ...commonConfig,
       displayName: "server:functional",
       setupFilesAfterEnv: ["<rootDir>/server_tests/init.js"],
-      testMatch: ["<rootDir>/server_tests/functional/**.test.js"],
+      testMatch: ["<rootDir>/server_tests/functional/**/**.test.js"],
+    },
+    { // Integration ctrl->to->database (php WebTestCase->BrowserKit)
+      // (ex: HTTP GET /login, retrieve data..) with mocked dependencies if needed, or not
+      ...commonConfig,
+      displayName: "server:integration",
+      setupFilesAfterEnv: ["<rootDir>/server_tests/init.js"],
+      testMatch: ["<rootDir>/server_tests/integration/**/**.test.js"],
+    },
+    {
+      ...commonConfig,
+      displayName: "server:unit",
+      setupFilesAfterEnv: ["<rootDir>/server_tests/init.js"],
+      testMatch: ["<rootDir>/server_tests/unit/**/**.test.js"],
     },
   ],
   extensionsToTreatAsEsm: ['.ts'],
