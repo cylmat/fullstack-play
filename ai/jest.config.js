@@ -52,10 +52,13 @@ export default {
       testMatch: ["<rootDir>/server_tests/unit/**/**.test.js"],
     },
   ],
-  extensionsToTreatAsEsm: ['.ts'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  testEnvironment: 'node',
-  roots: ['<rootDir>'],
+
+
+
+  // extensionsToTreatAsEsm: ['.ts'],
+  // moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  // testEnvironment: 'node',
+  // roots: ['<rootDir>'],
 }
 
 /**
