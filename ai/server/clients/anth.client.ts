@@ -10,6 +10,7 @@ export default async function anthropicClient(
 ): Promise<ContentBlock[]> {
     console.log('anthropicClient apiKey provided ?', !!process.env['ANTHROPIC_API_KEY'])
     console.log('anthropicClient | prompting... ', prompt);
+
     const client = new Anthropic({
         apiKey: process.env['ANTHROPIC_API_KEY'] // This is the default and can be omitted
     });

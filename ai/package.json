@@ -17,10 +17,10 @@
 		"preview": "vite preview",
 		"stop": "pkill node & pkill npm",
 		"test": "jest",
-		"test:server": "npm run test -- --selectProjects server",
-		"test:server:func": "npm run test -- --selectProjects server:functional",
-		"test:server:inte": "npm run test -- --selectProjects server:integration",
-		"test:server:unit": "npm run test -- --selectProjects server:unit"
+		"test:server": "NODE_TEST_ENV=server:all npm run test -- --selectProjects server",
+		"test:server:func": "NODE_TEST_ENV=server:func npm run test -- --selectProjects server:functional",
+		"test:server:inte": "NODE_TEST_ENV=server:inte npm run test -- --selectProjects server:integration",
+		"test:server:unit": "NODE_TEST_ENV=server:unit npm run test -- --selectProjects server:unit"
 	},
 	"eslintConfig": {
 		"extends": "preact"

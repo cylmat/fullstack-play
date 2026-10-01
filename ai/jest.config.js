@@ -1,12 +1,15 @@
 /** @type {import('jest').Config} */
 
+ console.log("run tests on ", process.env.NODE_TEST_ENV); // "unit", "func" ou "inte"
+
 /**
  * @doc https://jestjs.io/docs/configuration
  * Default: Jest will use babel-jest transformer for ESM to CommonJs
  */
 const commonConfig = {
-  extensionsToTreatAsEsm: ['.ts'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  moduleNameMapper: {
+    '^@app/(.*)$': '<rootDir>/server/$1' // DEFINED IN TSCONFIG too
+  },
   transform: {
     '^.+\\.[jt]sx?$': [
       'babel-jest',
@@ -18,7 +21,6 @@ const commonConfig = {
   // transformIgnorePatterns: [
   //   'node_modules/(?!(@anthropic-ai)/)',
   // ],
-  testEnvironment: 'node',
 };
 
 export default {

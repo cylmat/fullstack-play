@@ -6,7 +6,7 @@ import {
     type SDKResultSuccess,
     type Options
 } from "@anthropic-ai/claude-agent-sdk";
-import { query as agentQuery } from './anth.agent.wrapper.ts'
+import { query as agentQuery } from '@anthropic-ai/claude-agent-sdk'
 
 /**
  * @doc https://code.claude.com/docs/en/agent-sdk/overview

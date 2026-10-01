@@ -1,5 +1,5 @@
-import anthropicAgent from '../clients/anth.agent.ts';
-import anthropicClient from '../clients/anth.client.ts';
+import anthropicAgent from '@app/clients/anth.agent.ts';
+import anthropicClient from '@app/clients/anth.client.ts';
 
 export const ANTHROPIC_TYPES: AnthropicType[] = ['agent', 'client'];
 export type AnthropicType = 'agent' | 'client';
@@ -8,7 +8,7 @@ export type AnthropicServiceResult = { type: AnthropicType; messages: string[] }
 export default async function anthropicService(
     prompt: string,
     useType?: AnthropicType
-): Promise<AnthropicServiceResult> {
+): Promise<any> {
     useType = useType ?? 'agent';
 
     if (useType === 'client') {

@@ -1,4 +1,4 @@
-import { aiController } from '../../../server/controllers/ai.controller.ts';
+import { aiController } from '@app/controllers/ai.controller.ts';
 
 test('aiController should be defined', () => {
     expect(aiController).toBeDefined()
