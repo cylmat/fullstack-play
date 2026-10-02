@@ -53,6 +53,9 @@ MCP
 - [devto - oauth expresdjs](https://dev.to/sameer_saleem/the-ultimate-guide-to-oauth-with-expressjs-2025-edition-5137)
 - [owasp - webgoat](https://owasp.org/projects/webgoat)
 
+OTP
+- [moz otp](https://developer.mozilla.org/en-US/docs/Web/Security/Authentication/OTP)
+
 JWT
 
 - [laconsole - expressjs jwt](https://laconsole.dev/formations/express/securiser-api-rest-jwt)

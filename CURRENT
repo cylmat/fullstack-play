@@ -4,6 +4,7 @@ https://github.com/chjj/tiny
      - database save conversation
      - persist jwt
 - css : grid flex
+- secure: OTP and MFA Authenticator
 
 
 ## AI
