@@ -1,51 +1,109 @@
-- ai :
-login button on/off
-https://github.com/chjj/tiny
-     - database save conversation
-     - persist jwt
-- css : grid flex
+CURRENT WORK
+------------
+
+## AI ##
+
+Pour chaque projet, prépare :
+    un README avec architecture et décisions techniques ;
+    une démo courte avec un scénario réaliste ;
+    des tests sur les cas importants et les échecs ;
+    une section « limites et sécurité » ;
+    une explication claire de ce que fait le modèle, et de ce que ton code contrôle.
+
+
+[Chat helper]
+> Prompt info: read in files, get resume or data from files
+(fiable, sources, data temps reel, droits d'accès, gain de temps)
+- connect to claude sdk
+- rely on mcp "filesystem" > read files
+- rely on mcp "github" > read codesource
+- database metainformations, "fulltext" search inside
+- RAG (Retrieval-Augmented Generation) to get realtime data
+
+Assistant documentaire avec réponses sourcées
+     * Proposition : une application où l’on importe quelques documents — par exemple des rapports d’audit — puis où l’on pose des questions en langage naturel. 
+     * L’assistant répond avec des citations cliquables vers les passages utilisés, ou indique clairement qu’il ne trouve pas la réponse. (ex: "Fais-moi un résumé des points communs et des différences entre les trois derniers rapports d'audit").
+     * Je commencerais par une recherche dans un corpus limité et maîtrisé. Le RAG ne garantit pas à lui seul des réponses fiables : les citations, les permissions, les tests et le comportement « je ne sais pas » sont justement ce qui rendra le projet intéressant
+MVP
+     Import de PDF, Markdown ou fichiers texte.
+     Extraction, découpage en passages et indexation.
+     Recherche hybride : texte intégral + recherche vectorielle.
+     Réponse générée avec références aux documents et extraits.
+     Gestion de plusieurs espaces ou utilisateurs, avec contrôle d’accès aux documents.
+     Historique des questions et bouton de retour « réponse utile / incorrecte ».
+Architecture possible
+     Preact : interface de chat, sources et aperçu des documents.
+     Express : API, authentification, ingestion, recherche et appels au modèle.
+     PostgreSQL/sqlite avec recherche plein texte et, si tu veux, pgvector.
+     Claude API pour la génération et éventuellement les embeddings via un fournisseur adapté.
+
+
+[Code assist]
+> "Figma to github" Change a design on figma: change code in realtime, run tests and write doc
+- connect mcp to figma
+- connect mcp to filesystem
+- run code on local
+- run tests when code change
+- write doc when code change
+- puh to mcp github repo
+
+Assistant de revue de changements Figma → code
+     * Je reformulerais ton idée « Figma to GitHub » en assistant qui prépare un changement vérifiable, plutôt qu’en agent qui modifie le code et pousse automatiquement en production. 
+     * Le serveur MCP Figma fournit du contexte de design, mais ne garantit pas du code prêt pour la production. Code Connect peut aider à relier les composants Figma aux composants réels du projet.
+     * C’est donc une bonne démo si tu montres aussi comment tu vérifies et corriges le résultat
+     * Ces choix sont importants : les outils MCP et les agents peuvent avoir des permissions d’écriture, donc il faut limiter leur portée et traiter les entrées externes comme non fiables
+MVP
+     L’utilisateur sélectionne un écran ou un composant Figma.
+     L’assistant récupère le contexte du design et les composants existants.
+     Il propose un plan de changement et modifie une branche de travail.
+     Il lance lint, tests et éventuellement une capture d’écran.
+     Il présente le diff, les résultats et la documentation proposée.
+     L’utilisateur approuve avant la création d’une pull request.
+Architecture possible
+     Preact : sélection du design, aperçu du diff, statut des tests et approbation.
+     Express : orchestration, gestion des tâches et intégrations.
+     MCP Figma pour lire le contexte du design ; GitHub API ou MCP GitHub pour lire le dépôt et créer une PR.
+     Un worker isolé pour exécuter les commandes de test sur une branche temporaire.
+Garde-fous à montrer
+    Pas d’exécution arbitraire de commandes proposées par le modèle.
+    Pas de push direct sur la branche principale.
+    Permissions minimales pour GitHub et Figma.
+    Approbation humaine avant toute écriture ou création de PR.
+    Exécution des tests dans un environnement isolé.
+    Journal des actions et gestion des erreurs.
+
+
+
+
+other
+- typicode/lowdb: database for node
+- persist jwt
+- frontend save prompts conversation
+
+later
 - secure: OTP and MFA Authenticator
 - Ollama	: ollama.com
+- login button on/off
 
+**front**
+- css chatty (box..)
+- css : grid flex
+- js modules
 
-## AI
+**php**
+- symfony security
+- patterns symfony
+- psr7/15
+- Websockets
 
-- Anthropic sdk
-- JWT Token
-- Node/Expressjs
-
-## FRONT
-
-- React
-https://www.tutorialspoint.com/reactjs/reactjs_creating_application.htm
-
-
-- TS
-https://www.tutorialspoint.com/typescript/typescript_numbers.htm
-
-## BACK
-
-- Symfony
-https://symfony.com/doc/current/security.html
-
-
-## OTHER
-
-- Design Patterns
-https://refactoring.guru/design-patterns
-
-
-
-----------------------------
-
-
-Docker architecture
-docker mcp server
-javascript modules
-Php Websockets
+**books**
 architecture book Uncle BOB
 finish Redis "Seven Databases in Seven Weeks" (Luc Perkins)
-css chatty (box..)
-php patterns
-php apcu
-psr7/15
+
+
+DONE
+----
+
+**ai**
+- Anthropic sdk
+- JWT Token
