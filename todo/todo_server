@@ -8,6 +8,12 @@ vagrant
 # https://hub.docker.com/r/mattrayner/lamp
 
 
+security
+--------
+Saml
+Sso
+
+
 **Deploy**
 ------
 Deploi node app (ai) to vercel
