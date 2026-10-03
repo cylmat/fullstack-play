@@ -1,0 +1,500 @@
+Roadmap — Assistant de coding avec Claude, VS Code et MCP
+
+
+Pour ton objectif, je te conseille de commencer par Claude Code dans VS Code, plutôt que de créer immédiatement une extension ou un assistant autonome. Tu bénéficies déjà d’une interface de coding, de la revue des modifications et de la gestion des serveurs MCP. Tu pourras ensuite ajouter tes propres outils et automatisations.
+
+
+Claude Desktop peut compléter le dispositif pour discuter de documents, de spécifications ou de maquettes. Mais pour agir sur un dépôt et travailler dans l’IDE, Claude Code dans VS Code est le meilleur point de départ. La documentation actuelle décrit notamment les instructions de projet, les skills, les hooks et la configuration MCP. Documentation VS Code · MCP avec Claude Code
+
+
+Objectif du projet
+
+
+Construire un assistant qui t’aide à :
+
+
+
+
+comprendre rapidement un projet Symfony/React ;
+
+
+transformer une demande en plan de travail ;
+
+
+consulter une maquette Figma et la traduire en interface ;
+
+
+générer ou mettre à jour la documentation ;
+
+
+effectuer une revue de code utile ;
+
+
+lancer les vérifications du projet ;
+
+
+garder ton approbation pour les changements et actions sensibles.
+
+
+
+
+Le principe important : l’IA propose et exécute dans un périmètre contrôlé ; tu vérifies et décides.
+
+
+
+Phase 0 — Cadrage et mesure de départ
+
+
+Durée : 1 à 2 jours
+
+
+Avant de configurer l’assistant, choisis un dépôt représentatif et note quelques tâches récurrentes :
+
+
+
+
+comprendre un module existant ;
+
+
+corriger un bug ;
+
+
+créer un composant React à partir d’une maquette ;
+
+
+ajouter un endpoint Symfony ;
+
+
+rédiger une documentation technique ;
+
+
+relire une pull request.
+
+
+
+
+Pour chaque tâche, estime le temps passé et les difficultés. Cela te donnera une base pour vérifier si l’assistant améliore réellement ta productivité, plutôt que de simplement produire plus de code.
+
+
+Livrable : une liste de 5 à 10 cas d’usage prioritaires et une mesure de départ.
+
+
+
+Phase 1 — Installer et prendre en main Claude Code dans VS Code
+
+
+Durée : 2 à 3 jours
+
+
+
+
+Installe l’extension Claude Code dans VS Code et connecte ton compte.
+
+
+Ouvre un dépôt de test ou une branche dédiée.
+
+
+Essaie des tâches sans modification :
+
+
+« Explique l’architecture de ce projet. »
+
+
+« Décris le parcours de cette requête, du contrôleur à la base de données. »
+
+
+« Identifie les tests pertinents pour ce module. »
+
+
+
+
+
+
+Passe ensuite à des changements limités, en examinant les diffs avant de les accepter.
+
+
+Teste le mode plan pour les tâches qui touchent plusieurs fichiers.
+
+
+
+
+À retenir : commence en mode où les modifications et commandes demandent ton accord. N’active pas un mode permissif sur un dépôt contenant des données ou des secrets importants.
+
+
+Livrable : une courte procédure personnelle pour démarrer une tâche, examiner les changements et revenir en arrière.
+
+
+
+Phase 2 — Créer le contexte et la persona du projet
+
+
+Durée : 2 à 4 jours
+
+
+Dans Claude Code, le fichier de contexte de projet est généralement CLAUDE.md. Il doit donner des instructions utiles et vérifiables, pas devenir une copie de toute la documentation du dépôt.
+
+
+Tu peux y décrire :
+
+
+
+
+le rôle attendu de l’assistant ;
+
+
+les commandes de test, lint et build ;
+
+
+les conventions Symfony et React du projet ;
+
+
+les règles d’architecture importantes ;
+
+
+les fichiers ou zones à ne pas modifier sans accord ;
+
+
+les exigences de sécurité et de confidentialité ;
+
+
+le format attendu pour les plans, revues et documentations.
+
+
+
+
+Exemple de structure :
+
+
+# Rôle
+Tu es un assistant de développement pour ce dépôt Symfony et React.
+Privilégie les changements ciblés, lisibles et testés.
+
+# Architecture
+- Backend : Symfony, API ...
+- Frontend : React ...
+- Tests : ...
+
+# Commandes
+- Tests backend : ...
+- Tests frontend : ...
+- Lint : ...
+
+# Règles
+- Ne modifie pas les migrations déjà déployées sans le signaler.
+- Ne révèle ni ne copie les secrets.
+- N’ajoute pas de dépendance sans expliquer pourquoi.
+- Pour une tâche multi-fichiers, propose d’abord un plan.
+- Après une modification, indique les fichiers changés et les tests exécutés.
+
+
+
+Ajoute des instructions plus précises dans des fichiers de contexte locaux aux sous-projets si nécessaire. Évite d’y mettre des clés API, des données clients ou des informations confidentielles.
+
+
+Livrable : un CLAUDE.md concis, testé sur plusieurs tâches réelles.
+
+
+
+Phase 3 — Ajouter Figma via MCP
+
+
+Durée : 2 à 4 jours
+
+
+Commence par le serveur MCP officiel de Figma, plutôt que par un serveur maison. Figma documente une intégration pour des clients comme VS Code et Claude Code. Selon ton environnement, tu peux utiliser le serveur distant ou le serveur local de l’application Figma. Guide Figma MCP
+
+
+Parcours d’essai
+
+
+
+
+Choisis une maquette simple et un composant précis.
+
+
+Connecte le serveur MCP en suivant la configuration officielle correspondant à ton client.
+
+
+Demande à l’assistant d’extraire le contexte de design utile.
+
+
+Fais-lui proposer un plan d’implémentation avant de générer le code.
+
+
+Compare le résultat à la maquette : dimensions, typographie, couleurs, états et responsive.
+
+
+Corrige les écarts et note les limites de l’intégration.
+
+
+
+
+Point de vigilance : un outil MCP peut donner accès à des ressources externes. Vérifie les permissions, les données accessibles et les actions possibles avant de l’utiliser sur un projet professionnel.
+
+
+Livrable : un composant React réalisé à partir d’une maquette, avec une comparaison documentée entre le design et le résultat.
+
+
+
+Phase 4 — Revue de code assistée
+
+
+Durée : 3 à 5 jours
+
+
+Définis une procédure de revue que l’assistant suit à chaque fois :
+
+
+
+
+Examiner le diff, pas seulement le code isolé.
+
+
+Chercher les bugs, régressions, problèmes de sécurité et cas limites.
+
+
+Vérifier les tests existants et les tests manquants.
+
+
+Classer les remarques par gravité.
+
+
+Pour chaque remarque, citer le fichier et la zone concernée.
+
+
+Distinguer les problèmes certains des suggestions de style.
+
+
+Ne pas modifier le code pendant une revue, sauf demande explicite.
+
+
+
+
+Teste cette procédure sur plusieurs pull requests ou changements déjà corrigés. Vérifie si les remarques sont pertinentes et si l’assistant manque des problèmes connus.
+
+
+Livrable : un modèle de revue réutilisable et une liste de faux positifs à réduire.
+
+
+
+Phase 5 — Génération et mise à jour de documentation
+
+
+Durée : 3 à 5 jours
+
+
+Commence par des documents ciblés :
+
+
+
+
+README d’un module ;
+
+
+documentation d’un endpoint ;
+
+
+diagramme ou description d’un flux métier ;
+
+
+guide de lancement local ;
+
+
+notes de migration ou de déploiement.
+
+
+
+
+Demande à l’assistant de lire le code et les tests avant de rédiger. Fais-lui citer les fichiers qui justifient ses descriptions. Vérifie ensuite les commandes, noms de routes, variables d’environnement et exemples : la documentation générée peut être plausible tout en étant inexacte.
+
+
+Livrable : une documentation utile, relue et intégrée au dépôt.
+
+
+
+Phase 6 — Automatiser les tâches répétitives avec des skills et des hooks
+
+
+Durée : 1 semaine
+
+
+Une fois les usages manuels stabilisés, transforme les procédures répétées en skills ou commandes réutilisables, par exemple :
+
+
+
+
+/review-diff : revue structurée du diff ;
+
+
+/document-module : génération d’une documentation à partir du code ;
+
+
+/implement-figma-component : analyse de maquette, plan, implémentation et vérifications ;
+
+
+/prepare-pr : résumé des changements, tests et points d’attention.
+
+
+
+
+Les hooks peuvent servir à déclencher des vérifications déterministes, par exemple lancer un formatteur ou un contrôle après une modification. Garde les actions destructrices, les migrations et les opérations Git sensibles sous validation humaine.
+
+
+Livrable : deux ou trois workflows réutilisables, avec des entrées, sorties et limites clairement définies.
+
+
+
+Phase 7 — Ajouter tes propres outils MCP, seulement si nécessaire
+
+
+Durée : 1 à 2 semaines
+
+
+Ne crée pas un serveur MCP simplement pour « faire du MCP ». Ajoute-en un si tu as un besoin métier que les outils existants ne couvrent pas.
+
+
+Exemples d’outils utiles :
+
+
+
+
+consulter une documentation interne autorisée ;
+
+
+rechercher des tickets ou des décisions d’architecture ;
+
+
+lire des informations de projet en lecture seule ;
+
+
+lancer une suite de tests prédéfinie ;
+
+
+récupérer des métadonnées de composants ou de design system.
+
+
+
+
+Pour chaque outil, définis :
+
+
+
+
+une fonction étroite et compréhensible ;
+
+
+des entrées validées ;
+
+
+des permissions minimales ;
+
+
+une réponse structurée ;
+
+
+des erreurs explicites ;
+
+
+des tests ;
+
+
+une confirmation humaine pour toute action qui modifie des données ou déclenche un effet externe.
+
+
+
+
+Livrable : un serveur MCP minimal, documenté et testé, avec au moins un outil en lecture seule.
+
+
+
+Phase 8 — Évaluer le gain et préparer une version partageable
+
+
+Durée : 3 à 5 jours
+
+
+Reprends les tâches de la phase 0 et compare :
+
+
+
+
+temps de réalisation ;
+
+
+nombre de corrections nécessaires ;
+
+
+qualité des tests et de la documentation ;
+
+
+erreurs ou suggestions non pertinentes ;
+
+
+coût ou consommation, selon ton mode d’accès ;
+
+
+confort d’utilisation.
+
+
+
+
+Si tu veux partager la configuration avec une équipe, sépare clairement :
+
+
+
+
+les instructions communes au dépôt ;
+
+
+les préférences personnelles ;
+
+
+les secrets et paramètres locaux ;
+
+
+les serveurs MCP autorisés par l’équipe.
+
+
+
+
+Livrable final : un dépôt de démonstration ou un dossier de projet contenant la configuration, les workflows, les exemples et les résultats de l’évaluation.
+
+
+
+Ordre recommandé
+
+
+Pour obtenir rapidement un résultat utile :
+
+
+
+
+Claude Code dans VS Code
+
+
+CLAUDE.md et règles de sécurité
+
+
+Revue de code et documentation
+
+
+MCP Figma
+
+
+Skills et hooks
+
+
+Serveur MCP personnalisé, uniquement si un besoin concret le justifie
+
+
+Évaluation et partage
+
+
+
+
+Critère de réussite
+
+
+Ton assistant est prêt à être présenté dans un portfolio quand tu peux montrer un scénario complet : une demande métier, un plan proposé, une maquette Figma consultée, une implémentation contrôlée, des tests exécutés, une revue de code et une documentation vérifiée. Il faut aussi pouvoir expliquer ce que l’assistant ne fait pas et quelles actions restent sous ton contrôle.
+
+
