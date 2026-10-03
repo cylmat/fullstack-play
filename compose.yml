@@ -13,7 +13,7 @@ services:
 
     php:
         container_name: fs-php
-        # docker buildx -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
+        # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
         image: fs-php:latest
         # build:
         #     context: .docker
@@ -40,8 +40,11 @@ services:
     ########
 
     node:
-        image: node:latest
+        #image: node:latest
         container_name: fs-node
+        build:
+            context: .docker
+            dockerfile: node.Dockerfile
         restart: always
         user: 1000:1000
         working_dir: /var/www/application
