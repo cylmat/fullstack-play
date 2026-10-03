@@ -234,6 +234,192 @@ Pour chaque étape, cherche des ressources sur :
   - best practices sécurité / coûts
   - exemples d’architectures d’applications AI.
 
----
 
 mini‑projet : “assistant interne pour une appli de gestion projet
+
+-------------
+RECONVERTION PRO
+
+Pour une reconversion professionnelle vers le développement d’applications IA, tu peux compléter ton plan technique par un volet positionnement, expérience concrète et recherche d’emploi. Tu as déjà un atout important : ton expérience full stack Symfony/React. L’objectif n’est pas de repartir de zéro, mais de montrer que tu sais concevoir et livrer une fonctionnalité IA fiable dans une application réelle.
+
+
+1. Choisir un métier cible
+
+
+« Travailler dans l’IA » recouvre plusieurs métiers. Avec ton profil, les pistes les plus naturelles sont :
+
+
+
+
+Développeur d’applications IA / AI Engineer : intégration de modèles, outils, RAG, évaluation et mise en production.
+
+
+Développeur full stack spécialisé IA : fonctionnalités IA intégrées à des produits web.
+
+
+Ingénieur backend IA : APIs, orchestration, sécurité, observabilité et coûts.
+
+
+Consultant en intégration IA : cadrage des besoins et réalisation de prototypes pour des entreprises.
+
+
+
+
+Commence par analyser une dizaine d’offres d’emploi dans ta région ou en télétravail. Note les compétences qui reviennent, puis choisis une cible principale. Les intitulés et attentes varient beaucoup d’une entreprise à l’autre.
+
+
+2. Ajouter les compétences qui complètent Symfony et React
+
+
+Pour être crédible sur des postes d’intégration IA, approfondis notamment :
+
+
+
+
+Python, au moins pour lire et écrire des scripts, manipuler des données et utiliser les bibliothèques IA courantes.
+
+
+APIs de modèles : gestion des erreurs, streaming, sorties structurées, appels d’outils et limites de débit.
+
+
+RAG : découpage des documents, recherche hybride, citations et mesure de la pertinence.
+
+
+Évaluation : jeux de tests, critères de qualité, tests de non-régression et comparaison de modèles.
+
+
+Sécurité : injection de prompt, contrôle des permissions, validation des outils, protection des données et RGPD.
+
+
+Mise en production : Docker, files de tâches, observabilité, gestion des secrets, quotas et maîtrise des coûts.
+
+
+MCP : comprendre le protocole, créer un serveur MCP simple et savoir quand il est utile — sans le confondre avec les appels d’outils propres à chaque fournisseur.
+
+
+
+
+Tu n’as pas besoin de maîtriser tous les frameworks à la fois. Apprends d’abord les concepts, puis choisis une ou deux technologies adaptées aux offres que tu vises.
+
+
+3. Construire un portfolio orienté résultats
+
+
+Réalise deux projets aboutis, plutôt qu’une série de démonstrations superficielles. Par exemple :
+
+
+
+
+Assistant documentaire pour une application métier
+Symfony, React, RAG, réponses avec sources, gestion des droits d’accès et tests d’évaluation.
+
+
+
+
+Assistant capable d’utiliser des outils métier
+Le modèle peut consulter des données ou préparer une action, mais les opérations sensibles nécessitent validation et autorisation côté serveur. Ajoute éventuellement un serveur MCP pour exposer certaines capacités.
+
+
+
+
+
+
+Pour chaque projet, publie un dépôt propre et une courte présentation qui explique :
+
+
+
+
+le problème résolu et les utilisateurs visés ;
+
+
+l’architecture et les choix techniques ;
+
+
+les limites connues et les mesures de sécurité ;
+
+
+comment tu as évalué la qualité ;
+
+
+le coût ou la latence approximatifs, si tu les as mesurés.
+
+
+
+
+Évite de présenter un simple chat connecté à une API comme un projet complet : montre plutôt la fiabilité, l’évaluation et l’intégration métier.
+
+
+4. Préparer la transition professionnelle
+
+
+
+
+Reformule ton CV autour de compétences transférables : conception d’API, architecture, sécurité, tests, déploiement et expérience produit.
+
+
+Ajoute une rubrique « projets IA » avec des résultats vérifiables, sans te présenter comme expert avant d’avoir l’expérience correspondante.
+
+
+Prépare une démonstration courte et un schéma d’architecture pour chaque projet.
+
+
+En entretien, entraîne-toi à expliquer les compromis : modèle choisi, données envoyées, erreurs possibles, coût, latence et solution de repli.
+
+
+Échange avec des développeurs et recruteurs du secteur, et candidate aussi à des postes de développeur full stack avec missions IA : c’est souvent une transition plus accessible qu’un poste de recherche en IA.
+
+
+
+
+5. Vérifier si une formation est nécessaire
+
+
+Une formation peut aider si elle apporte un cadre, des projets évalués, du mentorat ou un réseau professionnel. Avant de t’engager, vérifie :
+
+
+
+
+les compétences réellement enseignées ;
+
+
+la part de projets pratiques ;
+
+
+les profils des intervenants ;
+
+
+les débouchés et les modalités de financement ;
+
+
+l’adéquation avec les offres d’emploi que tu as repérées.
+
+
+
+
+En France, tu peux aussi te renseigner auprès de France Travail, d’un conseiller en évolution professionnelle (CEP) et, selon ta situation, sur les dispositifs de financement disponibles. Les conditions évoluent : vérifie-les auprès des organismes officiels avant de prendre une décision.
+
+
+Plan de transition simple
+
+
+
+
+Semaines 1–2 : analyser les offres et choisir un métier cible.  
+
+
+Semaines 3–6 : réaliser un premier projet IA intégré à Symfony/React.  
+
+
+Semaines 7–10 : ajouter évaluation, sécurité, observabilité et documentation.  
+
+
+Semaines 11–12 : publier le portfolio, adapter le CV et commencer les candidatures.
+
+
+
+Le meilleur angle pour toi est probablement : « développeur full stack expérimenté qui sait intégrer des fonctionnalités IA robustes », plutôt que « débutant en IA ».
+
+
+
+
+
