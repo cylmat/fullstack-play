@@ -81,3 +81,4 @@ Productivité (Notion, Airtable, Leexi)
 No-code (Make, n8n, Softr, Lovable, etc.)
 Créativité (Gamma, Midjourney, ElevenLabs, HeyGen, etc.)
 Agents IA (marketing, sales, RH, facturation, SAV)
+

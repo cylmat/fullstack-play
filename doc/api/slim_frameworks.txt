@@ -11,6 +11,14 @@ https://phalcon.io
 https://slimframework.com
 https://yiiframework.com
 
+NODE
+----
+ref: https://grafikart.fr/tutoriels/frameworks-nodejs-2269
+Tout-en-un (AdonisJS, NestJS...) : Applications complexes avec base de données, authentification, etc.
+Micro-frameworks (Hono, Fastify...) : APIs légères, microservices.
+Frontend avec du backend (Next.js, Nuxt...) : Vous devez ajouter du rendu côté serveur à une application principalement front-end 
+(souvent combinée avec une API utilisant une autre approche).
+
 
 
 

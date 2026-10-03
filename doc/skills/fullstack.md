@@ -46,7 +46,3 @@
 - Concevoir une architecture adaptée au contexte, en sachant quand rester sur un monolithe plutôt que de passer aux microservices.
 - Écrire du code maintenable, avec des tests pertinents et une documentation utile.
 
-
----
-Cyril MATTÉ
-06 65 46 75 05

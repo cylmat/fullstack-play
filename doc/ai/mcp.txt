@@ -1,6 +1,31 @@
 
+Most used
+---------
+The most widely used MCP servers today cluster around a few core categories:
+ local filesystem, developer tooling (GitHub, Playwright, Jira), 
+ databases (Postgres/Supabase, SQLite), 
+ and productivity / SaaS APIs (Google Drive, Slack, etc.). 
+
 Ref
 - https://mcpservers.org/fr/servers/modelcontextprotocol/filesystem
+
+
+MCP “the one most people install first” as @modelcontextprotocol/server-filesystem
+
+- Start with the official mcp/filesystem
+- Once that works, add openmcpserver/mcp-filesystem as a second server.2   
+- Use it to practice multi‑server setups (files + search + DB).
+- A Node-based npm server (@shtse8/filesystem-mcp).11 
+- A hardened image like dhi.io/filesystem-mcp.7 10
+
+
+IMAGES
+
+https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/
+https://hub.docker.com/mcp
+https://mcpservers.org/fr
+
+
 
 Interest
 --------
@@ -119,24 +144,4 @@ By building small projects where an agent uses this mix of servers end‑to‑en
  (read files, query DB, call SaaS APIs, post to Slack, open Jira tickets), you’ll be working with the same MCP building blocks that are most prevalent in real‑world deployments.
 
 
-JSON-RCP
----
- 
-// {
-//   "jsonrpc": "2.0",
-//   "method": "tools/list",
-//   "params": {},
-//   "id": 2
-// }
 
-// {
-//   "jsonrpc": "2.0",
-//   "method": "tools/call",
-//   "params": {
-//     "name": "list_directory",
-//     "arguments": {
-//       "path": "/claude"
-//     }
-//   },
-//   "id": 3
-// }

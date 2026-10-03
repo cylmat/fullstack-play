@@ -1,3 +1,16 @@
+
+Vibe coding
+-----------
+Le concept a été popularisé début 2025 par Andrej Karpathy, chercheur en IA et cofondateur d'OpenAI.
+- Principe : L'utilisateur formule des intentions, des descriptions de besoins ou des corrections à l'aide de prompts, 
+tandis qu'un grand modèle de langage (LLM) ou un agent génère, teste et ajuste l'application de manière autonome.
+- Rôle de l'humain : L'humain agit comme un directeur artistique ou un chef de projet, 
+guidant l'itération sans avoir besoin de maîtriser la syntaxe informatique traditionnelle.
+
+- Lovable
+- v0.dev
+
+
  meileur moyen de créer un projet a à z en vibe coding :
 
 Comparatif des outils IA pour créer, coder et déployer des applications : usages, points forts et accès gratuit
@@ -13,3 +26,4 @@ Claude Code Agent terminal - Travaille en autonomie Aucun Avancés
 Gemini CLI - Agent terminal 1000 req/jour GRATUIT 1000 req/jour Tous
 Base44 - Générateur de SaaS Auth + BDD inclus 25 msg/mois Entrepreneurs
 Aider - Open-source 100 % gratuit Illimité Devs
+
