@@ -75,9 +75,11 @@ Garde-fous à montrer
 
 
 
-other
+current
 - typicode/lowdb: database for node
 - persist jwt
+- csrf
+- otp for connection
 - frontend save prompts conversation
 
 later
