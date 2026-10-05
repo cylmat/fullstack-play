@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import { Router } from 'express';
-import { aiController } from '../controllers/ai.controller.ts';
+import { aiController } from '#app/controllers/ai.controller.ts';
 
 const aiRoute: Router = Router();
 

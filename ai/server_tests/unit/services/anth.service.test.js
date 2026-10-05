@@ -1,6 +1,6 @@
-import anthropicService from '@app/services/anth.service.ts'; // import: syntax ESM
+import anthropicService from '#app/services/anth.service.ts'; // import: syntax ESM
 
-jest.mock('@app/clients/anth.client.ts', () => {
+jest.mock('#app/clients/anth.client.ts', () => {
     return (prompt) => [
         { type: 'text', text: 'Mock with prompt as: '+prompt },
         { type: 'text', text: 'ddd' }

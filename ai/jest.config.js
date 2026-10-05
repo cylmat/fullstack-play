@@ -8,7 +8,7 @@
  */
 const commonConfig = {
   moduleNameMapper: {
-    '^@app/(.*)$': '<rootDir>/server/$1' // DEFINED IN TSCONFIG too
+    // '^@app/(.*)$': '<rootDir>/server/$1' // DEFINED IN TSCONFIG too
   },
   transform: {
     '^.+\\.[jt]sx?$': [

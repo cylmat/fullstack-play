@@ -1,6 +1,6 @@
 
 
-// jest.mock('@app/clients/anth.agent.ts', () => {
+// jest.mock('#app/clients/anth.agent.ts', () => {
 //     return () => 'aaa'
 // });
 
