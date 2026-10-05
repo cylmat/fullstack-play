@@ -17,7 +17,7 @@ if [ "$1" == "build" ]; then
 fi
 
 if [ "$1" == "bash-alone" ]; then
-    docker run -u 1000:1000 -it -p 3000:3000 -p 5173:5173 --name nodealone \
+    docker run -u 1000:1000 -it -p 3333:3000 -p 5555:5173 --name nodealone \
         -v nodealone:/var/www/application -v ./doc/create_js:/var/www/create_js fs-node:latest bash
     exit 0
 fi

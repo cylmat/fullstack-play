@@ -3,7 +3,8 @@
 if [[
     "$1" == "ai" ||
     "$1" == "git" ||
-    "$1" == "node"
+    "$1" == "node" ||
+    "$1" == "php"
 ]]; then
     # all args except first ${parameter:offset:length}
     ./scripts/run/"$1".sh ${@:2}
