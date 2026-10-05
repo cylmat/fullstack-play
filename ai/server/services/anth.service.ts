@@ -1,5 +1,5 @@
-import anthropicAgent from '@app/clients/anth.agent.ts';
-import anthropicClient from '@app/clients/anth.client.ts';
+import anthropicAgent from '#app/clients/anth.agent.ts';
+import anthropicClient from '#app/clients/anth.client.ts';
 
 export const ANTHROPIC_TYPES: AnthropicType[] = ['agent', 'client'];
 export type AnthropicType = 'agent' | 'client';

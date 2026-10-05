@@ -7,7 +7,7 @@
 		"dev:server": "node server/app.ts",
 		"build": "npm run build:client && npm run build:server",
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
-		"build:server": "",
+		"build:server": "tsc --project server && tsc --build server",
 		"prettier": "npm run prettier:client & npm rnu prettier:server",
 		"prettier:client": "prettier client",
 		"prettier:server": "prettier server",
@@ -21,6 +21,12 @@
 		"test:server:func": "NODE_TEST_ENV=server:func npm run test -- --selectProjects server:functional",
 		"test:server:inte": "NODE_TEST_ENV=server:inte npm run test -- --selectProjects server:integration",
 		"test:server:unit": "NODE_TEST_ENV=server:unit npm run test -- --selectProjects server:unit"
+	},
+	"///": [{
+		"# internal node packages": "https://nodejs.org/api/packages.html#subpath-imports"
+	}],
+	"imports": {
+		"#app/*": "./server/*"
 	},
 	"eslintConfig": {
 		"extends": "preact"
@@ -40,12 +46,10 @@
 		"preact-render-to-string": "^6.7.0",
 		"zod": "^4.6.5"
 	},
-	"//": [
-		{
-			"client": "preact",
-			"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
-		}
-	],
+	"//": [{
+		"client": "preact",
+		"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
+	}],
 	"devDependencies": {
 		"@babel/core": "^7.29.7",
 		"@babel/preset-env": "^7.29.7",

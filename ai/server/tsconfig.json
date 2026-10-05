@@ -3,9 +3,14 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true, // enable import from '...module/yyy.ts' "ts" extension
     "noEmit": true,
-    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
     "paths": {
-      "@app/*": ["./server/*"] // allow name module instead of '../../modules' everywhere
+       // NO NEED, USE NODE SUBMODULES
+      // "#app/*": ["./*"] // allow name module instead of '../../modules' everywhere
     }
-  }
+  },
+  // "include": [
+  //   "**/*.ts"
+  // ]
 }
