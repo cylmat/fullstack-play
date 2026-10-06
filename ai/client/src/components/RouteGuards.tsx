@@ -1,7 +1,8 @@
 import { ComponentType } from 'preact'
-import { route } from 'preact-iso'
+import { Route } from 'preact-iso'
 import { useAuth } from '#front/hooks/useAuth'
 import { NotFound } from '#front/pages/_404'
+import { Login } from '#front/pages/Login'
 
 interface GuardProps {
     component: ComponentType
@@ -13,8 +14,7 @@ export function ProtectedRoute({ component: Component }: GuardProps) {
     if (isLoading) return <div>Loading...</div>
 
     if (!isAuthenticated) {
-        route('/login', true)
-        return null
+        return <Route path='/' component={Login} />
     }
 
     return <Component />
@@ -26,9 +26,15 @@ export function PublicRoute({ component: Component }: GuardProps) {
     if (isLoading) return <div>Loading...</div>
 
     if (isAuthenticated) {
-        route('/', true)
-        return null
+        return <Route path='/' component={Login} />
     }
 
     return <Component />
+}
+
+export function GuardRouter({ children }: { children: any }) {
+    // const { isAuthenticated, isLoading } = useAuth()
+    return (
+        <>guard{children}</>
+    )
 }

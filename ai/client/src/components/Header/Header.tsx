@@ -4,12 +4,17 @@ export function Header() {
     const { url } = useLocation()
 
     return (
-        <header>
+        <header class="d-flex justify-content-between">
             <nav>
-                <a href="/" class={url == '/' && 'active'}>
+                <a href="/login" class={url == '/login' ? 'active' : ''}>
+                    Login
+                </a>
+            </nav>
+            <nav>
+                <a href="/" class={url == '/' ? 'active' : ''}>
                     Home
                 </a>
-                <a href="/404" class={url == '/404' && 'active'}>
+                <a href="/404" class={url == '/404' ? 'active' : ''}>
                     404
                 </a>
             </nav>
