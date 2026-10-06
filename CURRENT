@@ -76,6 +76,7 @@ Garde-fous à montrer
 
 
 current
+- https://www.npmjs.com/package/mcp-local-search?activeTab=readme
 - typicode/lowdb: database for node
 - persist jwt
 - csrf
