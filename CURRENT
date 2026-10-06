@@ -111,5 +111,8 @@ DONE
 ----
 
 **ai**
+front
+- tinybase
+back
 - Anthropic sdk
 - JWT Token

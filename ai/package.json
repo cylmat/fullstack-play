@@ -22,11 +22,14 @@
 		"test:server:inte": "NODE_TEST_ENV=server:inte npm run test -- --selectProjects server:integration",
 		"test:server:unit": "NODE_TEST_ENV=server:unit npm run test -- --selectProjects server:unit"
 	},
-	"///": [{
-		"# internal node packages": "https://nodejs.org/api/packages.html#subpath-imports"
-	}],
+	"///": [
+		{
+			"# internal node packages": "https://nodejs.org/api/packages.html#subpath-imports"
+		}
+	],
 	"imports": {
-		"#app/*": "./server/*"
+		"#app/*": "./server/*",
+		"#front/*": "./client/src/*"
 	},
 	"eslintConfig": {
 		"extends": "preact"
@@ -44,12 +47,15 @@
 		"preact": "^10.29.8",
 		"preact-iso": "^2.12.2",
 		"preact-render-to-string": "^6.7.0",
+		"tinybase": "^10.0.1",
 		"zod": "^4.6.5"
 	},
-	"//": [{
-		"client": "preact",
-		"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
-	}],
+	"//": [
+		{
+			"client": "preact, tinybase",
+			"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
+		}
+	],
 	"devDependencies": {
 		"@babel/core": "^7.29.7",
 		"@babel/preset-env": "^7.29.7",
