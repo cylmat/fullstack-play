@@ -6,6 +6,8 @@ import secureRoute from './secure.route.ts';
 const routes: Router = Router();
 
 export default routes
-.use('', aiRoute)
 .use('', homeRoute)
+.use('/api', aiRoute)
+
+// no /api for token
 .use('', secureRoute)

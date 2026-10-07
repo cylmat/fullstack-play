@@ -1,22 +1,22 @@
 import {
-    LocationProvider,
     hydrate,
     prerender as ssr
 } from 'preact-iso'
 
-import { AppRouter } from '#front/components/AppRouter'
+import { AppRouter } from '#front/routes/router.js'
 import { Header } from '#front/components/Header/Header.js'
+import { AppProvider } from './providers/AppProvider'
 import './global.scss'
 import './style.css'
 
 export function App() {
     return (
-        <LocationProvider>
+        <AppProvider>
             <Header />
             <main>
                 <AppRouter />
             </main>
-        </LocationProvider>
+        </AppProvider>
     )
 }
 

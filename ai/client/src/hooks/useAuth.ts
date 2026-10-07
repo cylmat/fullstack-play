@@ -1,9 +1,15 @@
-import { useState, useEffect } from 'preact/hooks'
-import { AuthenticationService } from '#front/services/AuthenticationService'
+import { useState, useEffect, useContext } from 'preact/hooks'
+import { AuthContext } from '#front/providers/AuthProvider.js';
+import { AppUser } from '#front/types/types.js';
 
-export function useAuth() {
-    // const [isAuthenticated, setIsAuthenticated] = useState(false)
-    // const [isLoading, setIsLoading] = useState(true)
+export function useAuth(): AppUser | null {
+    const { user } = useContext(AuthContext);
+
+    if (!user) {
+        throw new Error('useAuth doit être utilisé sous AuthenticationProvider');
+    }
+
+    return user;
 
     // useEffect(() => {
     //     setIsAuthenticated(AuthenticationService.isAuthenticated())
@@ -22,8 +28,8 @@ export function useAuth() {
     //         setIsAuthenticated(false)
     //     }
     // }
-    return {
-        isAuthenticated: false,
-        isLoading: false,
-    }
+    // return {
+    //     // isAuthenticated: false,
+    //     // isLoading: false,
+    // }
 }

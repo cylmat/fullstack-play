@@ -1,1 +1,5 @@
-export type User = {}
+export type AppUser = {
+    isAuthenticated: boolean;
+    roles: string[];
+    username: string;
+}

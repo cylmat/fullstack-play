@@ -82,3 +82,16 @@ No-code (Make, n8n, Softr, Lovable, etc.)
 Créativité (Gamma, Midjourney, ElevenLabs, HeyGen, etc.)
 Agents IA (marketing, sales, RH, facturation, SAV)
 
+
+
+
+
+= OTHER =
+
+- https://www.orsys.fr/formation/formation-creer-un-assistant-ia-sur-vos-donnees-avec-le-rag
+
+- https://www.humancoders.com/formations/llm
+
+- https://www.m2iformation.fr/formation-conception-d-un-assistant-conversationnel-ia-sur-une-architecture-rag/IA-RAG/
+
+- https://laplateforme.io/entreprise/integrer-lia-dans-son-entreprise/

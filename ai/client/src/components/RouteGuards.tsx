@@ -1,40 +1,48 @@
-import { ComponentType } from 'preact'
-import { Route } from 'preact-iso'
+import { type ComponentType } from 'preact'
+import { VNode } from 'preact'
 import { useAuth } from '#front/hooks/useAuth'
-import { NotFound } from '#front/pages/_404'
-import { Login } from '#front/pages/Login'
+
+/**
+ * ROUTE GUARD
+ * Restricts access to certain routes based on user authentication and roles.
+ * Make redirection to login page if user is not authenticated or does not have the required roles.
+ */
+
 
 interface GuardProps {
     component: ComponentType
 }
 
-export function ProtectedRoute({ component: Component }: GuardProps) {
-    const { isAuthenticated, isLoading } = useAuth()
+// export function ProtectedRoute({ component: Component }: GuardProps) {
+//     const { isAuthenticated, isLoading } = useAuth()
 
-    if (isLoading) return <div>Loading...</div>
+//     if (isLoading) return <div>Loading...</div>
 
-    if (!isAuthenticated) {
-        return <Route path='/' component={Login} />
-    }
+//     if (!isAuthenticated) {
+//         return <Route path='/' component={Login} />
+//     }
 
-    return <Component />
-}
+//     return <Component />
+// }
 
-export function PublicRoute({ component: Component }: GuardProps) {
-    const { isAuthenticated, isLoading } = useAuth()
+// export function PublicRoute({ component: Component }: GuardProps) {
+//     const { isAuthenticated, isLoading } = useAuth()
 
-    if (isLoading) return <div>Loading...</div>
+//     if (isLoading) return <div>Loading...</div>
 
-    if (isAuthenticated) {
-        return <Route path='/' component={Login} />
-    }
+//     if (isAuthenticated) {
+//         return <Route path='/' component={Login} />
+//     }
 
-    return <Component />
-}
+//     return <Component />
+// }
 
-export function GuardRouter({ children }: { children: any }) {
-    // const { isAuthenticated, isLoading } = useAuth()
+export function RouteGuard({ children, rights }: { children: VNode, rights?: string[] }) {
+
+    const user = useAuth()
+    console.log(user)
+
     return (
-        <>guard{children}</>
+        <>{children}</>
     )
 }
