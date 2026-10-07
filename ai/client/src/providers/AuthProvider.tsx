@@ -10,20 +10,20 @@ import { useContext, useState } from 'preact/hooks';
  */
 
 type AppUserContext = {
-  user: AppUser | null;
-  setUser: (user: AppUser | null) => void;
+  user: AppUser;
+  setUser: (user: AppUser) => void;
 };
 
-const defaultUser = { isAuthenticated: false, username: USER_ANONYMOUS, roles: [] };
+export const anonymousUser = {} as AppUser;
 
 export const AuthContext = createContext<AppUserContext>({
-    user: defaultUser,
+    user: anonymousUser,
     setUser: () => {}
 } as AppUserContext);
 
 
 export function AuthProvider(props: { children: any }) {
-    const [user, setUser] = useState<AppUser | null>(defaultUser);
+    const [user, setUser] = useState<AppUser>(anonymousUser);
 
     return (
         <AuthContext.Provider value={{ user, setUser }}>

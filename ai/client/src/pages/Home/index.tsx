@@ -23,7 +23,7 @@ export function Home() {
                     description="If you're new to Preact, try the interactive tutorial to learn important concepts"
                     href="https://preactjs.com/tutorial"
                 >
-                    <div>a</div>
+
                 </Resource>
                 {/*<Resource
                     title="Differences to React"

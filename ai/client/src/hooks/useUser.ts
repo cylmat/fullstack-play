@@ -2,14 +2,14 @@ import { useState, useEffect, useContext } from 'preact/hooks'
 import { AuthContext } from '#front/providers/AuthProvider.js';
 import { AppUser } from '#front/types/types.js';
 
-export function useAuth(): AppUser | null {
+export function useUser(): AppUser|null {
     const { user } = useContext(AuthContext);
 
     if (!user) {
-        throw new Error('useAuth doit être utilisé sous AuthenticationProvider');
+        throw new Error('useUser doit être utilisé sous AuthenticationProvider');
     }
 
-    return user;
+    return user && user.isAuthenticated ? user : null;
 
     // useEffect(() => {
     //     setIsAuthenticated(AuthenticationService.isAuthenticated())

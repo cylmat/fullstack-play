@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { getToken, testToken } from '../controllers/secureController.ts';
+import { secureController } from '../controllers/secure.controller.ts';
 
 const secureRoute: Router = Router()
 
 export default secureRoute
-    .get('/token', getToken)
-    .post('/api/test-token', testToken)
+    .get('/token', secureController.getToken)
+    .post('/api/test-token', secureController.testToken)
 
 // var privateKey = fs.readFileSync('private.key');
 // var token = jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256' });

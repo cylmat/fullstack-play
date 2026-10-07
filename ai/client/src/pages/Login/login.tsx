@@ -4,15 +4,22 @@ import { AuthenticationService } from '#front/services/AuthenticationService.js'
 import './login.scss'
 
 export function Login() {
-    const { user, setUser } = useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
 
-    useEffect(() => {
-        // setUser({isAuthenticated: true, username: 'fdsgfdshglk9', roles: []});
-    }, [])
+    const handleButtonClick = async (username: string) => {
+        let userFromBackend = await AuthenticationService.authenticate(username);
+        setUser(userFromBackend);
+    }
 
     return (
-        <div class="login">
-            <h1>Login</h1>
+        <div class="login border p-2 d-flex justify-content-between" style={{ width: '200px' }}>
+            <button class="cursor-pointer" onClick={() => handleButtonClick('user-username')}>
+                <h2>USER</h2>
+            </button>
+
+            <button class="cursor-pointer" onClick={() => handleButtonClick('admin-username')}>
+                <h2>ADMIN</h2>
+            </button>
         </div>
     )
 }

@@ -12,7 +12,7 @@ export default class authService {
         let memoryUser = getMemoryUserByUsername(username)
 
         if (!memoryUser) {
-            throw new Error(`User with username ${username} not found in memory`)
+            throw new Error(`Error: User with username '${username}' not found in memory`)
         }
 
         var privateKey = fs.readFileSync('/var/www/application/config/keys/private.pem');
@@ -41,7 +41,7 @@ export default class authService {
             }
             return jwt.verify(token, publicKey, config) as object;
         } catch (err: any) {
-            console.error('Invalid token', err.message);
+            console.error('Invalid token: ', err.message);
             return false;
         }
     }

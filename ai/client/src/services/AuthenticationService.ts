@@ -1,12 +1,33 @@
+import { DB_AUTH_TOKEN_KEY, STORAGE_USERNAME_KEY } from '#front/constants/app.js';
+import { FetchClient } from '#front/core/FetchClient.js';
 import { Storage } from '#front/core/Storage'
-import { useContext } from 'preact/hooks';
-
-const AUTH_TOKEN_KEY = 'auth_token'
+import { AppUser } from '#front/types/types.js';
 
 export class AuthenticationService {
 
-    public static authenticate() {
-        return 'ttt-ref'
+    public static async authenticate(username: string): Promise<AppUser> {
+        const { jwt } = await FetchClient.get<{ jwt: string }>('/token', `username=${username}`)
+
+        if (!jwt) {
+            throw new Error('Authentication failed: No JWT returned from server.')
+        }
+
+        Storage.setDbValue(DB_AUTH_TOKEN_KEY, jwt)
+        Storage.setItem(STORAGE_USERNAME_KEY, username)
+
+        const user: AppUser = {
+            username: username,
+            isAuthenticated: true,
+            roles: [],
+            jwt: jwt
+        }
+
+        return user;
+    }
+
+    public static logout(): void {
+        Storage.removeDbValue(DB_AUTH_TOKEN_KEY)
+        Storage.removeItem(STORAGE_USERNAME_KEY)
     }
 
     ///////////////// V-A 2 //////////////
@@ -36,11 +57,7 @@ export class AuthenticationService {
     //         this.getMetabaseUserToken();
     //     }
     //     store.dispatch(login(tokenInfo))
-            
     //     let currentConfig = await UserConfigurationService.getCurrentConfigurationContract();
-
-
-    
 
 
     // static isAuthenticated(): boolean {

@@ -1,3 +1,5 @@
+import { DB_AUTH_TOKEN_KEY } from '#front/constants/app.js'
+import { Storage } from '#front/core/Storage.js'
 import { FetchClient } from '../core/FetchClient'
 
 type ChatResponse = {
@@ -11,35 +13,37 @@ type ChatResponse = {
 export class AppService {
     public static async sendMessage(message: string, useType: string): Promise<string> {
 
+        // @todo use hook
+        const jwt = Storage.getDbValue(DB_AUTH_TOKEN_KEY)
+        console.log('JWT:', jwt)
         try {
             let response = await FetchClient.post<ChatResponse>(
-                import.meta.env.VITE_API_BACKEND_URL + '/chat',
-                { message, useType }
+                '/api/chat',
+                { message, useType },
+                {  Authorization: `Bearer ${jwt}`, 'Access-Control-Allow-Origin': '*' }
             )
             return response.messages.join('\n')
         } catch (error) {
-            console.log(error)
+            console.error(error)
             throw error
         }
     }
 
-    public static async getMcpDataWIP() {
+    public static async _getMcpDataSample() {
         try {
-            let response = await FetchClient.get<any>(
-                import.meta.env.VITE_API_BACKEND_URL + '/mcp'
-            )
+            let response = await FetchClient.get<any>('/api/mcp')
             return response
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 
-    public static async getExampleData() {
+    public static async _getExampleData() {
         try {
             let response = await FetchClient.get<any>(import.meta.env.VITE_API_BACKEND_URL + '/')
             return response
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }
 }

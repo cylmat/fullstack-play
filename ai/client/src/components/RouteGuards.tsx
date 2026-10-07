@@ -1,6 +1,6 @@
 import { type ComponentType } from 'preact'
 import { VNode } from 'preact'
-import { useAuth } from '#front/hooks/useAuth'
+import { useUser } from '#front/hooks/useUser'
 
 /**
  * ROUTE GUARD
@@ -13,8 +13,17 @@ interface GuardProps {
     component: ComponentType
 }
 
+export function RouteGuard({ children, rights }: { children: VNode, rights?: string[] }) {
+
+    const user = useUser()
+
+    return (
+        <>{children}</>
+    )
+}
+
 // export function ProtectedRoute({ component: Component }: GuardProps) {
-//     const { isAuthenticated, isLoading } = useAuth()
+//     const { isAuthenticated, isLoading } = useUser()
 
 //     if (isLoading) return <div>Loading...</div>
 
@@ -26,7 +35,7 @@ interface GuardProps {
 // }
 
 // export function PublicRoute({ component: Component }: GuardProps) {
-//     const { isAuthenticated, isLoading } = useAuth()
+//     const { isAuthenticated, isLoading } = useUser()
 
 //     if (isLoading) return <div>Loading...</div>
 
@@ -36,13 +45,3 @@ interface GuardProps {
 
 //     return <Component />
 // }
-
-export function RouteGuard({ children, rights }: { children: VNode, rights?: string[] }) {
-
-    const user = useAuth()
-    console.log(user)
-
-    return (
-        <>{children}</>
-    )
-}

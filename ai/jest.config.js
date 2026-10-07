@@ -24,6 +24,7 @@ const commonConfig = {
 };
 
 export default {
+  bail: true, // Stop running tests after the first failure
   projects: [
      {
       ...commonConfig,
