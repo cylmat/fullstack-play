@@ -1,6 +1,6 @@
+import type { User } from "#app/models/user.ts";
+import type { IUserService } from "#app/contracts/IUserService.ts";
 import { USERS } from "#app/config/users_memory.ts";
-import { IUserService } from "#app/contracts/IUserService.ts";
-import { User } from "#app/models/user.ts";
 
 export class MemoryUserService implements IUserService {
     getUserByUsername(username: string): User | null {

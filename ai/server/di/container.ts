@@ -14,7 +14,7 @@ export const userService = new userServiceClass([
 
 
 
-/** SAMPLE FABRIC */
+/** SAMPLE FACTORY */
 
 // function createSecureController(tokenService) {
 //   return {

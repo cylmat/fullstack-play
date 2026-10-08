@@ -32,6 +32,20 @@ export default class authService {
         return signature;
     }
 
+    public static getUserFromJwt(token: string) {
+        const decoded = authService.verifyToken(token);
+        if (!decoded) {
+            return null;
+        }
+
+        const payload = (decoded as any).payload;
+        if (!payload || !payload.username) {
+            return null;
+        }
+
+        return userService.getUserByUsername(payload.username);
+    }
+
     public static verifyToken(token: string): object|false {
         try {
             var publicKey = fs.readFileSync('/var/www/application/config/keys/public.pem');

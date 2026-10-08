@@ -1,6 +1,7 @@
 import { userService } from '#app/di/container.ts';
 import { MemoryUserService } from '#app/services/user/memoryUser.service.ts';
 import { HardCodedUserService } from '#app/services/user/hardcodeUser.service.ts';
+import { userServiceClass } from '#app/services/user.service.ts';
 
 describe('Container UserService Integration Tests', () => {
     // let userService;
@@ -19,7 +20,7 @@ describe('Container UserService Integration Tests', () => {
         expect(userService.getUserByUsername).toBeDefined();
     })
 
-    test('should return user from first service when found', () => {
+    test('should return user from hardcoded service', () => {
         const user = userService.getUserByUsername('userH');
 
         expect(user).toBeDefined();
@@ -28,31 +29,31 @@ describe('Container UserService Integration Tests', () => {
         expect(user.roles).toContain('H');
     });
 
-    // test('should return user from second service when not found in first', () => {
-    //     const user = userService.getUserByUsername('user1');
+     test('should return user from memory service', () => {
+        const user = userService.getUserByUsername('user-username');
 
-    //     expect(user).toBeDefined();
-    //     expect(user.username).toBe('user1');
-    // });
+        expect(user).toBeDefined();
+        expect(user.username).toBe('user-username');
+    });
 
-    // test('should return null when user not found in any service', () => {
-    //     const user = userService.getUserByUsername('nonexistentuser');
+    test('should return null when user not found in any service', () => {
+        const user = userService.getUserByUsername('nonexistentuser');
 
-    //     expect(user).toBeNull();
-    // });
+        expect(user).toBeNull();
+    });
 
-    // test('should stop searching after finding user in first service', () => {
-    //     const hardCodedService = new HardCodedUserService();
-    //     const memoryService = new MemoryUserService();
+    test('should stop searching after finding user in first service', () => {
+        const hardCodedService = new HardCodedUserService();
+        const memoryService = new MemoryUserService();
 
-    //     const spyHardCoded = jest.spyOn(hardCodedService, 'getUserByUsername');
-    //     const spyMemory = jest.spyOn(memoryService, 'getUserByUsername');
+        const spyHardCoded = jest.spyOn(hardCodedService, 'getUserByUsername');
+        const spyMemory = jest.spyOn(memoryService, 'getUserByUsername');
 
-    //     const testService = new UserService([hardCodedService, memoryService]);
+        const testService = new userServiceClass([hardCodedService, memoryService]);
 
-    //     testService.getUserByUsername('userH');
+        testService.getUserByUsername('userH');
 
-    //     expect(spyHardCoded).toHaveBeenCalledWith('userH');
-    //     expect(spyMemory).not.toHaveBeenCalled();
-    // });
+        expect(spyHardCoded).toHaveBeenCalledWith('userH');
+        expect(spyMemory).not.toHaveBeenCalled();
+    });
 });

@@ -1,4 +1,4 @@
-import { User } from "#app/models/user.ts"
+import type { User } from "#app/models/user.ts"
 
 export const ADMIN: User = {
     id: '1',
