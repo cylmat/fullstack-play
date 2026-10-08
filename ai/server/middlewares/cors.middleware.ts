@@ -6,10 +6,15 @@ export default function corsMiddleware(req: Request, res: Response, next: NextFu
     // Or use npm install cors and import it
     console.log('Middleware: CORS')
 
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Origin', // Header only from server, don't send it client-side
+        '*'
+    );
+
+    // Allow these headers
     res.header(
         'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept'
+        'Accept, Authorization, Content-Type, Origin, X-Requested-With'
     );
 
     // Réponse à la requête preflight

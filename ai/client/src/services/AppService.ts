@@ -15,12 +15,12 @@ export class AppService {
 
         // @todo use hook
         const jwt = Storage.getDbValue(DB_AUTH_TOKEN_KEY)
-        console.log('JWT:', jwt)
+
         try {
             let response = await FetchClient.post<ChatResponse>(
                 '/api/chat',
                 { message, useType },
-                {  Authorization: `Bearer ${jwt}`, 'Access-Control-Allow-Origin': '*' }
+                {  Authorization: `Bearer ${jwt}` }
             )
             return response.messages.join('\n')
         } catch (error) {

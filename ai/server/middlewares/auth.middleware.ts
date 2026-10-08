@@ -18,11 +18,12 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
     }
 
     console.log('Middleware: AUTH on /api')
+    // console.log('headers send:', req.headers)
 
     let auth = req.header('Authorization') ?? ''
     let token = auth.replace('Bearer ', '')
 
-    console.log('Verifying token...')
+    console.log('Get headers, verifying token: ', token.substring(0, 10) + '...')
 
     let verify = authService.verifyToken(token)
     if (!verify) {

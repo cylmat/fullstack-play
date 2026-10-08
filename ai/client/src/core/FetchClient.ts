@@ -26,8 +26,8 @@ export class FetchClient {
         let postBody = body !== undefined ? JSON.stringify(body) : undefined
         const response = await fetch(`${this.apiHost}${url}`, {
             method: 'POST',
-            headers,
-            body: postBody
+            body: postBody,
+            headers
         })
         if (!response.ok) {
             throw new Error(`POST ${url} failed: ${response.status}`)

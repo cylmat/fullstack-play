@@ -19,8 +19,9 @@ app.use(express.urlencoded({ extended: true })); // use it for: parsing applicat
 
 // @doc https://expressjs.com/fr/resources/middleware/
 
+app.use(corsMiddleware); // MUST BE FIRST !
+
 app.use(authMiddleware)
-app.use(corsMiddleware);
 app.use(routes);
 
 app.get('/health', (req: Request, res: Response) => {

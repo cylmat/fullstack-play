@@ -4,11 +4,11 @@ import authService from '../services/auth.service.ts';
 export const secureController = {
   getToken: (req: Request, res: Response) => {
     let username: string | '' = req.query.username as string ?? ''
-    console.log('get token username: ', username)
+    console.log('get token for username: ', username)
 
     try {
       let signature = authService.getTokenForUsername(username)
-      console.log(signature)
+      console.log('Generated token signature:', signature.substring(0, 10) + '...')
       return res.json({ jwt: signature });
     } catch (error: any) {
       console.error('Error generating token:', error.message);
