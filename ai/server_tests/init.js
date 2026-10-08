@@ -1,8 +1,9 @@
 
 
-// jest.mock('#app/clients/anth.agent.ts', () => {
-//     return () => 'aaa'
-// });
+// REMOVE LOGS
+beforeAll(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => {});
+})
 
 
 jest.mock('@anthropic-ai/claude-agent-sdk', () => {

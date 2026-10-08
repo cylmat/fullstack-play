@@ -95,8 +95,8 @@ export default async function anthropicAgent(prompt: string): Promise<any> {
         ],
     }
 
-    console.log('anthropicClient apiKey provided in env var ?', !!process.env['ANTHROPIC_API_KEY'])
-    console.log('anthropicAgent | prompting... ', prompt);
+    console.info('anthropicClient apiKey provided in env var ?', !!process.env['ANTHROPIC_API_KEY'])
+    console.info('anthropicAgent | prompting... ', prompt);
 
     const promptSended = 'Please answer with 50 characters max.' + `${prompt}`;
 
@@ -147,7 +147,7 @@ export default async function anthropicAgent(prompt: string): Promise<any> {
         console.error('anthropicAgent | agentResponse is empty');
     }
 
-    console.log('anthropicAgent | responding.. ');
+    console.info('anthropicAgent | responding.. ');
 
     return queryResponse;
 }

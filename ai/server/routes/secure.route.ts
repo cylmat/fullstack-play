@@ -5,6 +5,7 @@ const secureRoute: Router = Router()
 
 export default secureRoute
     .get('/token', secureController.getToken)
+    .get('/api/current-user', secureController.getCurrentUser)
     .post('/api/test-token', secureController.testToken)
 
 // var privateKey = fs.readFileSync('private.key');

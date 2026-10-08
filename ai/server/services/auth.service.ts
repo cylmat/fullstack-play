@@ -74,7 +74,7 @@ export default class authService {
             },
             privateKey, //'has a van secret',
             { algorithm: 'RS256' }
-          //  (err, token) => { console.log(token); return token; }
+          //  (err, token) => { console.info(token); return token; }
         );
         return signature;
     }

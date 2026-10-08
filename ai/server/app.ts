@@ -29,5 +29,5 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 app.listen(3000, () => {
-    console.log('app.js | Server is running on http://localhost:3000');
+    console.info('APP | Server is running on http://localhost:3000');
 });

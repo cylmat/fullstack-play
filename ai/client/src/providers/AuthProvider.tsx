@@ -17,35 +17,32 @@ import { useContext, useEffect, useState } from 'preact/hooks';
 type AppUserContext = {
   user: AppUser;
   setUser: (user: AppUser) => void;
+  isUserLoading: boolean;
 };
 
-export const anonymousUser = {} as AppUser;
+export const anonymousUser = { isAuthenticated: false } as AppUser;
 
 export const AuthContext = createContext<AppUserContext>({
     user: anonymousUser,
-    setUser: () => {}
+    setUser: () => {},
+    isUserLoading: true
 } as AppUserContext);
 
 
 export function AuthProvider(props: { children: any }) {
     const [user, setUser] = useState<AppUser>(anonymousUser);
+    const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
     async function restoreSession() {
-    //   const token = localStorage.getItem("token");
-
-    //   if (!token) {
-        // setStatus("anonymous");
-        // return;
-    //   }
 
       try {
-        // const currentUser = await AuthenticationService.getCurrentUser(token);
-        // setUser(currentUser);
-        // setStatus("authenticated");
-      } catch {
-        // localStorage.removeItem("token");
-        // setUser(null);
-        // setStatus("anonymous");
+        const currentUser = await AuthenticationService.getCurrentUser();
+        setUser(currentUser ?? anonymousUser);
+      } catch (error) {
+        console.error('Failed to restore session, setting user to anonymous');
+        setUser(anonymousUser);
+      } finally {
+        setIsUserLoading(false);
       }
     }
 
@@ -54,7 +51,7 @@ export function AuthProvider(props: { children: any }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, isUserLoading }}>
            {props.children}
         </AuthContext.Provider>
     )

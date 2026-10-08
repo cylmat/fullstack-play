@@ -1,6 +1,6 @@
 /** @type {import('jest').Config} */
 
- console.log("run tests on ", process.env.NODE_TEST_ENV); // "unit", "func" ou "inte"
+ console.info("CONFIG | run tests on ", process.env.NODE_TEST_ENV); // "unit", "func" ou "inte"
 
 /**
  * @doc https://jestjs.io/docs/configuration

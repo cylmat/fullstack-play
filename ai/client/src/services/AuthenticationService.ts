@@ -6,59 +6,64 @@ import { AppUser } from '#front/types/types.js';
 export class AuthenticationService {
 
     // Get token
-    public static async authenticate(username: string): Promise<AppUser> {
-        const { jwt } = await FetchClient.get<{ jwt: string }>('/token', `username=${username}`)
+    public static async authenticate(username: string): Promise<AppUser | null> {
+        const url = '/api/token'
+
+        const { jwt } = await FetchClient.get<{ jwt: string }>(url, `username=${username}`)
 
         if (!jwt) {
             throw new Error('Authentication failed: No JWT returned from server.')
         }
 
-        Storage.setLocalItem(DB_AUTH_TOKEN_KEY, jwt)
-        Storage.setLocalItem(STORAGE_USERNAME_KEY, username)
+        this.setStoreCurrentToken(jwt)
 
-        const user: AppUser = {
-            username: username,
-            isAuthenticated: true,
-            roles: [],
-            jwt: jwt
-        }
-
-        return user;
+        return this.getCurrentUser()
     }
 
-    public static getCurrentToken() {
-        return Storage.getLocalItem<string>(DB_AUTH_TOKEN_KEY)
-    }
-
-    public static getCurrentUser() {
-        const jwt = Storage.getLocalItem(DB_AUTH_TOKEN_KEY)
+    public static async getCurrentUser(): Promise<AppUser | null> {
+        const jwt = this.getStoreCurrentToken()
 
         if (!jwt) {
             return null;
         }
 
-        // const username: string | null = Storage.getLocalItem(STORAGE_USERNAME_KEY)
+        const url = '/api/current-user'
+        const headers = { 'Authorization': `Bearer ${jwt}` }
 
-        // const user: AppUser = {
-        //     username: username || '',
-        //     isAuthenticated: true,
-        //     roles: [],
-        //     jwt: jwt
-        // }
+        let userResponse = await FetchClient.get<{
+            username: string;
+            roles: string[];
+        }>(url, '', headers)
 
-        // return user;
-    }
-
-    public static isAuthenticated(): boolean {
-        const jwt = Storage.getLocalItem(DB_AUTH_TOKEN_KEY)
-
-        return !!jwt
+        return this.createUserFromResponse(userResponse)
     }
 
     public static logout(): void {
         Storage.removeLocalItem(DB_AUTH_TOKEN_KEY)
-        Storage.removeLocalItem(STORAGE_USERNAME_KEY)
     }
+
+    // Private
+
+    private static createUserFromResponse(response: { username: string; roles: string[] }): AppUser {
+        return {
+            isAuthenticated: true,
+            username: response.username,
+            roles: response.roles
+        }
+    }
+
+    private static setStoreCurrentToken(token: string): void {
+        Storage.setLocalItem(DB_AUTH_TOKEN_KEY+'t', token)
+    }
+
+    private static getStoreCurrentToken(): string | null {
+        return Storage.getLocalItem<string | null>(DB_AUTH_TOKEN_KEY+'t')
+    }
+
+
+
+
+
 
     ///////////////// V-A 2 //////////////
     //  public static async login() {

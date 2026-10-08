@@ -3,22 +3,23 @@ import { useLocation } from 'preact-iso'
 
 export function Header() {
     const { url } = useLocation()
-    const user = useUser()
+    const { user, isUserLoading } = useUser()
 
     let isAuth = user;
 
     return (
         <header class="d-flex justify-content-between">
             <nav>
-                {isAuth
-                    ? <a href="/logout" class={url == '/logout' ? 'active' : ''}>
-                        Logout
-                    </a>
-                    : <a href="/login" class={url == '/login' ? 'active' : ''}>
-                        Login
-                    </a>}
+                {!isUserLoading &&
+                    (isAuth
+                        ? <a href="/logout" class={url == '/logout' ? 'active' : ''}>
+                            Logout
+                        </a>
+                        : <a href="/login" class={url == '/login' ? 'active' : ''}>
+                            Login
+                        </a>)}
             </nav>
-            <div>{user ? user.username : null}</div>
+            <div>{!isUserLoading ? user?.username : null}</div>
             <nav>
                 <a href="/" class={url == '/' ? 'active' : ''}>
                     Home

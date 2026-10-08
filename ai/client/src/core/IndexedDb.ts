@@ -53,4 +53,3 @@
 
 // // Exemple d'utilisation
 // const id = await ajouterUtilisateur("Camille");
-// console.log(await lireUtilisateur(id)); // { nom: "Camille", id: 1 }

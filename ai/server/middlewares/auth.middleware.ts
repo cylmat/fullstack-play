@@ -12,18 +12,18 @@ import authService from "../services/auth.service.ts";
 export default function authMiddleware(req: Request, res: Response, next: NextFunction) {
     let url = req.originalUrl
     if (!url.match(/^\/api/)) {
-        console.log(url + " doesn't match /api")
+        console.info(url + " doesn't match /api")
         next()
         return
     }
 
-    console.log('Middleware: AUTH on /api')
-    // console.log('headers send:', req.headers)
+    console.info('Middleware: AUTH on /api')
+    // console.info('headers send:', req.headers)
 
     let auth = req.header('Authorization') ?? ''
     let token = auth.replace('Bearer ', '')
 
-    console.log('Get headers, verifying token: ', token.substring(0, 10) + '...')
+    console.info('Get headers, verifying token: ', token.substring(0, 10) + '...')
 
     let verify = authService.verifyToken(token)
     if (!verify) {
@@ -31,7 +31,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         return;
     }
 
-    console.log('Token verified successfully');
+    console.info('Token verified successfully');
 
     next()
 }

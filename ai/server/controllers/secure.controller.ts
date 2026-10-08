@@ -13,16 +13,16 @@ export const secureController = {
     }
 
     let username: string | '' = req.query.username as string ?? ''
-    console.log('Get token for username: ', username)
+    console.info('APP | Get token for username: ', username)
 
     try {
       let signature = authService.getTokenForUsername(username)
-      console.log('Generated token signature:', signature.substring(0, 10) + '...')
+      console.info('APP | Generated token signature:', signature.substring(0, 10) + '...')
 
       res.status(200)
       return res.json({ jwt: signature });
     } catch (error: any) {
-      console.error('Error generating token:', error.message);
+      console.error('APP | Error generating token:', error.message);
     }
 
     return res.status(500).json({ error: 'Failed to generate token' });
@@ -30,10 +30,10 @@ export const secureController = {
 
   getCurrentUser: (req: Request, res: Response) => {
     let token: string | null = req.header('Authorization')?.replace('Bearer ', '') ?? null
-    console.log('Get user from token: ', token)
+    console.info('APP | Get user from token: ', token?.substring(0, 10) + '...')
 
     if (!token) {
-      return res.status(400).json({ error: 'Authorization token is missing' });
+      return res.status(400).json({ error: 'APP | Authorization token is missing' });
     }
 
     try {
@@ -42,10 +42,10 @@ export const secureController = {
         return res.status(404).json({ error: 'User not found for the provided token' });
       }
 
-      console.log('User retrieved from token:', user.username)
-      return res.status(200).json({ user });
+      console.info('APP | User retrieved from token of:', user.username)
+      return res.status(200).json(user);
     } catch (error: any) {
-      console.error('Error retrieving user from token:', error.message);
+      console.error('APP | Error retrieving user from token:', error.message);
     }
 
     return res.status(500).json({ error: 'Failed to retrieve user from token' });

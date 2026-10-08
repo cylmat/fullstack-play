@@ -45,6 +45,7 @@ if [ "$1" == "install" ]; then
 fi
 
 if [ "$1" == "start" ]; then
+    bash $0 up
     bash $0 stop
 
 	echo "Node JS client is available at http://localhost:5111"
@@ -91,8 +92,8 @@ if [ "$1" == "stop" ]; then
 fi
 
 if [ "$1" == "down" ]; then
-	docker compose -f "compose_ai.yml" down
-    docker compose -f "compose_ai.yml" rm
+	docker compose -f "compose_ai.yml" --profile ai down &&
+    docker compose -f "compose_ai.yml" --profile ai rm
     exit 0
 fi
 

@@ -38,7 +38,7 @@ describe('secureController Integration Tests', () => {
         const currentUser = await secureController.getCurrentUser(req, res)
         expect(currentUser).toBeDefined()
         expect(typeof currentUser).toBe('object')
-        expect(currentUser.user.username).toBe('user-username')
+        expect(currentUser.username).toBe('user-username')
 
     })
 })
