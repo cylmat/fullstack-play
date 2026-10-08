@@ -1,6 +1,5 @@
-import { DB_AUTH_TOKEN_KEY } from '#front/constants/app.js'
-import { Storage } from '#front/core/Storage.js'
 import { FetchClient } from '../core/FetchClient'
+import { AuthenticationService } from './AuthenticationService'
 
 type ChatResponse = {
     type: string
@@ -14,7 +13,7 @@ export class AppService {
     public static async sendMessage(message: string, useType: string): Promise<string> {
 
         // @todo use hook
-        const jwt = Storage.getDbValue(DB_AUTH_TOKEN_KEY)
+        const jwt = AuthenticationService.getCurrentToken()
 
         try {
             let response = await FetchClient.post<ChatResponse>(

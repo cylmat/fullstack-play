@@ -5,6 +5,7 @@ import { AppUser } from '#front/types/types.js';
 
 export class AuthenticationService {
 
+    // Get token
     public static async authenticate(username: string): Promise<AppUser> {
         const { jwt } = await FetchClient.get<{ jwt: string }>('/token', `username=${username}`)
 
@@ -12,8 +13,8 @@ export class AuthenticationService {
             throw new Error('Authentication failed: No JWT returned from server.')
         }
 
-        Storage.setDbValue(DB_AUTH_TOKEN_KEY, jwt)
-        Storage.setItem(STORAGE_USERNAME_KEY, username)
+        Storage.setLocalItem(DB_AUTH_TOKEN_KEY, jwt)
+        Storage.setLocalItem(STORAGE_USERNAME_KEY, username)
 
         const user: AppUser = {
             username: username,
@@ -25,9 +26,38 @@ export class AuthenticationService {
         return user;
     }
 
+    public static getCurrentToken() {
+        return Storage.getLocalItem<string>(DB_AUTH_TOKEN_KEY)
+    }
+
+    public static getCurrentUser() {
+        const jwt = Storage.getLocalItem(DB_AUTH_TOKEN_KEY)
+
+        if (!jwt) {
+            return null;
+        }
+
+        // const username: string | null = Storage.getLocalItem(STORAGE_USERNAME_KEY)
+
+        // const user: AppUser = {
+        //     username: username || '',
+        //     isAuthenticated: true,
+        //     roles: [],
+        //     jwt: jwt
+        // }
+
+        // return user;
+    }
+
+    public static isAuthenticated(): boolean {
+        const jwt = Storage.getLocalItem(DB_AUTH_TOKEN_KEY)
+
+        return !!jwt
+    }
+
     public static logout(): void {
-        Storage.removeDbValue(DB_AUTH_TOKEN_KEY)
-        Storage.removeItem(STORAGE_USERNAME_KEY)
+        Storage.removeLocalItem(DB_AUTH_TOKEN_KEY)
+        Storage.removeLocalItem(STORAGE_USERNAME_KEY)
     }
 
     ///////////////// V-A 2 //////////////

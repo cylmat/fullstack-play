@@ -1,10 +1,11 @@
 import { aiController } from '#app/controllers/ai.controller.ts';
 
-test('aiController should be defined', () => {
-    expect(aiController).toBeDefined()
-})
+describe('aiController Integration Tests', () => {
+    test('aiController should be defined', () => {
+        expect(aiController).toBeDefined()
+    })
 
-test('aiController should have a postChat method', () => {
-    expect(aiController.postChat).toBeDefined()
+    test('aiController should have a postChat method', () => {
+        expect(aiController.postChat).toBeDefined()
+    })
 })
-

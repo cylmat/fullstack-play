@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import fs from 'fs'
-import { getMemoryUserByUsername } from './memory_user.service.ts';
+import { userService } from '#app/di/container.ts';
 
 /**
  * @doc https://www.jwt.io/
@@ -9,7 +9,7 @@ import { getMemoryUserByUsername } from './memory_user.service.ts';
 export default class authService {
 
     public static getTokenForUsername(username: string) {
-        let memoryUser = getMemoryUserByUsername(username)
+        let memoryUser = userService.getUserByUsername(username)
 
         if (!memoryUser) {
             throw new Error(`Error: User with username '${username}' not found in memory`)
