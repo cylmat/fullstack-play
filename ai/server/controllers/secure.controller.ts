@@ -1,10 +1,19 @@
 import type { Request, Response } from 'express';
 import authService from '#app/services/auth.service.ts';
+import _ from 'lodash';
+import { checkParameters } from '#app/utils/checkParameters.ts';
 
 export const secureController = {
   getToken: (req: Request, res: Response) => {
+
+    const whiteList = ['username']
+    const diff = checkParameters(req.query, whiteList)
+    if (diff.length > 0) {
+      return res.status(400).json({ error: 'Wrong query parameters ' + diff.join(', ') + ', allowed are: ' + whiteList.join(', ') });
+    }
+
     let username: string | '' = req.query.username as string ?? ''
-    console.log('get token for username: ', username)
+    console.log('Get token for username: ', username)
 
     try {
       let signature = authService.getTokenForUsername(username)
