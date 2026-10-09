@@ -25,13 +25,15 @@ React
 -----
 - useMemo, useCallback, useRef, useContext
 
-
+ORM
+----
+TypeORM
 
 *** BACKEND ***
 
 Express.js
 Koa.js
-Nest.js
+Nest.js -> symfony-like node framework
 Sails.js
 Fastify
 
