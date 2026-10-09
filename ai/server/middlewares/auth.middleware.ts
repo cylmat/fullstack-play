@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
 import authService from "../services/auth.service.ts";
+import { Logger } from "#app/core/logger.ts";
 
 /**
  * @doc https://expressjs.com/en/5x/guide/using-middleware/
@@ -12,18 +13,18 @@ import authService from "../services/auth.service.ts";
 export default function authMiddleware(req: Request, res: Response, next: NextFunction) {
     let url = req.originalUrl
     if (!url.match(/^\/api/)) {
-        console.info(url + " doesn't match /api")
+        Logger.info(url + " doesn't match /api")
         next()
         return
     }
 
-    console.info('Middleware: AUTH on /api')
+    Logger.info('Middleware: AUTH on /api')
     // console.info('headers send:', req.headers)
 
     let auth = req.header('Authorization') ?? ''
     let token = auth.replace('Bearer ', '')
 
-    console.info('Get headers, verifying token: ', token.substring(0, 10) + '...')
+    Logger.info('Get headers, verifying token: ' + token.substring(0, 10) + '...', 'AUTH')
 
     let verify = authService.verifyToken(token)
     if (!verify) {
@@ -31,7 +32,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         return;
     }
 
-    console.info('Token verified successfully');
+    Logger.info('Token verified successfully', 'AUTH');
 
     next()
 }

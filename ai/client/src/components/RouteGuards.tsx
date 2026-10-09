@@ -1,21 +1,37 @@
-import { type ComponentType } from 'preact'
 import { VNode } from 'preact'
-import { useUser } from '#front/hooks/useUser'
+import { useAuth } from '#front/hooks/useAuth.js'
+import { NotAuthorized } from '#front/pages/_403'
+import _ from 'lodash'
 
 /**
  * ROUTE GUARD
  * Restricts access to certain routes based on user authentication and roles.
  * Make redirection to login page if user is not authenticated or does not have the required roles.
  */
+// interface GuardProps {
+//     component: ComponentType
+// }
 
+export function RouteGuard({ children, roles }: { children: VNode, roles?: string[] }) {
 
-interface GuardProps {
-    component: ComponentType
-}
+    const userContext = useAuth()
 
-export function RouteGuard({ children, rights }: { children: VNode, rights?: string[] }) {
+    const verifyRights = (): boolean => {
+        if (!roles || roles.length === 0) {
+            return true
+        }
 
-    const user = useUser()
+        let userRights = _.map(userContext?.user?.roles ?? [], role => _.toLower(role))
+        let routeRights = _.map(roles ?? [], role => _.toLower(role))
+
+        return routeRights.some(role => userRights.includes(role))
+    }
+
+    if (!verifyRights()) {
+        return (
+            <><NotAuthorized /></>
+        )
+    }
 
     return (
         <>{children}</>

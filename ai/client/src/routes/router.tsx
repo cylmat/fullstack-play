@@ -10,12 +10,11 @@ import { NotFound } from '#front/pages/_404.js'
 import { RouteGuard } from '../components/RouteGuards'
 import { Secure } from '#front/pages/Secure.js'
 import { User } from '#front/pages/User.js'
-import { AuthenticationService } from '#front/services/AuthenticationService.js'
-import { anonymousUser, AuthContext } from '#front/providers/AuthProvider.js'
+import { AuthContext } from '#front/providers/AuthProvider.js'
 import { useContext } from 'preact/hooks'
 
 type PathType = {
-    path: string, component: any, right?: string[]
+    path: string, component: any, roles?: string[]
 }
 
 export function AppRouter() {
@@ -34,18 +33,17 @@ export function AppRouter() {
     // }, [history]);
 
     function handleLogout() {
-        const { setUser } = useContext(AuthContext);
-        AuthenticationService.logout();
-        setUser(anonymousUser);
+        const auth = useContext(AuthContext);
+        auth.logout();
         window.location.href = '/';
     }
 
     const ROUTES: PathType[] = [
         { path: '/', component: Home },
-        { path: '/admin', component: Secure, right: ['ADMIN'] },
+        { path: '/admin', component: Secure, roles: ['ADMIN', 'ADMIN2'] },
+        { path: '/user', component: User, roles: ['USER', 'USER2'] },
         { path: '/login', component: Login },
-        { path: '/logout', component: () => { handleLogout(); } },
-        { path: '/user', component: User, right: ['USER'] }
+        { path: '/logout', component: () => { handleLogout(); } }
     ]
 
     // <Route path={path} component={() => <Guard component={component} />} />
@@ -53,7 +51,7 @@ export function AppRouter() {
             <Router>
                 {ROUTES.map((route: PathType) => (
                         <Route path={route.path} component={() =>
-                            <RouteGuard key={route.path} rights={route.right}>
+                            <RouteGuard key={route.path} roles={route.roles}>
                                 {route.component()}
                             </RouteGuard>}
                         />

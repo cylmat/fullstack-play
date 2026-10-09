@@ -1,17 +1,15 @@
-import { useUser } from '#front/hooks/useUser'
+import { useAuth } from '#front/hooks/useAuth.js'
 import { useLocation } from 'preact-iso'
 
 export function Header() {
     const { url } = useLocation()
-    const { user, isUserLoading } = useUser()
-
-    let isAuth = user;
+    const { user, isUserLoading } = useAuth()
 
     return (
         <header class="d-flex justify-content-between">
             <nav>
                 {!isUserLoading &&
-                    (isAuth
+                    (user
                         ? <a href="/logout" class={url == '/logout' ? 'active' : ''}>
                             Logout
                         </a>

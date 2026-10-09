@@ -1,4 +1,4 @@
-import { DB_AUTH_TOKEN_KEY, STORAGE_USERNAME_KEY } from '#front/constants/app.js';
+import { DB_AUTH_TOKEN_KEY } from '#front/constants/app.js';
 import { FetchClient } from '#front/core/FetchClient.js';
 import { Storage } from '#front/core/Storage'
 import { AppUser } from '#front/types/types.js';
@@ -7,7 +7,7 @@ export class AuthenticationService {
 
     // Get token
     public static async authenticate(username: string): Promise<AppUser | null> {
-        const url = '/api/token'
+        const url = '/token'
 
         const { jwt } = await FetchClient.get<{ jwt: string }>(url, `username=${username}`)
 
@@ -19,7 +19,7 @@ export class AuthenticationService {
 
         this.setStoreCurrentToken(jwt)
 
-        return this.getCurrentUser()
+        return await this.getCurrentUser()
     }
 
     public static async getCurrentUser(): Promise<AppUser | null> {
@@ -42,13 +42,13 @@ export class AuthenticationService {
 
     public static logout(): void {
         Storage.removeLocalItem(DB_AUTH_TOKEN_KEY)
+        Storage.removeLocalItem('username')
     }
 
     // Private
 
     private static createUserFromResponse(response: { username: string; roles: string[] }): AppUser {
         return {
-            isAuthenticated: true,
             username: response.username,
             roles: response.roles
         }
@@ -59,7 +59,7 @@ export class AuthenticationService {
     }
 
     private static getStoreCurrentToken(): string | null {
-        return Storage.getLocalItem<string | null>(DB_AUTH_TOKEN_KEY+'t')
+        return Storage.getLocalItem<string | null>(DB_AUTH_TOKEN_KEY)
     }
 
 

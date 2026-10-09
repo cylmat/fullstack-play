@@ -3,13 +3,13 @@ import type { User } from "#app/models/user.ts"
 export const ADMIN: User = {
     id: '1',
     username: 'admin-username',
-    roles: ['admin'],
+    roles: ['admin', 'user', 'read'],
 }
 
 const USER: User = {
     id: '2',
     username: 'user-username',
-    roles: ['user'],
+    roles: ['user', 'read'],
 }
 
 const READ: User = {

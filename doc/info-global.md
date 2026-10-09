@@ -88,3 +88,53 @@ Le navigateur envoie automatiquement le cookie ; le backend le vérifie et renvo
 Le backend renouvelle aussi le refresh token et invalide l’ancien. Si le refresh token est invalide ou expiré, l’utilisateur doit se reconnecter.
 
 - Au démarrage de l’application, appeler /auth/refresh pour récupérer un access token, puis /me pour recréer l’utilisateur. Vous pouvez aussi appeler le refresh automatiquement lorsqu’une requête API reçoit un 401, puis réessayer cette requête une fois.
+
+## Context
+
+Context (the Provider)
+Put here anything that is state, or that must exist exactly once for the whole app:
+
+user (state)
+isUserLoading (state)
+Side effects that should run once, not once per component: restoreSession() on startup
+Anything that mutates state if you want to keep setUser private (see below)
+
+Why not put everything in the context?
+Every component that consumes the context re-renders when the context value changes. Putting derived stuff in the context doesn't add much, and bloats the value object. Derived logic costs almost nothing to compute in the hook.
+
+## Hook
+
+Hook (useAuth)
+Put here anything that is:
+
+Derived from context values: isGranted, isAuthenticated, isAdmin
+A thin wrapper around a service + setUser: login, logout
+A guard: the "must be used under a Provider" check
+
+Why not put everything in the hook?
+State in a hook is per component, not shared. If useAuth had its own useState(user), every component calling it would get a separate user. Shared state must live in the Provider.
+
+## Mount/Unmount
+
+
+- Mount: The component renders for the first time and is added to the DOM
+- Unmount: The component is removed from the DOM
+- It's only needed in a specific situation: an effect that does async work and then sets state,
+    in a component that can unmount before the work finishes.
+
+```js
+useEffect(() => {
+  fetchSomething().then(data => setData(data)); // async -> then setState
+}, []);
+```
+Solutions
+1. Use a data-fetching library (TanStack Query, SWR, RTK Query)
+2. Use AbortController to actually cancel the request 
+
+```js
+useEffect(() => {
+  const controller = new AbortController();
+  fetch(url, { signal: controller.signal }).then(...).catch(...);
+  return () => controller.abort();
+}, [url]);
+```
