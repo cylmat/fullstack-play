@@ -8,7 +8,7 @@
 		"build": "npm run build:client && npm run build:server",
 		"build:client": "tsc -b && vite build --config vite.client.config.ts",
 		"build:server": "tsc --project server && tsc --build server",
-		"prettier": "npm run prettier:client & npm rnu prettier:server",
+		"prettier": "npm run prettier:client & npm run prettier:server",
 		"prettier:client": "prettier client",
 		"prettier:server": "prettier server",
 		"fix": "npm run fix:client & npm run fix:server",

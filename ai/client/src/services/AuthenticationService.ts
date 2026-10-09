@@ -12,7 +12,9 @@ export class AuthenticationService {
         const { jwt } = await FetchClient.get<{ jwt: string }>(url, `username=${username}`)
 
         if (!jwt) {
-            throw new Error('Authentication failed: No JWT returned from server.')
+            console.error('Authentication failed: No JWT returned from server.')
+            this.logout()
+            return null
         }
 
         this.setStoreCurrentToken(jwt)
@@ -53,7 +55,7 @@ export class AuthenticationService {
     }
 
     private static setStoreCurrentToken(token: string): void {
-        Storage.setLocalItem(DB_AUTH_TOKEN_KEY+'t', token)
+        Storage.setLocalItem(DB_AUTH_TOKEN_KEY, token)
     }
 
     private static getStoreCurrentToken(): string | null {

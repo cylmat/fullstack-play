@@ -1,4 +1,4 @@
-import { AuthContext } from '#front/providers/AuthProvider.js';
+import { anonymousUser, AuthContext } from '#front/providers/AuthProvider.js';
 import { useContext, useEffect } from 'preact/hooks';
 import { AuthenticationService } from '#front/services/AuthenticationService.js';
 import './login.scss'
@@ -8,7 +8,7 @@ export function Login() {
 
     const handleButtonClick = async (username: string) => {
         let userFromBackend = await AuthenticationService.authenticate(username);
-        setUser(userFromBackend);
+        setUser(userFromBackend ?? anonymousUser);
     }
 
     return (
