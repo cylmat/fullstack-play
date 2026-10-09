@@ -1,3 +1,6 @@
+------------------
+----- PRIO -------
+------------------
 
 JS
 - [modules](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules)
@@ -12,7 +15,9 @@ MCP
 - https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/get-started/first-client.md
 
 
-
+-------------------------
+-------- OTHER ----------
+-------------------------
 
 ## Amz
 
@@ -30,28 +35,41 @@ MCP
 - [moz - flex basics](https://developer.mozilla.org/fr/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts)
 - [moz - flex layout](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout)
 
-## Js
+## Js ##
 
 - [jstuto - prototype](https://www.javascripttutorial.net/javascript-prototype/)
 - [medium - reactor pattern](https://medium.com/m/global-identity-2?redirectUrl=https%3A%2F%2Fjavascript.plainenglish.io%2Fthe-reactor-pattern-in-node-js-behind-the-magic-of-asynchronous-i-o-bf88d4368ac3)
 - [codeur - node frame](https://www.codeur.com/blog/nodejs-framework/)
 - [devto - modules](https://dev.to/iggredible/what-the-heck-are-cjs-amd-umd-and-esm-ikm)
 
-## MCP
+## MCP ##
 
 - [mcp - start](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro)
 - [medium - build mcp server](https://heeki.medium.com/building-an-mcp-server-as-an-api-developer-cfc162d06a83)
 
-## php
+## php ##
 
 - [devto - websocket php](https://dev.to/robertobutti/websocket-with-php-4k2c)
 
-## Secure
+## Secure ##
 
 - [gfg - oauth expressjs](https://www.geeksforgeeks.org/node-js/implementing-an-oauth-server-with-nodejs-and-express/)
 - [permify - oauth expressjs](https://permify.co/post/oauth-20-implementation-nodejs-expressjs/)
 - [devto - oauth expresdjs](https://dev.to/sameer_saleem/the-ultimate-guide-to-oauth-with-expressjs-2025-edition-5137)
 - [owasp - webgoat](https://owasp.org/projects/webgoat)
+
+Auth
+- https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+- https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+- https://www.rfc-editor.org/rfc/rfc10017.html
+- https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+- https://github.com/JonPSmith/AuthPermissions.AspNetCore/wiki/JWT-Token-refresh-explained
+
+Refresh token
+- https://dev.to/ajitforger97/building-refreshing-jwt-tokens-in-nodejs-a-complete-guide-3g8g
+
+Guard routes
+- https://www.reacttutorial.com/protected-routes-authentication-in-react-router
 
 OTP
 - [moz otp](https://developer.mozilla.org/en-US/docs/Web/Security/Authentication/OTP)
@@ -60,10 +78,13 @@ JWT
 
 - [laconsole - expressjs jwt](https://laconsole.dev/formations/express/securiser-api-rest-jwt)
 
-## Web
+## Web ##
 
 - [moz - web auth api](https://developer.mozilla.org/fr/docs/Web/API/Web_Authentication_API)
 - [alsa - web workers](https://www.alsacreations.com/article/lire/1902-Les-Web-Workers-en-action.html)
+
+Test - mock api
+- https://github.com/typicode/json-server
 
 ---
 
@@ -73,10 +94,9 @@ JWT
 
 
 
-
-
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 
 [DONE]
 JWT
