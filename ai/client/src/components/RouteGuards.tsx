@@ -21,8 +21,8 @@ export function RouteGuard({ children, roles }: { children: VNode, roles?: strin
             return true
         }
 
-        let userRights = _.map(userContext?.user?.roles ?? [], role => _.toLower(role))
-        let routeRights = _.map(roles ?? [], role => _.toLower(role))
+        let userRights = _.map(userContext?.user?.roles ?? [], role => role.toUpperCase())
+        let routeRights = _.map(roles ?? [], role => role.toUpperCase())
 
         return routeRights.some(role => userRights.includes(role))
     }

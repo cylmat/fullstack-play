@@ -3,31 +3,30 @@ import { useLocation } from 'preact-iso'
 
 export function Header() {
     const { url } = useLocation()
-    const { user, isUserLoading } = useAuth()
+    const { user, isGranted } = useAuth()
 
     return (
         <header class="d-flex justify-content-between">
             <nav>
-                {!isUserLoading &&
-                    (user
-                        ? <a href="/logout" class={url == '/logout' ? 'active' : ''}>
-                            Logout
-                        </a>
-                        : <a href="/login" class={url == '/login' ? 'active' : ''}>
-                            Login
-                        </a>)}
+                {user
+                    ? <a href="/logout" class={url == '/logout' ? 'active' : ''}>
+                        Logout
+                    </a>
+                    : <a href="/login" class={url == '/login' ? 'active' : ''}>
+                        Login
+                    </a>}
             </nav>
-            <div>{!isUserLoading ? user?.username : null}</div>
+            <div>{user?.username}</div>
             <nav>
                 <a href="/" class={url == '/' ? 'active' : ''}>
                     Home
                 </a>
-                <a href="/user" class={url == '/user' ? 'active' : ''}>
+                {isGranted('USER') && <a href="/user" class={url == '/user' ? 'active' : ''}>
                     User
-                </a>
-                <a href="/admin" class={url == '/admin' ? 'active' : ''}>
+                </a>}
+                {isGranted('ADMIN') && <a href="/admin" class={url == '/admin' ? 'active' : ''}>
                     Admin
-                </a>
+                </a>}
                 <a href="/404" class={url == '/404' ? 'active' : ''}>
                     404
                 </a>

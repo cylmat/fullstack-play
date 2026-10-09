@@ -10,7 +10,15 @@ A thin wrapper around a service + setUser: login, logout
 A guard: the "must be used under a Provider" check
 */
 
-export function useAuth(): any {
+type UseAuthReturn = {
+    user: any,
+    login: (username: string) => Promise<void>,
+    logout: () => void,
+    isGranted: (role: string) => boolean,
+    isAuthenticated: boolean,
+};
+
+export function useAuth(): UseAuthReturn {
     const userContext = useContext(AuthContext);
 
     if (!userContext) {
@@ -21,15 +29,17 @@ export function useAuth(): any {
 
     // useCallback avoid recreate function each time
     const isGranted = useCallback(
-      (role: string): boolean => !!user?.roles?.includes(role)
-    , [user]);
+        (role: string): boolean => {
+            const roles = user?.roles?.map(role => role.toUpperCase()) ?? []
+            return !!roles.includes(role.toUpperCase())
+    }, [user]);
 
     return {
         user,
-        isGranted,
-        isAuthenticated: !!user,
         login,
         logout,
+        isGranted,
+        isAuthenticated: !!user,
     };
 }
 

@@ -35,19 +35,17 @@ Anything that mutates state if you want to keep setUser private (see below)
  */
 
 /**
- * STATE: data, loading, error, change state (login/logout)
+ * STATE: data, change state (login/logout), maybe ~loading, ~error..
  */
 export type AppUserContext = {
   // Login/logout instead of setUser avoid inconsistent state
   user: AppUser | null;
-  isUserLoading: boolean;
   login: (username: string) => Promise<void>;
   logout: () => void;
 };
 
 export const AuthContext = createContext<AppUserContext>({
     user: null,
-    isUserLoading: true,
     login: async () => {},
     logout: () => {},
 });
@@ -89,10 +87,13 @@ export function AuthProvider(props: { children: any }) {
 
     const value = useMemo(() => ({
       user,
-      isUserLoading,
       login,
       logout
-    }), [user, isUserLoading]);
+    }), [user]);
+
+    if (isUserLoading) {
+        return null;
+    }
 
     return (
         <AuthContext.Provider value={value}>
