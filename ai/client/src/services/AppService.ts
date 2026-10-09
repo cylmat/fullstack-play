@@ -12,8 +12,7 @@ type ChatResponse = {
 export class AppService {
     public static async sendMessage(message: string, useType: string): Promise<string> {
 
-        // @todo use hook
-        const jwt = AuthenticationService.getCurrentToken()
+        const jwt = AuthenticationService.getStoreCurrentToken()
 
         try {
             let response = await FetchClient.post<ChatResponse>(

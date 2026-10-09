@@ -45,6 +45,10 @@ export class AuthenticationService {
         Storage.removeLocalItem('username')
     }
 
+    public static getStoreCurrentToken(): string | null {
+        return Storage.getLocalItem<string | null>(DB_AUTH_TOKEN_KEY)
+    }
+
     // Private
 
     private static createUserFromResponse(response: { username: string; roles: string[] }): AppUser {
@@ -56,10 +60,6 @@ export class AuthenticationService {
 
     private static setStoreCurrentToken(token: string): void {
         Storage.setLocalItem(DB_AUTH_TOKEN_KEY, token)
-    }
-
-    private static getStoreCurrentToken(): string | null {
-        return Storage.getLocalItem<string | null>(DB_AUTH_TOKEN_KEY)
     }
 
 
