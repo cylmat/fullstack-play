@@ -149,18 +149,8 @@ js-down:
 # SYMFONY #
 
 sym-up:
-	docker compose --profile symfony up --build -d
+	HOST_VOLUME=./apps/symfony docker compose --profile php up --build -d
 	@echo 'To make Symfony assets displayed, use "make sym-build"'
-
-sym-bash:
-	docker exec -it fs-php bash
-
-sym-bash-root:
-	docker exec -it -u root fs-php bash
-
-sym-build:
-	docker exec -it fs-php pkill webpack || true
-	docker exec -it -u 1000 fs-php npm run build
 
 sym-start:
 	@echo 'Should run "composer install"'
@@ -180,11 +170,8 @@ sym-fixtures:
 	docker exec -it -u 1000 fs-php bin/console doctrine:fixtures:load -n || true
 
 sym-test:
-	docker exec -it fs-php  composer run-script test
+	docker exec -it fs-php composer run-script test
 
-sym-stop:
-	docker exec -it -u 1000 fs-php symfony server:stop
+sym-build:
 	docker exec -it fs-php pkill webpack || true
-
-sym-down:
-	docker compose --profile symfony down
+	docker exec -it -u 1000 fs-php npm run build

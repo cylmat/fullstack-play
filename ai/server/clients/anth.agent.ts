@@ -47,7 +47,7 @@ export default async function anthropicAgent(prompt: string): Promise<any> {
         mcpServers: {
             filesystem: {
                 type: "http", // or streamable-http
-                url: "http://fs-ai-mcpfilesystem:8123/mcp",
+                url: "http://fs-ai-mcpfilesystem:8523/mcp",
             }
 
             // @doc Claude DOC MCP server

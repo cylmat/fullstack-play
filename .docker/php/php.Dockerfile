@@ -57,7 +57,7 @@ RUN symfony completion bash | tee /etc/bash_completion.d/symfony
 ################
 
 # Composer install
-COPY ./symfony/composer.sh /tmp/composer.sh
+COPY ./php/composer.sh /tmp/composer.sh
 RUN chmod +x /tmp/composer.sh && /tmp/composer.sh
 
 
@@ -279,11 +279,31 @@ WORKDIR /var/www/application
 
 
 
+#############
+### Clean ###
+#############
+
+USER root:root
+
+RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
+USER user:user
+
+
+
+
+
+
+
+
+
+
+FROM core AS ext
+
 ##########
 # SWOOLE #
 ##########
 
-FROM core AS ext
 
 USER root:root
 
@@ -333,17 +353,6 @@ WORKDIR /var/www/application
 ##############
 
 
-
-
-#############
-### Clean ###
-#############
-
-USER root:root
-
-RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
-
-USER user:user
 
 
 ### Ssh ###

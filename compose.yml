@@ -9,30 +9,29 @@ services:
     #######
     # PHP #
     # docker run -it php:latest bash
+    # docker build -f ".docker/php/php.Dockerfile" --pull -t fs-php:latest ".docker"
     #######
 
     php:
         container_name: fs-php
-        # docker build -f ".docker/symfony/php.Dockerfile" --pull -t fs-php:latest ".docker"
         image: fs-php:latest
         # build:
         #     context: .docker
         #     dockerfile: php.Dockerfile
-        restart: always
         user: 1000:1000
         environment:
             MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
             REDIS_DSN: 'redis://redis:6379/1'
         ports:
             - 8101:81   # symfony server
-            - 8201:8080 # npm dev server (must match webpack "options.port" config)
+            - 8102:8080 # npm dev server (must match webpack "options.port" config)
         command: sleep infinity
         volumes:
-            - ./apps/symfony:/var/www/application
-            - .docker/symfony/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
+            - ${HOST_VOLUME:-./not}:/var/www/application
+            - .docker/php/server/php/conf.d/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini:ro
             # - .docker/symfony/server/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
         profiles:
-          - symfony
+          - php
 
 
     ########
@@ -42,10 +41,7 @@ services:
     node:
         #image: node:latest
         container_name: fs-node
-        build:
-            context: .docker
-            dockerfile: node.Dockerfile
-        restart: always
+        image: fs-node:latest
         user: 1000:1000
         working_dir: /var/www/application
         volumes:

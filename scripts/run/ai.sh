@@ -1,20 +1,17 @@
 #!/bin/bash
 
+LIST_COMMANDS="up build-image bash bash-root install start start-client start-server test test-client test-server stop down"
+
 if [[
     "$1" == "ls" ||
     "$1" == "" ||
     "$1" == "help"
 ]]; then
-    echo ""
     echo 'Listing available "Run Script" AI commands:'
-    echo "up"
-    echo "build-image"
-    echo "bash"
-    echo "bash-root"
-    echo "install"
-    echo "start"
-    echo "stop"
-    echo "down"
+    echo ""
+    for cmd in $LIST_COMMANDS; do
+        echo "$cmd"
+    done
     exit 0
 fi
 
@@ -48,20 +45,20 @@ if [ "$1" == "start" ]; then
     bash $0 up
     bash $0 stop
 
-	echo "Node JS client is available at http://localhost:5111"
-    echo "Node JS server is available at http://localhost:5112"
+	echo "Node JS client is available at http://localhost:5511"
+    echo "Node JS server is available at http://localhost:5512"
 	docker exec -it -u 1000 fs-ai-node npm run dev
     exit 0
 fi
 
 if [ "$1" == "start-client" ]; then
-	echo "Node JS client is available at http://localhost:5111"
+	echo "Node JS client is available at http://localhost:5511"
 	docker exec -it -u 1000 fs-ai-node npm run dev:client
     exit 0
 fi
 
 if [ "$1" == "start-server" ]; then
-	echo "Node JS client is available at http://localhost:5112"
+	echo "Node JS client is available at http://localhost:5512"
 	docker exec -it -u 1000 fs-ai-node npm run dev:server
     exit 0
 fi
@@ -99,7 +96,7 @@ fi
 
 
 
-echo "Error: Run AI '$1' not found!"
+echo "Error: Run AI '$1' not found! Availables are [$LIST_COMMANDS]"
 exit 1
 
 # getopts "m:" opt

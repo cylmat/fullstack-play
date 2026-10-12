@@ -2,11 +2,14 @@
 
 # Usage: ./scripts/git.sh push <commit message>
 
+LIST_COMMANDS="commit push"
+
 if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
-    echo ""
     echo 'Listing available "Run Script" GIT commands:'
-    echo "commit"
-    echo "push"
+    echo ""
+    for cmd in $LIST_COMMANDS; do
+        echo "$cmd"
+    done
     exit 0
 fi
 
@@ -48,7 +51,7 @@ if [ "$1" == "push" ]; then
     exit 0
 fi
 
-echo "Error: Run GIT '$1' not found!"
+echo "Error: Run GIT '$1' not found! Availables are [$LIST_COMMANDS]"
 exit 1
 
 # getopts "m:" opt
