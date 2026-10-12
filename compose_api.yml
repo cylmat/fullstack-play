@@ -18,7 +18,7 @@ services:
             MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
             REDIS_DSN: 'redis://redis:6379/1'
         ports:
-            - 8411:81   # api server
+            - 8111:81   # api server
         command: sleep infinity
         volumes:
             - ./api:/var/www/application

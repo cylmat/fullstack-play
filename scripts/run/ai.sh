@@ -45,20 +45,20 @@ if [ "$1" == "start" ]; then
     bash $0 up
     bash $0 stop
 
-	echo "Node JS client is available at http://localhost:5511"
-    echo "Node JS server is available at http://localhost:5512"
+	echo "Node JS client is available at http://localhost:5111"
+    echo "Node JS server is available at http://localhost:5112"
 	docker exec -it -u 1000 fs-ai-node npm run dev
     exit 0
 fi
 
 if [ "$1" == "start-client" ]; then
-	echo "Node JS client is available at http://localhost:5511"
+	echo "Node JS client is available at http://localhost:5111"
 	docker exec -it -u 1000 fs-ai-node npm run dev:client
     exit 0
 fi
 
 if [ "$1" == "start-server" ]; then
-	echo "Node JS client is available at http://localhost:5512"
+	echo "Node JS server is available at http://localhost:5112"
 	docker exec -it -u 1000 fs-ai-node npm run dev:server
     exit 0
 fi

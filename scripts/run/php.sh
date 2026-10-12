@@ -2,7 +2,10 @@
 
 # Usage: ./scripts/php.sh <command> [args]
 
-LIST_COMMANDS="build-image bash-alone rm-alone up bash bash-root stop down"
+LIST_COMMANDS="\
+ls build-image bash-alone rm-alone \
+php-up \
+bash bash-root down"
 
 if [ "$1" == "ls" ] || [ "$1" == "" ] || [ "$1" == "help" ]; then
     echo 'Listing available "Run Script" PHP commands:'
@@ -37,10 +40,24 @@ fi
 ### UP ###
 ##########
 
-if [ "$1" == "up" ]; then
-    docker compose -f "compose.yml" --profile php up --build -d
+if [ "$1" == "php-up" ]; then
+    HOST_VOLUME=./apps/php docker compose -f "compose.yml" --profile php up --build -d
     exit 0
 fi
+
+if [ "$1" == "php-start" ]; then
+    docker exec fs-php php -S 0.0.0.0:80 -t /var/www/application
+    exit 0
+fi
+
+if [ "$1" == "php-stop" ]; then
+    docker exec fs-php pkill -f php
+    exit 0
+fi
+
+##############
+### DOCKER ###
+##############
 
 if [ "$1" == "bash" ]; then
     docker exec -it -u 1000 fs-php bash
@@ -49,12 +66,6 @@ fi
 
 if [ "$1" == "bash-root" ]; then
     docker exec -it -u root fs-php bash
-    exit 0
-fi
-
-if [ "$1" == "stop" ]; then
-    docker exec -it fs-php symfony server:stop
-    docker exec -it fs-php pkill webpack || true
     exit 0
 fi
 

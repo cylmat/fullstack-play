@@ -23,8 +23,8 @@ services:
             MYSQL_DSN: 'mysql://user:pass@mysql:3306/symfony?serverVersion=9.7'
             REDIS_DSN: 'redis://redis:6379/1'
         ports:
-            - 8101:81   # symfony server
-            - 8102:8080 # npm dev server (must match webpack "options.port" config)
+            - 8111:80   # symfony server
+            - 8888:8080 # npm dev server (must match webpack "options.port" config)
         command: sleep infinity
         volumes:
             - ${HOST_VOLUME:-./not}:/var/www/application
@@ -48,7 +48,7 @@ services:
             - ${HOST_VOLUME:-./not}:/var/www/application
         command: sleep infinity
         ports:
-            - 5101:5173 # npm dev server
+            - 5111:5173 # npm dev server
         profiles:
           - node
 

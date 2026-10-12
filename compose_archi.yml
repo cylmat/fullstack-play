@@ -15,7 +15,7 @@ services:
         image: fs-php:latest
         user: 1000:1000
         ports:
-            - 8211:81
+            - 8111:81
         command: sleep infinity
         volumes:
             - ./archi:/var/www/application

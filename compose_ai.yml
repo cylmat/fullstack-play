@@ -21,8 +21,8 @@ services:
             - ./ai:/var/www/application
             - ./.docker/config/keys:/var/www/application/config/keys
         ports:
-            - 5511:5173
-            - 5512:3000
+            - 5111:5173
+            - 5112:3000
         working_dir: /var/www/application
         command: sleep infinity
         profiles:
@@ -32,7 +32,7 @@ services:
     local-mcp-filesystem:
         image: ghcr.io/njbrake/filesystem-mcp-server:main
         container_name: fs-ai-mcpfilesystem
-        ports: [8511:8123]
+        ports: [8111:8123]
         volumes:
             - ./ai/data:/data
         profiles:

@@ -152,6 +152,10 @@ sym-up:
 	HOST_VOLUME=./apps/symfony docker compose --profile php up --build -d
 	@echo 'To make Symfony assets displayed, use "make sym-build"'
 
+sym-build:
+	docker exec -it fs-php pkill webpack || true
+	docker exec -it -u 1000 fs-php npm run build
+
 sym-start:
 	@echo 'Should run "composer install"'
 	docker exec -it -u 1000 fs-php symfony serve --listen-ip=0.0.0.0 --port=81 -d
@@ -172,6 +176,6 @@ sym-fixtures:
 sym-test:
 	docker exec -it fs-php composer run-script test
 
-sym-build:
+sym-stop:
+	docker exec -it fs-php symfony server:stop
 	docker exec -it fs-php pkill webpack || true
-	docker exec -it -u 1000 fs-php npm run build
