@@ -80,8 +80,8 @@ db.documentsRag.createSearchIndex(
 // Use LANGCHAIN
 // @doc https://docs.langchain.com/oss/javascript/integrations/vectorstores/mongodb_atlas
 
-// MANUAL EMBEDDING:       npm install @langchain/mongodb mongodb @langchain/core @langchain/anthropic
-// AUTO MONGODB EMBEDDING: npm install @langchain/mongodb mongodb @langchain/core
+// MANUAL EMBEDDING:       npm install langchain @langchain/mongodb @langchain/core @langchain/anthropic
+// AUTO MONGODB EMBEDDING: npm install langchain @langchain/mongodb @langchain/core
 
 
 
