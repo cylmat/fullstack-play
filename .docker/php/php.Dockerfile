@@ -10,7 +10,8 @@
 
 ### Debian GNU/Linux 11 (bullseye) ###
 
-FROM php:8.5 AS core
+# php:8.5
+FROM php:latest AS core
 
 # root:root is 0
 

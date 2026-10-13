@@ -32,16 +32,10 @@ if [ "$1" == "commit" ]; then
 fi
 
 if [ "$1" == "push" ]; then
-    MSG="Update by make"
-    if [ $# -ge 2 ]; then
-        MSG="${@:2}"
-    fi
+
+    bash ${0} commit "${@:2}"
 
     CMD="
-        git config user.name \"\$GIT_USER\" &&
-        git config user.email \"\$GIT_EMAIL\" &&
-        git add . || true &&
-        git commit -m \"$MSG\" &&
         git pull --rebase &&
         git push
     "

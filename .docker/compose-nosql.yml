@@ -9,8 +9,9 @@ networks:
 
 services:
 
+    # mongo:8
     mongo:
-        image: mongo:8
+        image: mongo:latest
         restart: always
         container_name: fs-mongo
         environment:
@@ -26,8 +27,9 @@ services:
 
     ### ADMIN ###
 
+    # mongo-express:1
     mongo-express:
-        image: mongo-express:1
+        image: mongo-express:latest
         restart: always
         container_name: fs-mongoexpress
         ports:
@@ -50,8 +52,9 @@ services:
 
     # https://hub.docker.com/couchdb
     # couchdb.apache.org
+    # couchdb:3
     couchdb:
-        image: couchdb:3
+        image: couchdb:latest
         container_name: fs-couchdb
         restart: always
         ports: [8803:5984]

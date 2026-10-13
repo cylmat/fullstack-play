@@ -1,6 +1,132 @@
 CURRENT WORK
 ------------
 
+https://docs.langchain.com/
+
+```
+npm install @langchain/mongodb @langchain/openai @langchain/textsplitters langchain mongodb dotenv
+npm install pdf-parse
+```
+
+ingest
+```
+import { MongoClient } from "mongodb";
+import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+import { TextLoader } from "langchain/document_loaders/fs/text";
+import path from "path";
+import "dotenv/config"; // Charge vos variables d'environnement (MONGODB_URI, OPENAI_API_KEY)
+
+// 1. Configuration
+const client = new MongoClient(process.env.MONGODB_URI);
+const dbName = "rag_database";
+const collectionName = "knowledge_base";
+
+async function run() {
+  try {
+    console.log("Connexion à MongoDB...");
+    await client.connect();
+    
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    // 2. Charger le fichier de données (Ex: un fichier markdown ou texte)
+    console.log("Chargement du fichier...");
+    const loader = new TextLoader(path.resolve("./data/document.txt"));
+    const docs = await loader.load();
+
+    // 3. Découper le texte en morceaux (Chunking)
+    console.log("Découpage du texte en segments...");
+    const splitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+    });
+    const splitDocs = await splitter.splitDocuments(docs);
+
+    // 4. Initialiser le modèle d'embeddings d'OpenAI
+    const embeddings = new OpenAIEmbeddings({
+      modelName: "text-embedding-3-small", 
+    });
+
+    // 5. Stocker les documents et générer les vecteurs directement dans MongoDB
+    console.log(`Importation de ${splitDocs.length} segments dans MongoDB...`);
+    await MongoDBAtlasVectorSearch.fromDocuments(splitDocs, embeddings, {
+      collection: collection,
+      indexName: "vector_index", // Doit correspondre au nom de l'index Atlas
+      textKey: "text",           // Champ où sera stocké le texte brut
+      embeddingKey: "embedding", // Champ où sera stocké le tableau de vecteurs
+    });
+
+    console.log("Importation réussie ! Vos données sont prêtes pour le RAG.");
+  } catch (error) {
+    console.error("Erreur lors de l'ingestion :", error);
+  } finally {
+    await client.close();
+  }
+}
+
+run();
+
+```
+
+```
+ recherche vectorielle sur MongoDB Atlas.
+1. Rendez-vous sur votre interface MongoDB Atlas.
+2. Allez dans l'onglet Search Indexes de votre cluster.
+3. Cliquez sur Create Search Index et sélectionnez le JSON Editor.
+4. Associez-le à votre collection (rag_database.knowledge_base).
+5. Collez la configuration JSON suivante (adaptée au modèle text-embedding-3-small qui génère 1536 dimensions) :
+
+{
+  "name": "vector_index",
+  "type": "vectorSearch",
+  "definition": {
+    "fields": [
+      {
+        "type": "vector",
+        "path": "embedding",
+        "numDimensions": 1536,
+        "similarity": "cosine"
+      }
+    ]
+  }
+}
+
+```
+
+retrieve
+```
+import { MongoClient } from "mongodb";
+import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
+import { OpenAIEmbeddings } from "@langchain/openai";
+
+const client = new MongoClient(process.env.MONGODB_URI);
+
+async function search() {
+  await client.connect();
+  const collection = client.db("rag_database").collection("knowledge_base");
+
+  const vectorStore = new MongoDBAtlasVectorSearch(new OpenAIEmbeddings({ modelName: "text-embedding-3-small" }), {
+    collection: collection,
+    indexName: "vector_index",
+    textKey: "text",
+    embeddingKey: "embedding",
+  });
+
+  // Exécuter une recherche de similarité
+  const query = "Quelle est la politique de l'entreprise sur le télétravail ?";
+  const results = await vectorStore.similaritySearch(query, 3); // Récupère les 3 meilleurs morceaux
+
+  console.log("Documents trouvés pour le contexte du RAG :");
+  console.log(results);
+
+  await client.close();
+}
+search();
+
+```
+
 ## AI ##
 
 Pour chaque projet, prépare :
@@ -75,21 +201,14 @@ Garde-fous à montrer
 
 
 
-current
+::current::
+ai
+-> mongodd, vectoriel,langchain
 - https://www.npmjs.com/package/mcp-local-search?activeTab=readme
 - typicode/lowdb: database for node
-- persist jwt
 - csrf
 - otp for connection
 - frontend save prompts conversation
-
-later
-- secure: OTP and MFA Authenticator
-- Ollama	: ollama.com
-- login button on/off
-- Fastify, hono, koa, hapi
-- Robo, gulp
-
 
 **front**
 - css chatty (box..)
@@ -97,6 +216,7 @@ later
 - js modules
 
 **php**
+- messenger (rabbitmq)
 - symfony security
 - patterns symfony
 - psr7/15
@@ -106,6 +226,12 @@ later
 architecture book Uncle BOB
 finish Redis "Seven Databases in Seven Weeks" (Luc Perkins)
 
+later
+- secure: OTP and MFA Authenticator
+- Ollama	: ollama.com
+- login button on/off
+- Fastify, hono, koa, hapi
+- Robo, gulp
 
 DONE
 ----
@@ -113,6 +239,7 @@ DONE
 **ai**
 front
 - tinybase
+- persist jwt localstorage
 back
 - Anthropic sdk
 - JWT Token

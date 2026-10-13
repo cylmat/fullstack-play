@@ -6,12 +6,11 @@ networks:
 
 services:
 
-    #######
+    ######
     # AI #
-    #######
+    ######
 
     ai-node:
-        # image: node:latest
         container_name: fs-ai-node
         image: fs-node:latest
         user: 1000:1000
@@ -25,6 +24,9 @@ services:
             - 5112:3000
         working_dir: /var/www/application
         command: sleep infinity
+        depends_on:
+            - local-mcp-filesystem
+            - mongo
         profiles:
             - ai
 
@@ -34,9 +36,47 @@ services:
         container_name: fs-ai-mcpfilesystem
         ports: [8111:8123]
         volumes:
-            - ./ai/data:/data
+            - ./ai/data/files:/data
         profiles:
             - ai
+
+    # @TODO github, draw.io
+    # @doc https://mcpservers.org/fr/servers/lgazo/drawio-mcp-server
+
+    # https://github.com/docker-library/mongo
+    # mongodb-atlas-local:7
+    # use mongodb-atlas-local to enable "document.createSearchIndex" command
+    mongo:
+        image: mongodb/mongodb-atlas-local:latest
+        container_name: fs-ai-mongo
+        environment:
+            MONGODB_INITDB_ROOT_USERNAME: root
+            MONGODB_INITDB_ROOT_PASSWORD: root
+            MONGODB_LOAD_SAMPLE_DATA: false
+        volumes:
+            # initialize scripts
+            - ./ai/data/mongo-init:/docker-entrypoint-initdb.d:ro
+        ports:
+        - 27111:27017
+        profiles:
+            - ai
+            - ai-db
+
+    mongo-express:
+        image: mongo-express:latest
+        container_name: fs-ai-mongoexpress
+        ports:
+        - 8181:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+            ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+            ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017?authSource=admin
+            ME_CONFIG_BASICAUTH: false
+        depends_on:
+            - mongo
+        profiles:
+            - ai
+            - ai-db
 
 
     # https://hub.docker.com/categories/machine-learning-and-ai
