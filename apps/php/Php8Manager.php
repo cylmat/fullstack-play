@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MainBundle\Manager;
+namespace App;
 
 use Attribute;
 
@@ -27,7 +27,7 @@ class Php8Manager
         $reflectionAttribute = new \ReflectionClass(Testing::class);
         $methodWithAttribute = $reflectionAttribute->getMethod('usingTest')->getAttributes(SetUpAttributeUsage::class)[0];
         $matching = match ('one') { 'one' => "Displaying", 'two' => "Error", };
-        $nullSafe = $reflectionAttribute?->getConstant('NON_EXISTENT_CONSTANT');
+        $country = (null)?->user; // null, no error thrown
         $stringCompare = 0 == 'foobar'; // false
         // $strlenType = strlen([]);
 
@@ -43,7 +43,7 @@ class Php8Manager
             'Nullsafe Operator' => '$country = $session?->user?->getAddress()?->country;',
             'Saner string to number comparisons' => "0 == 'foobar' // false",
             'Consistent type errors' => 'strlen([]); // TypeErrorException',
-            'JIT compilation' => null,
+            'JIT compilation' => 1,
             'Improve' => 'mixed, return static',
             'NEW' => 'Weak Map, StringableInterface, str_contains(), str_starts_with(), str_ends_with(), fdiv()',
         ];

@@ -40,18 +40,34 @@ fi
 ### UP ###
 ##########
 
-if [ "$1" == "php-up" ]; then
-    HOST_VOLUME=./apps/php docker compose -f "compose.yml" --profile php up --build -d
+if [ "$1" == "up" ]; then
+    if [ -z "$2" ]; then
+        APP_DIR="./apps/php"
+    elif [ "$2" == "symfony" ]; then
+        APP_DIR="./apps/$2"
+    else
+        echo "Error: Run php 'up $2' not found! Availables are ['', symfony]"
+        exit 1
+    fi
+    HOST_VOLUME=$APP_DIR docker compose -f "compose.yml" --profile php up --build -d
     exit 0
 fi
 
-if [ "$1" == "php-start" ]; then
-    docker exec fs-php php -S 0.0.0.0:80 -t /var/www/application
+if [ "$1" == "start" ]; then
+    if [ -z "$2" ]; then
+        docker exec fs-php php -S 0.0.0.0:80 -t /var/www/application
+    elif [ "$2" == "symfony" ]; then
+        docker exec -it -u 1000 fs-php symfony serve --listen-ip=0.0.0.0 --port=80 -d
+    else
+        echo "Error: Run php 'start $2' not found! Availables are ['', symfony]"
+        exit 1
+    fi
     exit 0
 fi
 
-if [ "$1" == "php-stop" ]; then
+if [ "$1" == "stop" ]; then
     docker exec fs-php pkill -f php
+    echo "PHP server stopped."
     exit 0
 fi
 
