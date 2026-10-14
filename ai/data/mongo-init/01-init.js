@@ -107,26 +107,28 @@ db.documentsRag.createSearchIndex(
 */
 
 // CLAUDE EMBEDDING
-```
-/* exemple
-import { ChatAnthropic } from "@langchain/anthropic";
-import { HumanMessage } from "@langchain/core/messages";
 
-// Initialize the Claude model node
-const model = new ChatAnthropic({
-  model: "claude-3-7-sonnet-latest", // or your preferred Claude model
-  temperature: 0.7,
-  apiKey: process.env.ANTHROPIC_API_KEY,
+/* exemple
+import { readFile } from "node:fs/promises";
+import { RecursiveCharacterTextSplitter } from "@langchain/core/text_splitter";
+
+const content = await readFile("./mon-fichier.txt", "utf8");
+
+const splitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 1000,   // taille maximale approximative de chaque chunk
+  chunkOverlap: 150 // chevauchement pour préserver le contexte
 });
 
-// Invoke the model
-const response = await model.invoke([
-  new HumanMessage("Hello Claude, describe an agent node in one sentence."),
-]);
+const chunks = await splitter.createDocuments([content]);
 
-console.log(response.content);
+console.log(`Nombre de chunks : ${chunks.length}`);
+
+chunks.forEach((doc, index) => {
+  console.log(`\n--- Chunk ${index + 1} ---\n`);
+  console.log(doc.pageContent);
+});
 */
-```
+
 
 
 // * SAMPLE * //

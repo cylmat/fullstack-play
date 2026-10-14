@@ -14,7 +14,7 @@ export const aiController = {
 
         const parsedBodyErrors = getParsedBodyErrors(req.body, CHAT_PROMPT_KEYS);
         if (parsedBodyErrors.length > 0) {
-            console.info('ai controller errors: ',parsedBodyErrors)
+            console.info('ai controller errors: ', parsedBodyErrors)
             return res.status(400).json({
                 error: `Champs non autorisés : [${parsedBodyErrors.join(', ')}] parmis [${CHAT_PROMPT_KEYS.join(', ')}]`
             });
@@ -25,14 +25,14 @@ export const aiController = {
                 error: `Le champ 'useType' doit être l'un de [${ANTHROPIC_TYPES.join(', ')}].`
             });
         }
-        console.info('ai controller useType: ',useType)
+        console.info('ai controller useType: ', useType)
 
         if (typeof message !== 'string') {
             return res.status(400).json({
                 error: 'Le champ "message" doit être une chaîne de caractères.'
             });
         }
-        console.info('ai controller message: ',message)
+        console.info('ai controller message: ', message)
 
         try {
             const datas: AnthropicServiceResult = await anthropicService(message, useType);

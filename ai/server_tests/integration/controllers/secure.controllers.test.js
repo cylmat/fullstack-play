@@ -1,5 +1,5 @@
 import { secureController } from '#app/controllers/secure.controller.ts';
-import { mockRequest, mockResponse } from 'mock-req-res';
+import { getMockReq, getMockRes } from '@jest-mock/express'
 
 describe('secureController Integration Tests', () => {
     test('secureController should be defined', () => {
@@ -12,33 +12,32 @@ describe('secureController Integration Tests', () => {
 
     test('secureController.getToken should return a token', async () => {
 
-        const req = mockRequest({ query: { username: 'user-username' } })
-        const res = mockResponse({
-            json: (data) => data
-            // json: jest.fn().mockResolvedValue({ jwt: 'mocked-jwt' })
-        })
+        const req = getMockReq({ query: { username: 'user-username' } })
+        const { res } = getMockRes()
+        res.json.mockImplementation((data) => data);
 
         const token = await secureController.getToken(req, res)
-        expect(res.status.calledWith(200)).toBe(true);
+        expect(res.status).toHaveBeenCalledWith(200)
         expect(token).toBeDefined()
         expect(typeof token).toBe('object')
         expect(token).toHaveProperty('jwt')
     })
 
     test('secureController.getCurrentUser should return the current user', async () => {
-        const _req = mockRequest({ query: { username: 'user-username' } })
-        const _res = mockResponse({ json: (data) => data })
+        const _req = getMockReq({ query: { username: 'user-username' } })
+        const { res: _res } = getMockRes()
+        _res.json.mockImplementation((data) => data);
 
         const token = await secureController.getToken(_req, _res)
 
-        const req = mockRequest()
+        const req = getMockReq()
         req.header = (key) => { return key === 'Authorization' ? `Bearer ${token.jwt}` : undefined }
-        const res = mockResponse({ json: (data) => data })
+        const { res } = getMockRes()
+        res.json.mockImplementation((data) => data);
 
         const currentUser = await secureController.getCurrentUser(req, res)
         expect(currentUser).toBeDefined()
         expect(typeof currentUser).toBe('object')
         expect(currentUser.username).toBe('user-username')
-
     })
 })

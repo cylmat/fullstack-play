@@ -38,6 +38,8 @@
 	"dependencies": {
 		"@anthropic-ai/claude-agent-sdk": "^0.3.280",
 		"@anthropic-ai/sdk": "^0.127.0",
+		"@langchain/core": "^1.2.17",
+		"@langchain/textsplitters": "^1.0.2",
 		"@modelcontextprotocol/sdk": "^1.30.0",
 		"cors": "^2.8.6",
 		"dotenv": "^18.0.1",
@@ -54,13 +56,14 @@
 	"//": [
 		{
 			"client": "preact, tinybase",
-			"server": "@anth/sdk, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
+			"server": "@anth/sdk, @langchain/core, @mcp/sdk, cors, dotenv, express, jsonwebtoken"
 		}
 	],
 	"devDependencies": {
 		"@babel/core": "^7.29.7",
 		"@babel/preset-env": "^7.29.7",
 		"@babel/preset-typescript": "^7.29.7",
+		"@jest-mock/express": "^3.0.0",
 		"@preact/preset-vite": "^2.10.6",
 		"@types/express": "^5.0.6",
 		"@types/jsonwebtoken": "^9.0.10",
@@ -70,7 +73,6 @@
 		"eslint": "^9.39.5",
 		"eslint-config-preact": "^2.0.0",
 		"jest": "^30.5.2",
-		"mock-req-res": "^1.2.1",
 		"preact-jsx-runtime": "^1.2.0",
 		"prettier": "^3.9.8",
 		"sass-embedded": "^1.104.1",
