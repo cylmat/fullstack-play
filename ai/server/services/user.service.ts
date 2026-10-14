@@ -1,5 +1,5 @@
 import type { User } from "#app/models/user.ts";
-import type { IUserService } from "#app/contracts/IUserService.ts";
+import type { IUserService } from "#app/contracts/user/IUserService.ts";
 
 export class userServiceClass implements IUserService {
 

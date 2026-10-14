@@ -1,5 +1,5 @@
 import type { User } from "#app/models/user.ts";
-import type { IUserService } from "#app/contracts/IUserService.ts";
+import type { IUserService } from "#app/contracts/user/IUserService.ts";
 import { USERS } from "#app/config/users_memory.ts";
 
 export class MemoryUserService implements IUserService {
