@@ -1,6 +1,5 @@
 import anthropicClient from '#app/clients/anth.client.ts'
 
-
 test('anthropicClient should be defined', () => {
   expect(anthropicClient).toBeDefined();
 });
