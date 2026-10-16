@@ -1,0 +1,12 @@
+
+## sftp
+
+ssh-keygen -t ed25519 -f /home/node/ssh/ftpuser_ed25519 -C "ftpuser-sftp"
+ssh-keyscan -p 22 fs-ai-sftp >> ~/.ssh/known_hosts
+
+
+// ssh-keygen -y -f /home/node/.ssh/sftp-ftpuser_ed25519
+// ssh-keygen -lf /home/node/.ssh/sftp-ftpuser_ed25519.pub
+// ssh-keyscan -p 22 fs-ai-sftp >> ~/.ssh/known_hosts
+// chmod 600 /home/node/.ssh/sftp-ftpuser_ed25519
+// ssh -vvv -o IdentitiesOnly=yes -i /home/node/.ssh/sftp-ftpuser_ed25519 -p 22 ftpuser@fs-ai-sftp

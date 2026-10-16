@@ -15,7 +15,7 @@ export default class authService {
             throw new Error(`Error: User with username '${username}' not found in memory`)
         }
 
-        var privateKey = fs.readFileSync('/var/www/application/config/keys/private.pem');
+        var privateKey = fs.readFileSync('/var/www/application/config/keys/jwt-private.pem');
         const signature = jwt.sign(
             {
                 payload: {
@@ -48,7 +48,7 @@ export default class authService {
 
     public static verifyToken(token: string): object|false {
         try {
-            var publicKey = fs.readFileSync('/var/www/application/config/keys/public.pem');
+            var publicKey = fs.readFileSync('/var/www/application/config/keys/jwt-public.pem');
             let config = {
                 audience: /urn:f[o]{2}/,
                 issuer: 'MY'

@@ -2,6 +2,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"cli": "node server/cli.ts",
 		"dev": "npm run dev:client & npm run dev:server",
 		"dev:client": "vite --host 0.0.0.0 client",
 		"dev:server": "node server/app.ts",

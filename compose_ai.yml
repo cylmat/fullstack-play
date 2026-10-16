@@ -17,8 +17,9 @@ services:
     #     environment:
     #         API_DSN: ''
         volumes:
-            - .docker/config/keys:/var/www/application/config/keys
             - ./ai:/var/www/application
+            - .docker/config/keys:/var/www/application/config/keys:ro
+            - .docker/config/ssh:/home/node/.ssh:ro
         ports:
             - 5111:5173
             - 5112:3000
@@ -32,10 +33,12 @@ services:
 
     sftp:
         image: atmoz/sftp
+        container_name: fs-ai-sftp
         ports:
             - "2222:22"
         volumes:
             - ./ai/data:/home/ftpuser/upload
+            - .docker/config/ssh/sftp-ftpuser_ed25519.pub:/home/ftpuser/.ssh/keys/sftp-ftpuser_ed25519.pub:ro
         command: ftpuser:change-moi:1001
         profiles:
             - ai

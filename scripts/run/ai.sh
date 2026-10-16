@@ -24,7 +24,8 @@ fi
 ##############
 
 if [ "$1" == "up" ]; then
-    docker compose -f "compose_ai.yml" --profile ai up --build -d
+    # force-recreate is used to ensure that the container is recreated even if there are no changes in the image or configuration.
+    docker compose -f "compose_ai.yml" --profile ai up --build --force-recreate -d
     exit 0
 fi
 
