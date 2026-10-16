@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import anthropicService, { type AnthropicType, type AnthropicServiceResult, ANTHROPIC_TYPES } from '../services/anthropic.service.ts';
-import { getParsedBodyErrors } from '../utils/parseBody.ts';
+import { getParsedBodyErrors } from '#app/utils/parseBody.ts';
 
 type ChatPromptType = {
     message: string;

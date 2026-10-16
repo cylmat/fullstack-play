@@ -17,8 +17,8 @@ services:
     #     environment:
     #         API_DSN: ''
         volumes:
-            - ./ai:/var/www/application
             - .docker/config/keys:/var/www/application/config/keys
+            - ./ai:/var/www/application
         ports:
             - 5111:5173
             - 5112:3000
@@ -27,6 +27,16 @@ services:
         depends_on:
             - local-mcp-filesystem
             - mongo
+        profiles:
+            - ai
+
+    sftp:
+        image: atmoz/sftp
+        ports:
+            - "2222:22"
+        volumes:
+            - ./ai/data:/home/ftpuser/upload
+        command: ftpuser:change-moi:1001
         profiles:
             - ai
 
