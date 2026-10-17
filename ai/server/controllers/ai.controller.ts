@@ -1,6 +1,8 @@
 import { type Request, type Response } from 'express';
 import anthropicService, { type AnthropicType, type AnthropicServiceResult, ANTHROPIC_TYPES } from '../services/anthropic.service.ts';
 import { getParsedBodyErrors } from '#app/utils/parseBody.ts';
+import embeddingService from '#app/rag/tools/embeddingTools.ts';
+import embeddingTools from '#app/rag/tools/embeddingTools.ts';
 
 type ChatPromptType = {
     message: string;
@@ -49,5 +51,12 @@ export const aiController = {
 
     getMCP: async (req: Request, res: Response) => {
         res.status(200).send('Hello from AI "MCP" controller !');
+    },
+
+    // ADMIN
+
+    embedText: async (req: Request, res: Response) => {
+        let embedded = await embeddingTools(req.body.text);
+        res.json({ embedded });
     }
 }

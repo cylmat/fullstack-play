@@ -37,7 +37,8 @@ services:
         ports:
             - "2222:22"
         volumes:
-            - ./ai/data:/home/ftpuser/upload
+            - ./ai/data/files:/home/ftpuser/upload
+            # allowed_keys automatic when keys are in ~/.ssh/keys directory
             - .docker/config/ssh/sftp-ftpuser_ed25519.pub:/home/ftpuser/.ssh/keys/sftp-ftpuser_ed25519.pub:ro
         command: ftpuser:change-moi:1001
         profiles:

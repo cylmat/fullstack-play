@@ -1,4 +1,5 @@
-import { type PipelineType, type Tensor, FeatureExtractionPipeline, pipeline } from '@huggingface/transformers';
+import { type PipelineType, type Tensor, type DataArray } from '@huggingface/transformers';
+import { FeatureExtractionPipeline, pipeline } from '@huggingface/transformers';
 
 // @doc https://huggingface.co/docs/transformers/index
 
@@ -11,7 +12,7 @@ const HF_PIPELINE_FEATURE_EXTRACTION: PipelineType = 'feature-extraction';
 const DEFAULT_PIPELINE_MODEL = 'distilbert';
 const XENOVA_PIPELINE_MODEL = 'Xenova/all-MiniLM-L6-v2';
 
-export default async function embeddingService(chunkText: string): Promise<Tensor> {
+export default async function embeddingTools(chunkText: string): Promise<DataArray> {
     // Allocate a pipeline for sentiment-analysis or text-classification
     // @doc https://huggingface.co/docs/transformers.js/en/pipelines#available-tasks
     const chunkEmbedder: any = await pipeline(
@@ -22,9 +23,9 @@ export default async function embeddingService(chunkText: string): Promise<Tenso
         // TASK: task: 'text-classification',
             // config: _PretrainedConfig {
 
-    const score = await chunkEmbedder(chunkText);
+    const score: Tensor = await chunkEmbedder(chunkText);
 
-    return score
+    return score.data
 }
 
 
