@@ -1,18 +1,29 @@
 import { type SftpFile } from '#app/types/sftp.ts';
 import { type FileEntryWithStats, type SFTPWrapper, Client } from 'ssh2'
 
-const getSftpFiles = async (directory: string): Promise<SftpFile[]> => {
+const getConfig = () => {
+    let up = process.env.SFTP_DSN?.split('@')
+    let username = up?.[0].split(':')[0];
+    let password = up?.[0].split(':')[1];
+    let host = up?.[1].split(':')[0];
+    let port = parseInt(up?.[1].split(':')[1] || '22', 10);
+
+    return {
+        host,
+        port,
+        username,
+        password
+    }
+}
+
+export const getSftpFiles = async (directory: string): Promise<SftpFile[]> => {
 
     const conn = new Client();
 
     return new Promise<SftpFile[]>((resolve, reject) => {
+
         conn
-            .connect({
-                host: "fs-ai-sftp",
-                port: 22,
-                username: "ftpuser",
-                password: "change-moi",
-            })
+            .connect(getConfig())
             .on("ready", () => {
                 conn.sftp((err, sftp: SFTPWrapper) => {
                     if (err) throw err;
@@ -47,7 +58,40 @@ const getSftpFiles = async (directory: string): Promise<SftpFile[]> => {
         ;
     })
 }
-export default getSftpFiles;
+
+export const getFileContent = async (path: string): Promise<string> => {
+    const conn = new Client();
+    let config = getConfig()
+
+    return new Promise<string>((resolve, reject) => {
+        const fail = (err: Error) => {
+            conn.end();
+            reject(err);
+        };
+
+        conn
+            .on("error", fail)
+            .connect(getConfig())
+            .on("ready", () => {
+                conn.sftp((err, sftp: SFTPWrapper) => {
+                    if (err) {
+                        fail(err);
+                        return;
+                    }
+
+                    const stream = sftp.createReadStream(path);
+                    const chunks: Buffer[] = [];
+
+                    stream.on("data", (chunk: Buffer) => chunks.push(chunk));
+                    stream.on("error", fail);
+                    stream.on("end", () => {
+                        conn.end();
+                        resolve(Buffer.concat(chunks).toString("utf8"));
+                    });
+                });
+            });
+    });
+};
 
 
     // sftp -vvv -i /home/node/.ssh/sftp-ftpuser_ed25519 -P 22 ftpuser@fs-ai-sftp

@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { type SftpFile } from "#app/types/sftp.ts";
-import getSftpFiles from "#app/utils/files/getSftpFiles.ts";
+import { getSftpFiles, getFileContent } from "#app/utils/files/sftpFiles.ts";
 // import { execFile } from 'node:child_process';
 // import { promisify } from "node:util"; // @doc https://nodejs.org/api/util.html#utilpromisifyoriginal
 // import { spawn } from "node:child_process";
@@ -23,6 +23,5 @@ export default async function syncFilesCommand(): Promise<void> {
 
     let listElements: SftpFile[] = await getSftpFiles('/upload');
 
-    console.log(listElements);
 
 }
