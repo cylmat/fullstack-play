@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express';
 import anthropicService, { type AnthropicType, type AnthropicServiceResult, ANTHROPIC_TYPES } from '../services/anthropic.service.ts';
 import { getParsedBodyErrors } from '#app/utils/parseBody.ts';
-import embeddingService from '#app/utils/embeddingTools.ts';
-import embeddingTools from '#app/utils/embeddingTools.ts';
+import embeddingService from '#app/utils/embed/embeddingTools.ts';
+import embeddingTools from '#app/utils/embed/embeddingTools.ts';
 
 type ChatPromptType = {
     message: string;

@@ -1,4 +1,4 @@
-import chunkService from '#app/utils/chunkService.ts';
+import chunkService from '#app/utils/embed/chunkService.ts';
 
 describe('chunkService', () => {
     it('should be defined', async () => {
