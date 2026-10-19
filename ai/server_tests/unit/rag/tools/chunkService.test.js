@@ -1,4 +1,4 @@
-import chunkService from '#app/rag/tools/chunkService.ts';
+import chunkService from '#app/utils/chunkService.ts';
 
 describe('chunkService', () => {
     it('should be defined', async () => {

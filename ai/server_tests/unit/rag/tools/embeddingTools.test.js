@@ -1,4 +1,4 @@
-import embeddingTools from '#app/rag/tools/embeddingTools.ts';
+import embeddingTools from '#app/utils/embeddingTools.ts';
 
 describe('embeddingTools', () => {
     it('should be defined', async () => {

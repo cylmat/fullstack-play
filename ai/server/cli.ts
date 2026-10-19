@@ -1,4 +1,4 @@
-import syncFilesCommand from "./rag/commands/syncFilesCommand.ts";
+import syncFilesCommand from "./commands/syncFilesCommand.ts";
 
 const command = process.argv[2]
 

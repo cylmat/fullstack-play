@@ -6,6 +6,7 @@ import {
     type SDKResultSuccess,
     type Options
 } from "@anthropic-ai/claude-agent-sdk";
+import type { QueryResponse } from '#app/types/anthropicTypes.ts';
 import { query as agentQuery } from '@anthropic-ai/claude-agent-sdk'
 
 /**
@@ -13,26 +14,6 @@ import { query as agentQuery } from '@anthropic-ai/claude-agent-sdk'
  * @doc https://code.claude.com/docs/en/agent-sdk/typescript
  */
 
-export type QueryResponse = {
-    system: {
-        type: string;
-        cwd: string;
-        tools: string[];
-        mcpServers: any[];
-        model: string;
-        slash_commands: string[];
-        skills: string[];
-    },
-    assistant: {
-        messageModel: string;
-        session_id: string;
-    },
-    result: {
-        usage: string;
-        isError: boolean;
-        messages: string[];
-    }
-}
 
 export default async function anthropicAgent(prompt: string): Promise<any> {
 
