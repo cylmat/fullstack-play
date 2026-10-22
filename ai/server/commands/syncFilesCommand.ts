@@ -13,7 +13,7 @@ import documentsRag from "#app/databases/documentsRag.ts";
 // ssh-keygen -t ed25519 -f /home/node/ssh/ftpuser_ed25519 -C "ftpuser-sftp"
 // ls /home/node/ssh
 
-export default async function syncFilesCommand(): Promise<void> {
+export default async function syncFilesCommand(): Promise<number> {
 
     // get files from sftp
     if (!process.env.SFTP_DSN) {
@@ -21,12 +21,13 @@ export default async function syncFilesCommand(): Promise<void> {
     }
 
     let listElements: SftpFile[] = await getSftpFiles('/upload');
+    const documentsRagInstance = documentsRag.getInstance();
 
     for (const file of listElements) {
         const content = await getFileContent(file.path);
         const embed = await embeddingTools(content);
 
-        documentsRag.getInstance().saveEmbeddedFile({
+        documentsRagInstance.saveEmbeddedFile({
             // type: "file",
             // filename: file.filename,
             // size: file.size,
@@ -41,7 +42,12 @@ export default async function syncFilesCommand(): Promise<void> {
             
         });
 
-        let r = await documentsRag.getInstance().getCollection();
+        let data = await documentsRagInstance.testData();
+        console.log(data)
+        
+        console.trace('who called me?')
+
+        // let r = await documentsRag.getInstance().getCollection();
 
         // await saveEmbeddedFile({
         //     path: file.path,
@@ -51,5 +57,11 @@ export default async function syncFilesCommand(): Promise<void> {
         //     content: String(content),
         //     embedding: Array.from(embed as ArrayLike<number>),
         // });
+        console.info('break')
+        await documentsRagInstance.closeMongo();
+        return 1
     }
+    console.log('ok')
+    await documentsRagInstance.closeMongo();
+    return 0
 }
