@@ -86,7 +86,7 @@ if [ "$1" == "bash-root" ]; then
 fi
 
 if [ "$1" == "down" ]; then
-    docker compose -f "compose.yml" --profile php down
+    docker compose -f "compose.yml" --profile php down --volumes
     exit 0
 fi
 

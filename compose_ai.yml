@@ -26,8 +26,10 @@ services:
         working_dir: /var/www/application
         command: sleep infinity
         depends_on:
-            - local-mcp-filesystem
-            - mongo
+            local-mcp-filesystem:
+                condition: service_started
+            mongo:
+                condition: service_started
         profiles:
             - ai
 
@@ -60,9 +62,11 @@ services:
     # https://github.com/docker-library/mongo
     # mongodb-atlas-local:7
     # use mongodb-atlas-local to enable "document.createSearchIndex" command
+    # connect with mongosh -u root -p root --authenticationDatabase admin --eval 'db.getSiblingDB("AIdatabase").documentsRag.getSearchIndexes()'
     mongo:
         image: mongodb/mongodb-atlas-local:latest
         container_name: fs-ai-mongo
+        hostname: mongo
         environment:
             MONGODB_INITDB_ROOT_USERNAME: root
             MONGODB_INITDB_ROOT_PASSWORD: root
@@ -76,21 +80,22 @@ services:
             - ai
             - ai-db
 
-    mongo-express:
-        image: mongo-express:latest
-        container_name: fs-ai-mongoexpress
-        ports:
-        - 8181:8081
-        environment:
-            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-            ME_CONFIG_MONGODB_ADMINPASSWORD: admin
-            ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017?authSource=admin
-            ME_CONFIG_BASICAUTH: false
-        depends_on:
-            - mongo
-        profiles:
-            - ai
-            - ai-db
+    # mongo-express:
+    #     image: mongo-express:latest
+    #     container_name: fs-ai-mongoexpress
+    #     restart: unless-stopped
+    #     ports:
+    #     - 8181:8081
+    #     environment:
+    #         ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+    #         ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+    #         ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017?authSource=admin&directConnection=true
+    #         ME_CONFIG_BASICAUTH: false
+    #     depends_on:
+    #         - mongo
+    #     profiles:
+    #         - ai
+    #         - ai-db
 
 
     # https://hub.docker.com/categories/machine-learning-and-ai

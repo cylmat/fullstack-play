@@ -3,6 +3,24 @@
 
 
 
+/* ****************************************************************************** 
+use AIdatabase
+show collections
+db.documentsRag.getSearchIndexes()
+db.documentsRag.insertOne({
+  text: "hello",
+  source: "test.txt",
+  chunkIndex: 0,
+  embedding: Array.from({ length: 1536 }, () => Math.random())
+})
+
+or
+
+db.getSiblingDB("AIdatabase").getCollectionNames()
+db.getSiblingDB("AIdatabase").documentsRag.getSearchIndexes()
+
+ ****************************************************************************** */
+
 
 // @doc https://www.mongodb.com/docs/manual/reference/method/db.getSiblingDB/
 // getSiblingDB: Used to return another database without modifying the db variable in the shell environment
@@ -30,7 +48,7 @@ db.createCollection('documentsRag', {
                 text:       { bsonType: "string" },
                 embedding:  { bsonType: "array" },
                 source:     { bsonType: "string" },
-                chunkIndex: { bsonType: "int" },
+                chunkIndex: { bsonType: ["int", "long", "double"] },
                 fileType:   { bsonType: "string" },
                 page:       { bsonType: ["int", "null"] }
             }
@@ -62,14 +80,15 @@ db.createCollection('documentsRag', {
 // quick start: https://www.mongodb.com/docs/vector-search/tutorials/quick-start/
 db.documentsRag.createSearchIndex(
     "rag_search_index", // name of the index
-    "vectorSearch", {
+    "vectorSearch",
+    {
         "fields": [
             {
                 "type": "vector", // vector: for vector search, autoEmbed: for automatic embedding of text fields
                 "path": "embedding", // document's -field- to index
                 "numDimensions": 1536, // 256 | 512 | 1024 | 2048, (ex: with OpenAI text-embedding-3-small, default to 1536)
-                "similarity": "euclidean", // similarity based on the angle between vectors, see also "cosine" or "dotProduct"
-                "model": "voyage-4" // Balanced performance for general text search (also voyage-lite, voyage-large...)
+                "similarity": "cosine", // similarity based on the angle between vectors, see also "cosine" or "dotProduct"
+                // "model": "voyage-4" -> "model" is not used with "type": vector Balanced performance for general text search (also voyage-lite, voyage-large...)
             }
         ]
     }
