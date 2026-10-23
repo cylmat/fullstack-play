@@ -12,6 +12,8 @@ export const embeddingFilesService = {
             let source = file.path
             const text = await getFileContent(file.path);
             const embeddingRaw = await embeddingTools(text);
+
+            // Array.from(output.data as Float32Array); // number[] of length 384
             const embedding = Array.from(embeddingRaw);
 
             await documentsRagInstance.saveEmbeddedFile({

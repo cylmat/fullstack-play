@@ -1,12 +1,85 @@
 import { type PipelineType, type Tensor, type DataArray } from '@huggingface/transformers';
 import { FeatureExtractionPipeline, pipeline } from '@huggingface/transformers';
 
-// @doc https://huggingface.co/docs/transformers/index
-
 /**
  * Claude can't generate "embedding models" (vertex) so we use huggingface embedding model instead
  * Hugging face will call https://huggingface.co/<model_name>/resolve/main/config.json (ex: Xenova/all-MiniLM-L6-v2)
- */
+*/
+// @doc https://huggingface.co/docs/transformers/index
+
+
+/////// @todo
+
+// !!!!!!!!INFO
+/*
+The same model, same pooling, same normalize must be used for:
+indexing your chunks (documentsRag), and
+embedding the user's question at query time.
+*/
+///
+
+
+// 2. 2: Retrieve relevant chunks
+
+//const extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+
+
+/*
+async function retrieve(question: string, k = 5) {
+  // IMPORTANT: same model + same pooling/normalize as at indexing time
+  const output = await extractor(question, { pooling: 'mean', normalize: true });
+  const queryVector = Array.from(output.data as Float32Array);
+
+  return db.collection('documentsRag').aggregate([
+    {
+      $vectorSearch: {
+        index: 'vector_index',
+        path: 'embedding',
+        queryVector,
+        numCandidates: 100,
+        limit: k,
+      },
+    },
+    {
+      $project: {
+        _id: 0, source: 1, text: 1, chunkIndex: 1,
+        score: { $meta: 'vectorSearchScore' },
+      },
+    },
+  ]).toArray();
+}
+*/
+
+// 3 send to claude
+
+/*
+import Anthropic from '@anthropic-ai/sdk';
+const anthropic = new Anthropic();
+
+async function ask(question: string) {
+  const chunks = await retrieve(question);
+
+  const context = chunks
+    .map((c, i) => `[${i + 1}] (${c.source}, chunk ${c.chunkIndex})\n${c.text}`)
+    .join('\n\n');
+
+  const response = await anthropic.messages.create({
+    model: 'claude-sonnet-4-5', // use the model ID available to you
+    max_tokens: 1024,
+    system:
+      'Answer using only the provided context. Cite sources like [1], [2]. ' +
+      "If the answer isn't in the context, say you don't know.",
+    messages: [
+      {
+        role: 'user',
+        content: `<context>\n${context}\n</context>\n\nQuestion: ${question}`,
+      },
+    ],
+  });
+
+  return response.content[0].type === 'text' ? response.content[0].text : '';
+}
+*/
 
 const HF_PIPELINE_FEATURE_EXTRACTION: PipelineType = 'feature-extraction';
 const DEFAULT_PIPELINE_MODEL = 'distilbert';
@@ -15,18 +88,27 @@ const XENOVA_PIPELINE_MODEL = 'Xenova/all-MiniLM-L6-v2';
 export default async function embeddingTools(chunkText: string, pipelineModel?: string): Promise<DataArray> {
     // Allocate a pipeline for sentiment-analysis or text-classification
     // @doc https://huggingface.co/docs/transformers.js/en/pipelines#available-tasks
+    // @doc https://huggingface.co/docs/transformers/main/en/main_classes/pipelines#transformers.Pipeline
+
+    // Return:
+        // TASK: task: 'text-classification',
+            // config: _PretrainedConfig {
     const chunkEmbedder: any = await pipeline(
       HF_PIPELINE_FEATURE_EXTRACTION,
       pipelineModel ? pipelineModel : XENOVA_PIPELINE_MODEL
     ) as FeatureExtractionPipeline
-        // Return:
-        // TASK: task: 'text-classification',
-            // config: _PretrainedConfig {
 
     const score: Tensor = await chunkEmbedder(chunkText);
 
     return score.data
 }
+
+
+
+
+
+
+
 
 
 /* PIPELINE TRANSFORMER //
