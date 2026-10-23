@@ -3,7 +3,7 @@
  * @see also InversifyJS (https://inversify.io/)
  */
 
-import { userServiceClass } from "#app/services/user.service.ts";
+import { userServiceClass } from "#app/services/auth/user.service.ts";
 import { HardCodedUserService } from "#app/services/user/hardcodeUser.service.ts";
 import { MemoryUserService } from "#app/services/user/memoryUser.service.ts";
 
