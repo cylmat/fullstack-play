@@ -39,18 +39,18 @@ db.createCollection('documentsRag', {
         $jsonSchema: {
             bsonType: "object",
             required: [
+                "source", // source file name or identifier (ex: "guide.pdf")
                 "text", // textual content of the chunk (ex: " le texte lisible du morceau")
                 "embedding", // vector representation of the chunk (ex: [0.123, 0.456, ...])
-                "source", // source file name or identifier (ex: "guide.pdf")
                 "chunkIndex" // index/number of the chunk in the source file (ex: 0, 1, 2, ...)
             ],
             properties: {
+                source:     { bsonType: "string" },
                 text:       { bsonType: "string" },
                 embedding:  { bsonType: "array" },
-                source:     { bsonType: "string" },
                 chunkIndex: { bsonType: ["int", "long", "double"] },
-                fileType:   { bsonType: "string" },
-                page:       { bsonType: ["int", "null"] }
+                // fileType:   { bsonType: "string" },
+                // page:       { bsonType: ["int", "null"] }
             }
         }
     }

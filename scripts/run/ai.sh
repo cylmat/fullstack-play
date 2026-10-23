@@ -4,7 +4,7 @@
 
 LIST_COMMANDS="\
 ls \
-up install bash bash-root down \
+up install bash bash-root restart down \
 start start-client start-server stop \
 init \
 test test-client test-server \
@@ -24,8 +24,6 @@ fi
 ##############
 
 if [ "$1" == "up" ]; then
-    bash $0 down
-
     # force-recreate is used to ensure that the container is recreated even if there are no changes in the image or configuration.
     docker compose -f "compose_ai.yml" --profile ai up --build --force-recreate -d
     exit 0
@@ -43,6 +41,12 @@ fi
 
 if [ "$1" == "bash-root" ]; then
     docker exec -it -u root fs-ai-node bash
+    exit 0
+fi
+
+if [ "$1" == "restart" ]; then
+    bash $0 down
+    bash $0 up
     exit 0
 fi
 

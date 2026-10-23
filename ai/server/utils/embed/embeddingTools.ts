@@ -12,12 +12,12 @@ const HF_PIPELINE_FEATURE_EXTRACTION: PipelineType = 'feature-extraction';
 const DEFAULT_PIPELINE_MODEL = 'distilbert';
 const XENOVA_PIPELINE_MODEL = 'Xenova/all-MiniLM-L6-v2';
 
-export default async function embeddingTools(chunkText: string): Promise<DataArray> {
+export default async function embeddingTools(chunkText: string, pipelineModel?: string): Promise<DataArray> {
     // Allocate a pipeline for sentiment-analysis or text-classification
     // @doc https://huggingface.co/docs/transformers.js/en/pipelines#available-tasks
     const chunkEmbedder: any = await pipeline(
       HF_PIPELINE_FEATURE_EXTRACTION,
-      XENOVA_PIPELINE_MODEL
+      pipelineModel ? pipelineModel : XENOVA_PIPELINE_MODEL
     ) as FeatureExtractionPipeline
         // Return:
         // TASK: task: 'text-classification',

@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { type SftpFile } from "#app/types/sftp.ts";
 import { getSftpFiles, getFileContent } from "#app/utils/files/sftpFiles.ts";
-import embeddingTools from "#app/utils/embed/embeddingTools.ts";
-import documentsRag from "#app/databases/documentsRag.ts";
+import { embeddingFilesService } from "#app/services/embed/embeddingFilesService.ts";
+
 // import { execFile } from 'node:child_process';
 // import { promisify } from "node:util"; // @doc https://nodejs.org/api/util.html#utilpromisifyoriginal
 // import { spawn } from "node:child_process";
@@ -15,53 +15,14 @@ import documentsRag from "#app/databases/documentsRag.ts";
 
 export default async function syncFilesCommand(): Promise<number> {
 
-    // get files from sftp
     if (!process.env.SFTP_DSN) {
         throw new Error("SFTP_DSN est requis");
     }
 
+    console.trace('TRACE | who called me?')
+
     let listElements: SftpFile[] = await getSftpFiles('/upload');
-    const documentsRagInstance = documentsRag.getInstance();
+    let ret = await embeddingFilesService.embedFiles(listElements);
 
-    for (const file of listElements) {
-        const content = await getFileContent(file.path);
-        const embed = await embeddingTools(content);
-
-        documentsRagInstance.saveEmbeddedFile({
-            // type: "file",
-            // filename: file.filename,
-            // size: file.size,
-            // mtime: file.mtime,
-            // content: String(content),
-            // embedding: Array.from(embed as ArrayLike<number>),
-             
-                text: 'r',
-                source: 't',
-                chunkIndex: 'i',
-                embedding: [3]
-            
-        });
-
-        let data = await documentsRagInstance.testData();
-        console.log(data)
-        
-        console.trace('who called me?')
-
-        // let r = await documentsRag.getInstance().getCollection();
-
-        // await saveEmbeddedFile({
-        //     path: file.path,
-        //     filename: file.filename,
-        //     size: file.size,
-        //     mtime: file.mtime,
-        //     content: String(content),
-        //     embedding: Array.from(embed as ArrayLike<number>),
-        // });
-        console.info('break')
-        await documentsRagInstance.closeMongo();
-        return 1
-    }
-    console.log('ok')
-    await documentsRagInstance.closeMongo();
-    return 0
+    return ret
 }

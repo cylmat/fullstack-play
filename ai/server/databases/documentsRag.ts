@@ -4,7 +4,7 @@ import type { EmbeddedFile } from "#app/types/embeddedFile.ts";
 import MongoService from "#app/services/mongo.ts";
 
 export default class DocumentsRag implements IDocumentsRag {
-    
+
     private static readonly COLLECTION = "documentsRag";
 
     public static getInstance(): DocumentsRag {
@@ -18,13 +18,15 @@ export default class DocumentsRag implements IDocumentsRag {
     public async saveEmbeddedFile(file: Omit<EmbeddedFile, "updatedAt">): Promise<void> {
         const collection = await this.getCollection();
 
-        // await collection.insertOne({
-        //     text: "hello",
-        //     embedding: Array.from({ length: 1536 }, () => Math.random()),
-        //     source: "test.txt",
-        //     chunkIndex: 0,
-        // })
+        let existingFile = await this.getOneEmbeddedFileBySource(file.source);
+        if (existingFile) {
+            await this.updateEmbeddedFileBySource(file.source, file);
+            console.info(`DocumentsRag: updateEmbeddedFile ${file.source} in DB`, DocumentsRag.COLLECTION);
+            return;
+        }
 
+        await collection.insertOne(file as EmbeddedFile);
+        console.info('DocumentsRag: saveEmbeddedFile in DB', DocumentsRag.COLLECTION);
     }
 
     public async getCollection(): Promise<Collection<EmbeddedFile>> {
@@ -33,30 +35,52 @@ export default class DocumentsRag implements IDocumentsRag {
         return db.collection<EmbeddedFile>(DocumentsRag.COLLECTION)
     }
 
-    public async testData() {
-        const db = await MongoService.getDb()
+    private async getOneEmbeddedFileBySource(source: string): Promise<EmbeddedFile | null> {
+        const collection = await this.getCollection();
 
-        const collection = await this.getCollection()
+        return await collection.findOne({ source });
+    }
 
-          // @info Vector search ONLY exists on the aggregation side !
-        return await collection.aggregate([{
-            $vectorSearch: {
-                index: "rag_search_index",
-                path: "embedding",
-                queryVector: Array.from({ length: 1536 }, () => Math.random()),
-                numCandidates: 10,
-                limit: 3
-            }
-        }]).toArray() // @info aggregate: perform a vector search on the documentsRag collection
+    private async updateEmbeddedFileBySource(source: string, update: Partial<EmbeddedFile>): Promise<void> {
+        const collection = await this.getCollection();
 
-        
+        await collection.updateOne({ source }, { $set: update });
+        console.info('DocumentsRag: updateEmbeddedFileBySource in DB', DocumentsRag.COLLECTION);
+    }
+
+    // public async testData() {
+    //     const db = await MongoService.getDb()
+
+    //     const collection = await this.getCollection()
+
+    //       // @info Vector search ONLY exists on the aggregation side !
+    //     return await collection.aggregate([{
+    //         $vectorSearch: {
+    //             index: "rag_search_index",
+    //             path: "embedding",
+    //             queryVector: Array.from({ length: 1536 }, () => Math.random()),
+    //             numCandidates: 10,
+    //             limit: 3
+    //         }
+    //     }]).toArray() // @info aggregate: perform a vector search on the documentsRag collection
+
+    // }
+}
+
+
+
+
+
+
+
+
+
+
         // let db = this.client.db(process.env.MONGO_DB_NAME)
         // let col = db.collection<any>('documentsRag')
         // let r = Array.from({ length: 3 },  () => Math.random())
         // console.log(r,44)
 
-       
-      
             // {
             //     $vectorSearch: {
             //         index: "rag_search_index",
@@ -116,5 +140,3 @@ export default class DocumentsRag implements IDocumentsRag {
         //         }
         //     }
         // ])
-    }
-}
