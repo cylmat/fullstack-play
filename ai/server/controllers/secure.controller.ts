@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import authService from '#app/services/auth/auth.service.ts';
 import _ from 'lodash';
-import { checkParameters } from '#app/utils/checkParameters.ts';
+import { checkParameters } from '#app/utils/request/checkParameters.ts';
 
 export const secureController = {
   getToken: (req: Request, res: Response) => {
