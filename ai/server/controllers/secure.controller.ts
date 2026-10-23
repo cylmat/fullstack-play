@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import authService from '#app/services/auth.service.ts';
+import authService from '#app/services/auth/auth.service.ts';
 import _ from 'lodash';
 import { checkParameters } from '#app/utils/checkParameters.ts';
 

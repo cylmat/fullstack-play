@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import authService from "../services/auth.service.ts";
+import authService from "../services/auth/auth.service.ts";
 import { Logger } from "#app/core/logger.ts";
 
 /**

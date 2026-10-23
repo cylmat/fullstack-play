@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express';
-import anthropicService, { type AnthropicType, type AnthropicServiceResult, ANTHROPIC_TYPES } from '../services/anthropic.service.ts';
+import anthropicService, { type AnthropicType, type AnthropicServiceResult, ANTHROPIC_TYPES } from '../services/chat/anthropic.service.ts';
 import { getParsedBodyErrors } from '#app/utils/parseBody.ts';
 import embeddingService from '#app/utils/embed/embeddingTools.ts';
 import embeddingTools from '#app/utils/embed/embeddingTools.ts';
