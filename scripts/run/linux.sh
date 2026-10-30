@@ -20,7 +20,8 @@ if [ "$1" == "build-image" ]; then
 fi
 
 if [ "$1" == "bash" ]; then
-    docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.local -v .:/var/www/application fs-linux:latest bash
+    docker run --rm -it -u 1000:1000 --env-file .docker/linux/.env.local -v .:/var/www/application \
+    fs-linux:latest sh -c "/init.sh && bash"
     exit 0
 fi
 

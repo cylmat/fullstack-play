@@ -32,6 +32,8 @@ RUN apt install -y nix
 ### DATA ###
 
 COPY ./linux/data /var/www/data
+COPY ./linux/init.sh /init.sh
+RUN chmod +x /init.sh
 
 ### USER ###
 
