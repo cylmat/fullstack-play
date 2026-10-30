@@ -1,3 +1,4 @@
+*.local
 **/*.local
 **/dist
 **/node_modules
