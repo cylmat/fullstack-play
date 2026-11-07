@@ -28,6 +28,7 @@ finish Redis "Seven Databases in Seven Weeks" (Luc Perkins)
 
 later
 - secure: OTP and MFA Authenticator
+  https://dev.to/raza_engage/how-to-implement-otp-authentication-in-nodejs-a-complete-guide-for-secure-user-verification-3l40
 - Ollama	: ollama.com
 - login button on/off
 - Fastify, hono, koa, hapi
